@@ -7,8 +7,6 @@
 #######################################
 
 library(dplyr)
-library(devtools)
-install_github("bpulidob/ehymet")
 library("ehymet")
 
 # Data simulation for 1 dimension 
@@ -246,7 +244,6 @@ data_7 <- sim_model_ex1(i_sim=7,seed=174) #model 7
 data_8 <- sim_model_ex1(i_sim=8,seed=187) #model 8 
 
 # Smooth the data and calculate derivatives
-t <- seq(0, 1, length = ncol(data_1))
 smooth_data_1 <- funspline(curves = data_1, grid_ll = 0, grid_ul = 1, nbasis = 25, norder = 4)
 smooth_data_2 <- funspline(curves = data_2, grid_ll = 0, grid_ul = 1, nbasis = 25, norder = 4)
 smooth_data_3 <- funspline(curves = data_3, grid_ll = 0, grid_ul = 1, nbasis = 25, norder = 4)
@@ -325,8 +322,6 @@ mmhi_data_5 <- ind_data_5$dtaMMHI
 mmhi_data_6 <- ind_data_6$dtaMMHI
 mmhi_data_7 <- ind_data_7$dtaMMHI
 mmhi_data_8 <- ind_data_8$dtaMMHI
-
-
 
 # first derivatives indexes
 ind_dat1_d <- ind(curves = smooth_data_1$deriv, grid_ll = 0, grid_ul = 1)
@@ -471,34 +466,6 @@ mmhi_d2dat_8 <- ind_dat8_dd$ddtaMMHI
 #############################
 # plots: 
 #############################
-library(dplyr)
-par(mfrow=c(4,3))
-
-plt_fun <- function(data, true_labels){
-  
-  if (!(length(dim(data)) == 2))
-    stop("This function can be only used with 2-dimensional datasets.")
-  
-  df <-  dplyr::as_tibble(data)
-  t_interval <- seq(0, 1, length = ncol(data))
-  names(df) <- as.character(t_interval)
-  df$id <- 1:nrow(data)
-  df$Order <- true_labels
-  df_long<- df %>% tidyr::pivot_longer(-c(id, Order), names_to="variable", values_to="values") %>%
-    dplyr::mutate(variable=as.numeric(variable))
-  pa <- df_long %>% ggplot2::ggplot(ggplot2::aes(x=variable, y=values,group=id, color=factor(Order)))
-  
-  plt<- pa +
-    ggplot2::geom_line(linewidth=0.1)+
-    ggplot2::scale_color_brewer(palette = "Set1")+
-    # scale_color_manual(values=c("#CC6600","#3399FF")) +
-    # ggtitle("MEI. First dimension")+
-    ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))+
-    ggplot2::ylab("") + ggplot2::xlab("") +
-    ggplot2::theme(legend.position = "none")
-  return(plt)
-}
-
 true_labels1 <- c(rep(1,100)) # ? 
 #############################
 # Model 1 vs. Model 2
@@ -518,10 +485,6 @@ plot(mmei_data_1,mmhi_data_1, col = "pink", pch=16, ylab="MMHI", xlab = "MMEI")
 points(mmei_data_2,mmhi_data_2, col="lightblue", pch = 16)
 
 #first derivative 
-#plt_fun(smooth_data_2$deriv, true_labels2)
-#plot(smooth_data_1$deriv, smooth_data_2$deriv, col = c("pink", "lightblue"),
-#     type = "l", main = "First Derivatives", xlab = "t", ylab="")
-
 plot(ei_ddat_1,hi_ddat_1,col="pink", pch=16, xlab="EI", ylab="HI", 
      main = "First Derivatives")
 points(ei_ddat_2,hi_ddat_2,col="lightblue", pch=16)
@@ -533,10 +496,6 @@ plot(mmei_ddat_1,mmhi_ddat_1,col="pink", pch=16, xlab="MMEI", ylab="MMHI")
 points(mmei_ddat_2,mmhi_ddat_2,col="lightblue", pch=16)
 
 #second derivative
-#plt_fun(smooth_data_2$deriv2,true_labels2)
-#plot(smooth_data_1$deriv2, smooth_data_2$deriv2, col = c("pink", "lightblue"),
-#     type = "l", main="Second Derivatives",ylab = "",xlab = "t")
-
 plot(ei_d2dat_1,hi_d2dat_1,col="pink", pch=16, xlab="EI", ylab="HI",
      main = "Second Derivatives")
 points(ei_d2dat_2,hi_d2dat_2,col="lightblue", pch=16)
@@ -567,9 +526,6 @@ plot(mmei_data_1,mmhi_data_1, col = "pink", pch=16, ylab="MMHI", xlab = "MMEI")
 points(mmei_data_3,mmhi_data_3, col="lightblue", pch = 16)
 
 #first derivative 
-#plot(smooth_data_1$deriv, smooth_data_3$deriv, col = c("pink", "lightblue"),
-#     type = "l", main = "First Derivatives", xlab = "t", ylab="")
-
 plot(ei_ddat_1,hi_ddat_1,col="pink", pch=16, xlab="EI", ylab="HI", 
      main = "First Derivatives")
 points(ei_ddat_3,hi_ddat_3,col="lightblue", pch=16)
@@ -581,9 +537,6 @@ plot(mmei_ddat_1,mmhi_ddat_1,col="pink", pch=16, xlab="MMEI", ylab="MMHI")
 points(mmei_ddat_3,mmhi_ddat_3,col="lightblue", pch=16)
 
 #second derivative
-#plot(smooth_data_1$deriv2, smooth_data_3$deriv2, col = c("pink", "lightblue"),
-#     type = "l", main="Second Derivatives",ylab = "",xlab = "t")
-
 plot(ei_d2dat_1,hi_d2dat_1,col="pink", pch=16, xlab="EI", ylab="HI",
      main = "Second Derivatives")
 points(ei_d2dat_3,hi_d2dat_3,col="lightblue", pch=16)
@@ -612,9 +565,6 @@ plot(mmei_data_1,mmhi_data_1, col = "pink", pch=16, ylab="MMHI", xlab = "MMEI")
 points(mmei_data_4,mmhi_data_4, col="lightblue", pch = 16)
 
 #first derivative 
-#plot(smooth_data_1$deriv, smooth_data_4$deriv, col = c("pink", "lightblue"),
-#     type = "l", main = "First Derivatives", xlab = "t", ylab="")
-
 plot(ei_ddat_1,hi_ddat_1,col="pink", pch=16, xlab="EI", ylab="HI", 
      main = "First Derivatives")
 points(ei_ddat_4,hi_ddat_4,col="lightblue", pch=16)
@@ -626,9 +576,6 @@ plot(mmei_ddat_1,mmhi_ddat_1,col="pink", pch=16, xlab="MMEI", ylab="MMHI")
 points(mmei_ddat_4,mmhi_ddat_4,col="lightblue", pch=16)
 
 #second derivative
-#plot(smooth_data_1$deriv2, smooth_data_4$deriv2, col = c("pink", "lightblue"),
-#     type = "l", main="Second Derivatives",ylab = "",xlab = "t")
-
 plot(ei_d2dat_1,hi_d2dat_1,col="pink", pch=16, xlab="EI", ylab="HI",
      main = "Second Derivatives")
 points(ei_d2dat_4,hi_d2dat_4,col="lightblue", pch=16)
@@ -657,9 +604,6 @@ plot(mmei_data_1,mmhi_data_1, col = "pink", pch=16, ylab="MMHI", xlab = "MMEI")
 points(mmei_data_5,mmhi_data_5, col="lightblue", pch = 16)
 
 #first derivative 
-#plot(smooth_data_1$deriv, smooth_data_5$deriv, col = c("pink", "lightblue"),
-#     type = "l", main = "First Derivatives", xlab = "t", ylab="")
-
 plot(ei_ddat_1,hi_ddat_1,col="pink", pch=16, xlab="EI", ylab="HI", 
      main = "First Derivative")
 points(ei_ddat_5,hi_ddat_5,col="lightblue", pch=16)
@@ -671,9 +615,6 @@ plot(mmei_ddat_1,mmhi_ddat_1,col="pink", pch=16, xlab="MMEI", ylab="MMHI")
 points(mmei_ddat_5,mmhi_ddat_5,col="lightblue", pch=16)
 
 #second derivative
-#plot(smooth_data_1$deriv2, smooth_data_5$deriv2, col = c("pink", "lightblue"),
-#     type = "l", main="Second Derivatives",ylab = "",xlab = "t")
-
 plot(ei_d2dat_1,hi_d2dat_1,col="pink", pch=16, xlab="EI", ylab="HI",
      main = "Second Derivative")
 points(ei_d2dat_5,hi_d2dat_5,col="lightblue", pch=16)
@@ -702,9 +643,6 @@ plot(mmei_data_1,mmhi_data_1, col = "pink", pch=16, ylab="MMHI", xlab = "MMEI")
 points(mmei_data_6,mmhi_data_6, col="lightblue", pch = 16)
 
 #first derivative 
-#plot(smooth_data_1$deriv, smooth_data_6$deriv, col = c("pink", "lightblue"),
-#     type = "l", main = "First Derivatives", xlab = "t", ylab="")
-
 plot(ei_ddat_1,hi_ddat_1,col="pink", pch=16, xlab="EI", ylab="HI",
      main = "First Derivative")
 points(ei_ddat_6,hi_ddat_6,col="lightblue", pch=16)
@@ -748,9 +686,6 @@ plot(mmei_data_1,mmhi_data_1,
 points(mmei_data_7,mmhi_data_7, col="lightblue", pch = 16)
 
 #first derivative 
-#plot(smooth_data_1$deriv, smooth_data_7$deriv, col = c("pink", "lightblue"),
-#     type = "l", main = "First Derivatives", xlab = "t", ylab="")
-
 plot(ei_ddat_1,hi_ddat_1,col="pink", pch=16, xlab="EI", ylab="HI", 
      main = "First Derivative")
 points(ei_ddat_7,hi_ddat_7,col="lightblue", pch=16)
@@ -762,9 +697,6 @@ plot(mmei_ddat_1,mmhi_ddat_1,col="pink", pch=16, xlab="MMEI", ylab="MMHI")
 points(mmei_ddat_7,mmhi_ddat_7,col="lightblue", pch=16)
 
 #second derivative
-#plot(smooth_data_1$deriv2, smooth_data_7$deriv2, col = c("pink", "lightblue"),
-#     type = "l", main="Second Derivatives",ylab = "",xlab = "t")
-
 plot(ei_d2dat_1,hi_d2dat_1,col="pink", pch=16, xlab="EI", ylab="HI",
      main = "Second Derivative")
 points(ei_d2dat_7,hi_d2dat_7,col="lightblue", pch=16)
@@ -793,9 +725,6 @@ plot(mmei_data_1,mmhi_data_1, col = "pink", pch=16, ylab="MMHI", xlab = "MMEI")
 points(mmei_data_8,mmhi_data_8, col="lightblue", pch = 16)
 
 #first derivative 
-#plot(smooth_data_1$deriv, smooth_data_8$deriv, col = c("pink", "lightblue"),
-#     type = "l", main = "First Derivatives", xlab = "t", ylab="")
-
 plot(ei_ddat_1,hi_ddat_1,col="pink", pch=16, xlab="EI", ylab="HI",
      main = "First Derivative")
 points(ei_ddat_8,hi_ddat_8,col="lightblue", pch=16)
@@ -807,9 +736,6 @@ plot(mmei_ddat_1,mmhi_ddat_1,col="pink", pch=16, xlab="MMEI", ylab="MMHI")
 points(mmei_ddat_8,mmhi_ddat_8,col="lightblue", pch=16)
 
 #second derivative
-#plot(smooth_data_1$deriv2, smooth_data_8$deriv2, col = c("pink", "lightblue"),
-#     type = "l", main="Second Derivatives",ylab = "",xlab = "t")
-
 plot(ei_d2dat_1,hi_d2dat_1,col="pink", pch=16, xlab="EI", ylab="HI",
      main = "Second Derivative")
 points(ei_d2dat_8,hi_d2dat_8,col="lightblue", pch=16)

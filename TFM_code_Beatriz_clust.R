@@ -7,11 +7,9 @@ library("ehymet")
 ### CLUSTERING ########################
 #######################################
 
-# NOTE: Add the replicate() function to every model 
-#and clustering function so that I can do the 50 
-#simulations of the clustering after this i can 
-#compute the validations and i should also compare
-#the results using either the mean or boxplots. 
+# NOTE: repeat each clustering algorithm n times, suppose n=50, 
+# and for each time you may compute some metrics 
+# (you can use the validation function)
 
 #############################
 # Hierarchical Clustering
@@ -110,9 +108,9 @@ index_data3 <- data.frame(HI = hi_data_3, EI = ei_data_3, MEI = mei_data_3,
                           MMHI = mmhi_data_3)
 
 results3 <- replicate(50,clustInd_hierarch(index_data3, list_vars_hierarch,
-                             method_list = c("single", "complete", "average", "centroid",
-                                             "ward.D2"),
-                             dist_list = c("euclidean", "manhattan")))
+                                           method_list = c("single", "complete", "average", "centroid",
+                                                           "ward.D2"),
+                                           dist_list = c("euclidean", "manhattan")))
 
 
 # first derivative
@@ -121,9 +119,9 @@ index_data3_d <- data.frame(dHI = hi_ddat_3, dEI = ei_ddat_3, dMEI = mei_ddat_3,
                             dMMHI = mmhi_ddat_3) 
 
 results3_d <- replicate(50,clustInd_hierarch(index_data3_d, list_vars_hierarch_d,
-                               method_list = c("single", "complete", "average", "centroid",
-                                               "ward.D2"),
-                               dist_list = c("euclidean", "manhattan")))
+                                             method_list = c("single", "complete", "average", "centroid",
+                                                             "ward.D2"),
+                                             dist_list = c("euclidean", "manhattan")))
 
 # second derivative
 index_data3_d2 <- data.frame(d2HI = hi_d2dat_3, d2EI = ei_d2dat_3, d2MEI = mei_d2dat_3,
@@ -131,19 +129,18 @@ index_data3_d2 <- data.frame(d2HI = hi_d2dat_3, d2EI = ei_d2dat_3, d2MEI = mei_d
                              d2MMHI = mmhi_d2dat_3) 
 
 results3_d2 <- replicate(50,clustInd_hierarch(index_data3_d2, list_vars_hierarch_d2,
-                                method_list = c("single", "complete", "average", "centroid",
-                                                "ward.D2"),
-                                dist_list = c("euclidean", "manhattan")))
-
+                                              method_list = c("single", "complete", "average", "centroid",
+                                                              "ward.D2"),
+                                              dist_list = c("euclidean", "manhattan")))
 # Model 4 - original 
 index_data4 <- data.frame(HI = hi_data_4, EI = ei_data_4, MEI = mei_data_4, 
                           MHI = mhi_data_4, MMEI = mmei_data_4, 
                           MMHI = mmhi_data_4)
 
 results4 <- replicate(50,clustInd_hierarch(index_data4, list_vars_hierarch,
-                             method_list = c("single", "complete", "average", "centroid",
-                                             "ward.D2"),
-                             dist_list = c("euclidean", "manhattan")))
+                                           method_list = c("single", "complete", "average", "centroid",
+                                                           "ward.D2"),
+                                           dist_list = c("euclidean", "manhattan")))
 
 
 # first derivative
@@ -152,9 +149,9 @@ index_data4_d <- data.frame(dHI = hi_ddat_4, dEI = ei_ddat_4, dMEI = mei_ddat_4,
                             dMMHI = mmhi_ddat_4) 
 
 results4_d <- replicate(50,clustInd_hierarch(index_data4_d, list_vars_hierarch_d,
-                               method_list = c("single", "complete", "average", "centroid",
-                                               "ward.D2"),
-                               dist_list = c("euclidean", "manhattan")))
+                                             method_list = c("single", "complete", "average", "centroid",
+                                                             "ward.D2"),
+                                             dist_list = c("euclidean", "manhattan")))
 
 # second derivative
 index_data4_d2 <- data.frame(d2HI = hi_d2dat_4, d2EI = ei_d2dat_4, d2MEI = mei_d2dat_4,
@@ -162,9 +159,9 @@ index_data4_d2 <- data.frame(d2HI = hi_d2dat_4, d2EI = ei_d2dat_4, d2MEI = mei_d
                              d2MMHI = mmhi_d2dat_4)
 
 results4_d2 <- replicate(50,clustInd_hierarch(index_data4_d2, list_vars_hierarch_d2,
-                                method_list = c("single", "complete", "average", "centroid",
-                                                "ward.D2"),
-                                dist_list = c("euclidean", "manhattan")))
+                                              method_list = c("single", "complete", "average", "centroid",
+                                                              "ward.D2"),
+                                              dist_list = c("euclidean", "manhattan")))
 
 # Model 5 - original 
 index_data5 <- data.frame(HI = hi_data_5, EI = ei_data_5, MEI = mei_data_5, 
@@ -172,9 +169,9 @@ index_data5 <- data.frame(HI = hi_data_5, EI = ei_data_5, MEI = mei_data_5,
                           MMHI = mmhi_data_5)
 
 results5 <- replicate(50,clustInd_hierarch(index_data5, list_vars_hierarch,
-                             method_list = c("single", "complete", "average", "centroid",
-                                             "ward.D2"),
-                             dist_list = c("euclidean", "manhattan")))
+                                           method_list = c("single", "complete", "average", "centroid",
+                                                           "ward.D2"),
+                                           dist_list = c("euclidean", "manhattan")))
 
 # first derivative
 index_data5_d <- data.frame(dHI = hi_ddat_5, dEI = ei_ddat_5, dMEI = mei_ddat_5,
@@ -182,9 +179,9 @@ index_data5_d <- data.frame(dHI = hi_ddat_5, dEI = ei_ddat_5, dMEI = mei_ddat_5,
                             dMMHI = mmhi_ddat_5) 
 
 results5_d <- replicate(50,clustInd_hierarch(index_data5_d, list_vars_hierarch_d,
-                               method_list = c("single", "complete", "average", "centroid",
-                                               "ward.D2"),
-                               dist_list = c("euclidean", "manhattan")))
+                                             method_list = c("single", "complete", "average", "centroid",
+                                                             "ward.D2"),
+                                             dist_list = c("euclidean", "manhattan")))
 
 # second derivative
 index_data5_d2 <- data.frame(d2HI = hi_d2dat_5, d2EI = ei_d2dat_5, d2MEI = mei_d2dat_5,
@@ -192,9 +189,9 @@ index_data5_d2 <- data.frame(d2HI = hi_d2dat_5, d2EI = ei_d2dat_5, d2MEI = mei_d
                              d2MMHI = mmhi_d2dat_5) 
 
 results5_d2 <- replicate(50,clustInd_hierarch(index_data5_d2, list_vars_hierarch_d2,
-                                method_list = c("single", "complete", "average", "centroid",
-                                                "ward.D2"),
-                                dist_list = c("euclidean", "manhattan")))
+                                              method_list = c("single", "complete", "average", "centroid",
+                                                              "ward.D2"),
+                                              dist_list = c("euclidean", "manhattan")))
 
 # Model 6 - original 
 index_data6 <- data.frame(HI = hi_data_6, EI = ei_data_6, MEI = mei_data_6, 
@@ -202,9 +199,9 @@ index_data6 <- data.frame(HI = hi_data_6, EI = ei_data_6, MEI = mei_data_6,
                           MMHI = mmhi_data_6)
 
 results6 <- replicate(50,clustInd_hierarch(index_data6, list_vars_hierarch,
-                              method_list = c("single", "complete", "average", "centroid",
-                                              "ward.D2"),
-                              dist_list = c("euclidean", "manhattan")))
+                                           method_list = c("single", "complete", "average", "centroid",
+                                                           "ward.D2"),
+                                           dist_list = c("euclidean", "manhattan")))
 
 # first derivative
 index_data6_d <- data.frame(dHI = hi_ddat_6, dEI = ei_ddat_6, dMEI = mei_ddat_6,
@@ -212,9 +209,9 @@ index_data6_d <- data.frame(dHI = hi_ddat_6, dEI = ei_ddat_6, dMEI = mei_ddat_6,
                             dMMHI = mmhi_ddat_6) 
 
 results6_d <- replicate(50,clustInd_hierarch(index_data6_d, list_vars_hierarch_d,
-                                method_list = c("single", "complete", "average", "centroid",
-                                                "ward.D2"),
-                                dist_list = c("euclidean", "manhattan")))
+                                             method_list = c("single", "complete", "average", "centroid",
+                                                             "ward.D2"),
+                                             dist_list = c("euclidean", "manhattan")))
 
 # second derivative
 index_data6_d2 <- data.frame(d2HI = hi_d2dat_6, d2EI = ei_d2dat_6, d2MEI = mei_d2dat_6,
@@ -222,9 +219,9 @@ index_data6_d2 <- data.frame(d2HI = hi_d2dat_6, d2EI = ei_d2dat_6, d2MEI = mei_d
                              d2MMHI = mmhi_d2dat_6) 
 
 results6_d2 <- replicate(50,clustInd_hierarch(index_data6_d2, list_vars_hierarch_d2,
-                                 method_list = c("single", "complete", "average", "centroid",
-                                                 "ward.D2"),
-                                 dist_list = c("euclidean", "manhattan")))
+                                              method_list = c("single", "complete", "average", "centroid",
+                                                              "ward.D2"),
+                                              dist_list = c("euclidean", "manhattan")))
 
 # Model 7 - original 
 index_data7 <- data.frame(HI = hi_data_7, EI = ei_data_7, MEI = mei_data_7, 
@@ -232,9 +229,9 @@ index_data7 <- data.frame(HI = hi_data_7, EI = ei_data_7, MEI = mei_data_7,
                           MMHI = mmhi_data_7)
 
 results7 <- replicate(50,clustInd_hierarch(index_data7, list_vars_hierarch,
-                              method_list = c("single", "complete", "average", "centroid",
-                                              "ward.D2"),
-                              dist_list = c("euclidean", "manhattan")))
+                                           method_list = c("single", "complete", "average", "centroid",
+                                                           "ward.D2"),
+                                           dist_list = c("euclidean", "manhattan")))
 
 
 # first derivative
@@ -243,9 +240,9 @@ index_data7_d <- data.frame(dHI = hi_ddat_7, dEI = ei_ddat_7, dMEI = mei_ddat_7,
                             dMMHI = mmhi_ddat_7)
 
 results7_d <- replicate(50,clustInd_hierarch(index_data7_d, list_vars_hierarch_d,
-                                method_list = c("single", "complete", "average", "centroid",
-                                                "ward.D2"),
-                                dist_list = c("euclidean", "manhattan")))
+                                             method_list = c("single", "complete", "average", "centroid",
+                                                             "ward.D2"),
+                                             dist_list = c("euclidean", "manhattan")))
 
 # second derivative
 index_data7_d2 <- data.frame(d2HI = hi_d2dat_7, d2EI = ei_d2dat_7, d2MEI = mei_d2dat_7,
@@ -253,9 +250,9 @@ index_data7_d2 <- data.frame(d2HI = hi_d2dat_7, d2EI = ei_d2dat_7, d2MEI = mei_d
                              d2MMHI = mmhi_d2dat_7) 
 
 results7_d2 <- replicate(50,clustInd_hierarch(index_data7_d2, list_vars_hierarch_d2,
-                                 method_list = c("single", "complete", "average", "centroid",
-                                                 "ward.D2"),
-                                 dist_list = c("euclidean", "manhattan")))
+                                              method_list = c("single", "complete", "average", "centroid",
+                                                              "ward.D2"),
+                                              dist_list = c("euclidean", "manhattan")))
 
 # Model 8 - original 
 index_data8 <- data.frame(HI = hi_data_8, EI = ei_data_8, MEI = mei_data_8, 
@@ -263,9 +260,9 @@ index_data8 <- data.frame(HI = hi_data_8, EI = ei_data_8, MEI = mei_data_8,
                           MMHI = mmhi_data_8)
 
 results8 <- replicate(50,clustInd_hierarch(index_data8, list_vars_hierarch,
-                              method_list = c("single", "complete", "average", "centroid",
-                                              "ward.D2"),
-                              dist_list = c("euclidean", "manhattan")))
+                                           method_list = c("single", "complete", "average", "centroid",
+                                                           "ward.D2"),
+                                           dist_list = c("euclidean", "manhattan")))
 
 # first derivative
 index_data8_d <- data.frame(dHI = hi_ddat_8, dEI = ei_ddat_8, dMEI = mei_ddat_8,
@@ -273,9 +270,9 @@ index_data8_d <- data.frame(dHI = hi_ddat_8, dEI = ei_ddat_8, dMEI = mei_ddat_8,
                             dMMHI = mmhi_ddat_8) 
 
 results8_d <- replicate(50,clustInd_hierarch(index_data8_d, list_vars_hierarch_d,
-                                method_list = c("single", "complete", "average", "centroid",
-                                                "ward.D2"),
-                                dist_list = c("euclidean", "manhattan")))
+                                             method_list = c("single", "complete", "average", "centroid",
+                                                             "ward.D2"),
+                                             dist_list = c("euclidean", "manhattan")))
 
 # second derivative
 index_data8_d2 <- data.frame(d2HI = hi_d2dat_8, d2EI = ei_d2dat_8, d2MEI = mei_d2dat_8,
@@ -283,9 +280,9 @@ index_data8_d2 <- data.frame(d2HI = hi_d2dat_8, d2EI = ei_d2dat_8, d2MEI = mei_d
                              d2MMHI = mmhi_d2dat_8) 
 
 results8_d2 <- replicate(50,clustInd_hierarch(index_data8_d2, list_vars_hierarch_d2,
-                                 method_list = c("single", "complete", "average", "centroid",
-                                                 "ward.D2"),
-                                 dist_list = c("euclidean", "manhattan")))
+                                              method_list = c("single", "complete", "average", "centroid",
+                                                              "ward.D2"),
+                                              dist_list = c("euclidean", "manhattan")))
 
 #############################
 # K means clustering
@@ -534,28 +531,31 @@ svc8dd <- replicate(50,clustInd_svc(index_data8_d2, list_varsdd_svc))
 
 # model 1
 
-list_vars_spc <- list(vars1, vars2, vars3, vars4, vars5, vars6, vars7)
+list_spc <- list(vars1, vars2, vars3, vars4, vars5, vars6, vars7)
 
-spc1 <- replicate(50,clustInd_spc(index_data1,list_vars_spc))
+#spc1 <- replicate(50,clustInd_spc(index_data1,list_spc, n_cluster = 2))
+#list_spc_d <- list(varsd1, varsd2, varsd3, varsd4, varsd5, varsd6, varsd7)
+#spc1_d <- clustInd_spc(index_data1_d,list_spc_d, n_cluster=)
 
 # list_vars_spc_d <- list(varsd1, varsd2, varsd3, varsd4, varsd5, varsd6, varsd7)
 # spc1_d <- clustInd_spc(index_data1_d, list_vars_spc_d)
 # list_vars_spc_dd <- list(varsdd1, varsdd2, varsdd3, varsdd4, varsdd5, varsdd6, varsdd7)
 # spc1_dd <- clustInd_spc(index_data1_d2, list_vars_spc_dd)
 
-spc2 <- replicate(50,clustInd_spc(index_data2, list_vars_svc))
+spc2 <- replicate(50,clustInd_spc(index_data2, list_spc, n_cluster = 6))
 
-spc3 <- replicate(50,clustInd_spc(index_data3, list_vars_spc))
+spc3 <- replicate(50,clustInd_spc(index_data3, list_spc, n_cluster = 6))
 
-spc4 <- replicate(50,clustInd_spc(index_data4, list_vars_spc))
+spc4 <- replicate(50,clustInd_spc(index_data4, list_spc, n_cluster = 6))
 
-spc5 <- replicate(50,clustInd_spc(index_data5, list_vars_spc))
+# error in spc 5
+spc5 <- replicate(50,clustInd_spc(index_data5, list_spc, n_cluster = 6))
 
-spc6 <- replicate(50,clustInd_spc(index_data6, list_vars_spc))
+spc6 <- replicate(50,clustInd_spc(index_data6, list_spc, n_cluster = 6))
 
-spc7 <- replicate(50,clustInd_spc(index_data7, list_vars_spc))
+spc7 <- replicate(50,clustInd_spc(index_data7, list_spc, n_cluster = 6))
 
-spc8 <- replicate(50,clustInd_spc(index_data8, list_vars_spc))
+spc8 <- replicate(50,clustInd_spc(index_data8, list_spc, n_cluster = 6))
 
 #############################
 # EHyClus method for clustering
