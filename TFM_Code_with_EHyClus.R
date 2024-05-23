@@ -1,4 +1,5 @@
 library("ehymet")
+library("dplyr")
 
 check_list_parameter <- function(argument, parameter_values, parameter_name) {
   if (length(argument) == 0) {
@@ -137,6 +138,150 @@ quiet <- function(x) {
   invisible(force(x))
 }
 
+# Epigraph index 
+EI <- function(curves, ...) {
+  UseMethod("EI")
+}
+
+EI.matrix <- function(curves, ...) {
+  n_curves <- dim(curves)[1]
+  l_curves <- dim(curves)[2]
+  
+  index <- apply(curves,1, function(y)
+    sum(apply(curves,1,function(x)
+      sum(x>=y)==l_curves)))/n_curves
+  
+  return(1 - index)
+}
+
+EI.array <- function(curves, ...) {
+  if (length(dim(curves)) != 3) {
+    stop("'curves' should be a matrix or a 3-dimensional array", call. = FALSE)
+  }
+  
+  n_curves <- dim(curves)[1]
+  l_curves <- dim(curves)[2]
+  d_curves <- dim(curves)[3]
+  
+  index <- colSums(Reduce('*',lapply(1:d_curves, function(k)
+    sapply(1:n_curves, function(j)
+      colSums(sapply(1:n_curves, function(i)
+        curves[i,,k] >= curves[j,,k]))==l_curves))))
+  
+  return(1 - index/n_curves)
+}
+
+EI.default <- function(curves, ...) {
+  stop("'curves' should be a matrix or a 3-dimensional array", call. = FALSE)
+}
+
+# Hypograph index
+HI <- function(curves, ...) {
+  UseMethod("HI")
+}
+
+HI.matrix <- function(curves, ...) {
+  n_curves <- dim(curves)[1]
+  l_curves <- dim(curves)[2]
+  
+  index <- apply(curves,1, function(y)
+    sum(apply(curves,1,function(x)
+      sum(x<=y)==l_curves)))/n_curves
+  
+  return(index)
+}
+
+HI.array <- function(curves, ...) {
+  if (length(dim(curves)) != 3) {
+    stop("'curves' should be a matrix or a 3-dimensional array", call. = FALSE)
+  }
+  
+  n_curves <- dim(curves)[1]
+  l_curves <- dim(curves)[2]
+  d_curves <- dim(curves)[3]
+  
+  index <- colSums(Reduce('*',lapply(1:d_curves, function(k)
+    sapply(1:n_curves, function(j)
+      colSums(sapply(1:n_curves, function(i)
+        curves[i,,k] <= curves[j,,k]))==l_curves))))
+  
+  return(index/n_curves)
+}
+
+HI.default <- function(curves, ...) {
+  stop("'curves' should be a matrix or a 3-dimensional array", call. = FALSE)
+}
+
+# Modified Epigraph 
+MEI <- function(curves, ...) {
+  UseMethod("MEI")
+}
+
+MEI.matrix <- function(curves, ...) {
+  n_curves <- dim(curves)[1]
+  l_curves <- dim(curves)[2]
+  rankm <- apply(curves, 2, function(y) (rank(y, ties.method = "min")))
+  n_a <- n_curves-rankm+1
+  index <- rowSums(n_a)/(n_curves*l_curves)
+  return(1 - index)
+}
+
+MEI.array <- function(curves, ...) {
+  if (length(dim(curves)) != 3) {
+    stop("'curves' should be a matrix or a 3-dimensional array", call. = FALSE)
+  }
+  
+  n_curves <- dim(curves)[1]
+  l_curves <- dim(curves)[2]
+  d_curves <- dim(curves)[3]
+  
+  index <- sapply(1:n_curves, function(j)
+    sum(Reduce('*', lapply(1:d_curves, function(k)
+      sapply(1:n_curves, function(i)
+        curves[i,,k] >= curves[j,,k])))))
+  
+  return (1 - index / (n_curves * l_curves))
+}
+
+MEI.default <- function(curves, ...) {
+  stop("'curves' should be a matrix or a 3-dimensional array", call. = FALSE)
+}
+
+# Modified Hypograph 
+MHI <- function(curves, ...) {
+  UseMethod("MHI")
+}
+
+MHI.matrix <- function(curves, ...) {
+  n_curves <- dim(curves)[1]
+  l_curves <- dim(curves)[2]
+  rankm <- apply(curves, 2, function(y) (rank(y, ties.method = "max")))
+  index <- rowSums(rankm) / (n_curves * l_curves)
+  return(index)
+}
+
+MHI.array <- function(curves, ...) {
+  if (length(dim(curves)) != 3) {
+    stop("'curves' should be a matrix or a 3-dimensional array", call. = FALSE)
+  }
+  
+  n_curves <- dim(curves)[1]
+  l_curves <- dim(curves)[2]
+  d_curves <- dim(curves)[3]
+  
+  index <- sapply(1:n_curves, function(j)
+    sum(Reduce('*', lapply(1:d_curves, function(k)
+      sapply(1:n_curves, function(i)
+        curves[i,,k] <= curves[j,,k])))))
+  
+  return (index / (n_curves * l_curves))
+}
+
+MHI.default <- function(curves, ...) {
+  stop("'curves' should be a matrix or a 3-dimensional array", call. = FALSE)
+}
+
+
 # New Modified Epigraph function
 MMEI <- function(curves) {
   index <- numeric()
@@ -246,57 +391,411 @@ data8_ind <- ind(data8, grid_ll = 0, grid_ul = 1, nbasis = 25,
 
 # clustering with the indices
 
-# combinations 
-
-# original indices
-vars1 <- c("dtaEI", "dtaHI")
-vars2 <- c("ddtaEI", "ddtaHI") # doesn't make sense! 
-vars3 <- c("d2dtaEI", "d2dtaHI") # doesn't make sense!
-vars4 <- c(vars1, vars2) # doesn't make sense!
-vars5 <- c(vars1, vars3) # same
-vars6 <- c(vars2, vars3) # same 
-vars7 <- c(vars4, vars3) # same
-
-# general indices 
-vars8 <- c("dtaMEI", "dtaMHI")
-vars9 <- c("ddtaMEI", "ddtaMHI")
-vars10 <- c("d2dtaMEI", "d2dtaMHI")
-vars11 <- c(vars8, vars9)
-vars12 <- c(vars8, vars10)
-vars13 <- c(vars9, vars10)
-vars14 <- c(vars11, vars10)
-
-# new modified indices
-vars15 <- c("dtaMMEI", "dtaMMHI")
-vars16 <- c("ddtaMMEI", "ddtaMMHI")
-vars17 <- c("d2dtaMMEI", "d2dtaMMHI")
-vars18 <- c(vars14, vars15)
-vars19 <- c(vars14, vars16)
-vars20 <- c(vars15, vars16)
-vars21 <- c(vars18, vars17)
-
-# combination of all types
-vars22 <- c(vars1, "dtaMEI")
-vars23 <- c(vars2, "ddtaMEI")
-vars24 <- c(vars3, "d2dtaMEI")
-vars25 <- c(vars20, "dtaMHI")
-vars26 <- c(vars21, "ddtaMHI")
-vars27 <- c(vars22, "d2dtaMHI")
-vars28 <- c(vars23, "dtaMMEI")
-vars29 <- c(vars24, "ddtaMMEI")
-vars30 <- c(vars25, "d2dtaMMEI")
-vars31 <- c(vars26, "dtaMMHI")
-vars32 <- c(vars27, "ddtaMMHI")
-vars33 <- c(vars28, "d2dtaMMHI")
-
-vars <- list(vars1, vars2, vars3, vars4, vars5, vars6, vars7,vars8, vars9,
-             vars10, vars11, vars12, vars13, vars14, vars15, vars16, vars17,
-             vars18, vars19, vars20, vars21, vars22, vars23, vars24, vars25,
-             vars26, vars27, vars28, vars29, vars30, vars31, vars32, vars33)
-
 set.seed(123)
 
-EHyClus <- function(curves, vars_combinations, nbasis = 30,  n_clusters = 2, norder = 4,
+clustInd_hierarch_aux <- function(ind_data, vars, method = "single",
+                                  dist = "euclidean", n_cluster = 2,
+                                  true_labels=NULL){
+  
+  # Check if input is a data frame
+  if (!is.data.frame(ind_data)) {
+    stop("Input 'ind_data' must be a data frame.")
+  }
+  
+  # Check if variables exist in the data frame
+  if (!all(vars %in% names(ind_data))) {
+    stop("Invalid variable name.")
+  }
+  
+  if(!all(method %in% c("single","complete","average", "centroid","ward.D2"))) {
+    stop("Invalid method name.")
+  }
+  
+  if(!all(dist %in% c("euclidean", "manhattan"))) {
+    stop("Invalid distance name.")
+  }
+  
+  t0 <- Sys.time()
+  
+  # Perform hierarchical clustering
+  d <- stats::dist(ind_data[,vars], method = dist)
+  met <- stats::hclust(d, method = method)
+  clus <- stats::cutree(met, k = n_cluster)
+  
+  t1 <- Sys.time()
+  
+  # Calculate execution time
+  et <- data.frame(difftime(t1,t0,'secs'))
+  
+  if (is.null(true_labels)) {
+    res <- list("cluster" = clus, "time" = as.numeric(et))
+  } else {
+    valid <- valid(true_labels, clus)
+    res <- list("cluster" = clus, "valid" = valid, "time" = as.numeric(et))
+  }
+  
+  return(res)
+}
+
+clustInd_hierarch <- function(ind_data, vars_combinations,
+                              method_list = c("single","complete","average",
+                                              "centroid","ward.D2"),
+                              dist_list = c("euclidean", "manhattan"),
+                              n_cluster=2, true_labels = NULL,
+                              num_cores=1) {
+  
+  # Check if input is a data frame
+  if (!is.data.frame(ind_data)) {
+    stop("input 'ind_data' must be a data frame.", call. = FALSE)
+  }
+  
+  if(!is.list(vars_combinations)) {
+    stop("input 'vars_combinations' must be a list.", call. = FALSE)
+  }
+  
+  # Check for correct vars combinations
+  vars_combinations_to_remove <- check_vars_combinations(vars_combinations, ind_data)
+  
+  if (length(vars_combinations_to_remove)) {
+    vars_combinations <- vars_combinations[-vars_combinations_to_remove]
+  }
+  
+  # Check if indices, methods and distances lists are provided
+  if (!is.character(method_list) ||
+      !is.character(dist_list) || length(vars_combinations) == 0 ||
+      length(method_list) == 0 || length(dist_list) == 0) {
+    stop("invalid 'method_list' or 'dist_list'. Both must be non-empty character vectors.", call. = FALSE)
+  }
+  
+  if (is.null(names(vars_combinations))) {
+    names(vars_combinations) <- paste0("vars", seq_along(vars_combinations))
+  }
+  
+  # Generate all the possible combinations of indices, methods and distances
+  parameter_combinations <- expand.grid(vars = names(vars_combinations),
+                                        method = method_list, distance = dist_list)
+  
+  tl_null <- is.null(true_labels)
+  
+  n_comb <- nrow(parameter_combinations)
+  
+  result <- parallel::mclapply(1:n_comb, function(i) {
+    vars <- vars_combinations[[parameter_combinations$vars[i]]]
+    met  <- parameter_combinations$method[i]
+    dist <- parameter_combinations$distance[i]
+    
+    clustInd_hierarch_aux(ind_data, vars, met, dist, n_cluster, true_labels)
+  }, mc.cores = num_cores)
+  
+  result_name <- get_result_names("hierarch", parameter_combinations, vars_combinations)
+  names(result) <- result_name
+  
+  return(result)
+}
+
+kmeans_mahal <- function(ind_data, n_cluster){
+  
+  # Check if input is numeric matrix or array
+  if (!(is.numeric(ind_data) || is.matrix(ind_data) || is.array(ind_data) ||
+        is.data.frame(ind_data))) {
+    stop("Input must be a numeric matrix, array or data frame.")
+  }
+  
+  # Convert data to matrix
+  if (! is.matrix(ind_data)) {
+    data_matrix <- as.matrix(ind_data)
+  } else {
+    data_matrix <- ind_data
+  }
+  
+  # Cholesky transformation
+  c <- chol(stats::var(data_matrix))
+  data_transform <- data_matrix %*% solve(c)
+  
+  #vector containing the clustering partition
+  km <- stats::kmeans(data_transform, centers=n_cluster, iter.max=1000,
+                      nstart=100)$cluster
+  return(km)
+}
+
+clustInd_kmeans_aux <- function(ind_data, vars, dist = "euclidean",
+                                n_cluster = 2, true_labels = NULL){
+  
+  # Check if input is a data frame
+  if (!is.data.frame(ind_data)) {
+    stop("Input 'ind_data' must be a data frame.")
+  }
+  
+  # Check if variables exist in the data frame
+  if (!all(vars %in% names(ind_data))) {
+    stop("Invalid variable names.")
+  }
+  
+  # Check if the distance given can be used
+  if (!dist %in% c("euclidean", "mahalanobis")) {
+    stop("Invalid distance.")
+  }
+  
+  t0 <- Sys.time()
+  
+  if(dist=="euclidean"){
+    clus <- stats::kmeans(ind_data[,vars], centers = n_cluster,
+                          iter.max = 1000, nstart = 100)$cluster
+  } else{
+    clus <- kmeans_mahal(ind_data[,vars], n_cluster)
+  }
+  t1 <- Sys.time()
+  t <- data.frame(difftime(t1,t0,'secs'))
+  
+  if (is.null(true_labels)) {
+    res <- list("cluster" = clus, "time" = as.numeric(t))
+  } else {
+    valid <- valid(true_labels, clus)
+    res <- list("cluster" = clus, "valid" = valid, "time" = as.numeric(t))
+  }
+  return(res)
+}
+
+clustInd_kmeans <- function(ind_data, vars_combinations,
+                            dist_list = c("euclidean", "mahalanobis"),
+                            n_cluster = 2, true_labels = NULL,
+                            num_cores = 1) {
+  
+  # Check if input is a data frame
+  if (!is.data.frame(ind_data)) {
+    stop("Input 'ind_data' must be a data frame.", call. = FALSE)
+  }
+  
+  if(!is.list(vars_combinations)) {
+    stop("Input 'vars_combinations' must be a list.", call. = FALSE)
+  }
+  
+  # Check for correct vars combinations
+  vars_combinations_to_remove <- check_vars_combinations(vars_combinations, ind_data)
+  
+  if (length(vars_combinations_to_remove)) {
+    vars_combinations <- vars_combinations[-vars_combinations_to_remove]
+  }
+  
+  # Check if indices, methods and distances lists are provided
+  if (length(vars_combinations) == 0 || length(dist_list) == 0) {
+    stop("Invalid 'vars_combinations' or 'dist_list'. Both must be non-empty
+         character vectors.", call. = FALSE)
+  }
+  
+  if (is.null(names(vars_combinations))) {
+    names(vars_combinations) <- paste0("vars", seq_along(vars_combinations))
+  }
+  
+  # Generate all the possible combinations of indices, methods and distances
+  parameter_combinations <- expand.grid(vars = names(vars_combinations),
+                                        distance = dist_list)
+  
+  tl_null <- is.null(true_labels)
+  
+  n_comb <- nrow(parameter_combinations)
+  
+  result <- parallel::mclapply(1:n_comb, function(i) {
+    vars <- vars_combinations[[parameter_combinations$vars[i]]]
+    dist <- parameter_combinations$distance[i]
+    
+    clustInd_kmeans_aux(ind_data = ind_data, vars =vars, dist = dist,
+                        n_cluster = n_cluster, true_labels = true_labels)
+  }, mc.cores = num_cores)
+  
+  result_name <- get_result_names("kmeans", parameter_combinations, vars_combinations)
+  names(result) <- result_name
+  
+  return(result)
+}
+
+clustInd_kkmeans_aux <- function(ind_data, vars, kernel = "rbfdot",
+                                 n_cluster = 2, true_labels = NULL, ...){
+  
+  # Check if input is a data frame
+  if (!is.data.frame(ind_data)) {
+    stop("Input 'ind_data' must be a data frame.")
+  }
+  
+  # Check if variables exist in the data frame
+  if (!all(vars %in% names(ind_data))) {
+    stop("Invalid variable names.")
+  }
+  
+  # Check if the kernel given can be used
+  if (!kernel %in% c("rbfdot", "polydot")) {
+    stop("Invalid kernel.")
+  }
+  
+  
+  t0 <- Sys.time()
+  kkmeans_out <- kernlab::kkmeans(as.matrix(ind_data[,vars]),
+                                  centers= n_cluster, kernel = kernel, ...)
+  clus <- kkmeans_out@.Data
+  t1 <- Sys.time()
+  t <- data.frame(difftime(t1,t0,'secs'))
+  
+  if (is.null(true_labels)) {
+    res <- list("cluster" = clus, "time" = as.numeric(t))
+  } else {
+    valid <- valid(true_labels, clus)
+    res <- list("cluster" = clus, "valid" = valid, "time" = as.numeric(t))
+  }
+  return(res)
+}
+
+clustInd_kkmeans <- function(ind_data, vars_combinations,
+                             kernel_list = c("rbfdot", "polydot"),
+                             n_cluster = 2, true_labels = NULL,
+                             num_cores = 1, ...) {
+  
+  # Check if input is a data frame
+  if (!is.data.frame(ind_data)) {
+    stop("Input 'ind_data' must be a data frame.", call. = FALSE)
+  }
+  
+  if(!is.list(vars_combinations)) {
+    stop("Input 'vars_combinations' must be a list.", call. = FALSE)
+  }
+  
+  # Check for correct vars combinations
+  vars_combinations_to_remove <- check_vars_combinations(vars_combinations, ind_data)
+  
+  if (length(vars_combinations_to_remove)) {
+    vars_combinations <- vars_combinations[-vars_combinations_to_remove]
+  }
+  
+  # Check if indices, and kernel lists are provided
+  if (!is.character(kernel_list) || length(vars_combinations) == 0 || length(kernel_list) == 0) {
+    stop("Invalid 'kernel_list' or 'vars_combinations'. Both must be non-empty
+         character vectors.", call. = FALSE)
+  }
+  
+  if (is.null(names(vars_combinations))) {
+    names(vars_combinations) <- paste0("vars", seq_along(vars_combinations))
+  }
+  
+  # Generate all the possible combinations of indices, methods and distances
+  parameter_combinations <- expand.grid(vars = names(vars_combinations),
+                                        kernel = kernel_list)
+  
+  tl_null <- is.null(true_labels)
+  
+  n_comb <- nrow(parameter_combinations)
+  
+  result <- parallel::mclapply(1:n_comb, function(i) {
+    vars <- vars_combinations[[parameter_combinations$vars[i]]]
+    kern <- as.character(parameter_combinations$kernel[i])
+    
+    clustInd_kkmeans_aux(ind_data, vars, kern, n_cluster, true_labels)
+  }, mc.cores = num_cores)
+  
+  result_name <- get_result_names("kkmeans", parameter_combinations, vars_combinations)
+  names(result) <- result_name
+  
+  return(result)
+}
+
+clustInd_spc_aux <- function(ind_data, vars, kernel = "rbfdot", n_cluster = 2,
+                             true_labels=NULL, ...){
+  
+  # Check if input is a data frame
+  if (!is.data.frame(ind_data)) {
+    stop("Input 'ind_data' must be a data frame.", call. = FALSE)
+  }
+  
+  # Check if variables exist in the data frame
+  if (!all(vars %in% names(ind_data))) {
+    stop("Invalid variable names.", call. = FALSE)
+  }
+  
+  t0 <- Sys.time()
+  
+  # create target variable
+  nrow_ind_data <- nrow(ind_data)
+  specc_output <- kernlab::specc(as.matrix(ind_data[,vars]),
+                                 centers = n_cluster,  kernel = kernel, ...)
+  clus <- specc_output@.Data
+  
+  t1 <- Sys.time()
+  t <- data.frame(difftime(t1,t0,'secs'))
+  
+  if (is.null(true_labels)) {
+    res <- list("cluster" = clus, "time" = as.numeric(t))
+  } else {
+    valid <- valid(true_labels, clus)
+    res <- list("cluster" = clus, "valid" = valid, "time" = as.numeric(t))
+  }
+  return(res)
+}
+
+clustInd_spc <- function(ind_data, vars_combinations,
+                         kernel_list = c("rbfdot", "polydot"),
+                         n_cluster = 2, true_labels = NULL,
+                         num_cores = 1, ...) {
+  
+  # Check if input is a data frame
+  if (!is.data.frame(ind_data)) {
+    stop("Input 'ind_data' must be a data frame.", call. = FALSE)
+  }
+  
+  if(!is.list(vars_combinations)) {
+    stop("Input 'vars_combinations' must be a data frame.", call. = FALSE)
+  }
+  
+  # Check for correct vars combinations
+  vars_combinations_to_remove <- check_vars_combinations(vars_combinations, ind_data)
+  
+  if (length(vars_combinations_to_remove)) {
+    vars_combinations <- vars_combinations[-vars_combinations_to_remove]
+  }
+  
+  # Check if indices, methods and distances lists are provided
+  if (!is.character(kernel_list) || length(vars_combinations) == 0 ||
+      length(kernel_list) == 0) {
+    stop("Invalid 'kernel_list' or 'vars_combinations'. Both must be non-empty
+         character vectors.", call. = FALSE)
+  }
+  
+  if (is.null(names(vars_combinations))) {
+    names(vars_combinations) <- paste0("vars", seq_along(vars_combinations))
+  }
+  
+  # Generate all the possible combinations of indices, methods and distances
+  parameter_combinations <- expand.grid(vars = names(vars_combinations),
+                                        kernel = kernel_list)
+  
+  tl_null <- is.null(true_labels)
+  
+  n_comb <- nrow(parameter_combinations)
+  
+  result <- parallel::mclapply(1:n_comb, function(i) {
+    vars <- vars_combinations[[parameter_combinations$vars[i]]]
+    kern <- as.character(parameter_combinations$kernel[i])
+    
+    clustInd_spc_aux(ind_data, vars, kern, n_cluster, true_labels)
+  }, mc.cores = num_cores)
+  
+  result_name <- get_result_names("spc", parameter_combinations, vars_combinations)
+  names(result) <- result_name
+  
+  return(result)
+}
+
+get_result_names <- function(method_name, parameter_combinations, vars_combinations) {
+  args <- list(method_name)
+  for (combination in parameter_combinations[-1]) {
+    args <- append(args, list(combination))
+  }
+  
+  args <- append(args, list(rep(sapply(vars_combinations, function(x) paste0(x, collapse = "")),
+                                times = nrow(parameter_combinations) / length(vars_combinations))
+  ))
+  args[["sep"]] <- "_"
+  do.call(paste, args)
+}
+
+EHyClus_mm <- function(curves, vars_combinations, nbasis = 30,  n_clusters = 2, norder = 4,
                     clustering_methods = c("hierarch", "kmeans", "kkmeans", "spc"),
                     indices            = c("EI", "HI", "MEI", "MHI", "MMEI", "MMHI"),
                     l_method_hierarch  = c("single", "complete", "average", "centroid", "ward.D2"),
@@ -344,6 +843,12 @@ EHyClus <- function(curves, vars_combinations, nbasis = 30,  n_clusters = 2, nor
   
   # Generate the dataset with the indexes
   ind_curves <- ind(curves, grid_ll = grid_ll, grid_ul = grid_ul, nbasis, norder, indices)
+  ind_curves$dtaMMEI <- scale(ind_curves$dtaMMEI)
+  ind_curves$dtaMMHI <- scale(ind_curves$dtaMMHI)
+  ind_curves$ddtaMMEI <- scale(ind_curves$ddtaMMEI)
+  ind_curves$ddtaMMHI <- scale(ind_curves$ddtaMMHI)
+  ind_curves$d2dtaMMEI <- scale(ind_curves$d2dtaMMEI)
+  ind_curves$d2dtaMMHI <- scale(ind_curves$d2dtaMMHI)
   
   # Check for correct vars combinations
   vars_combinations_to_remove <- check_vars_combinations(vars_combinations, ind_curves)
@@ -402,6 +907,237 @@ EHyClus <- function(curves, vars_combinations, nbasis = 30,  n_clusters = 2, nor
   result
 }
 
-data1_ehyclus <- EHyClus(data1, vars_combinations = vars, nbasis = 25,
+# combinations 
+
+v1 <- c("dtaMEI", "dtaMHI") # too similar
+v2 <- c("ddtaMEI", "ddtaMHI") # too similar
+v3 <- c("d2dtaMEI", "d2dtaMHI") # too similar
+v4 <- c(v1, v2) 
+v5 <- c(v1, v3)
+v6 <- c(v2, v3)
+v7 <- c(v4, v3) 
+
+# separately
+v8 <- c("dtaMEI", "ddtaMEI") 
+v9 <- c("dtaMEI", "d2dtaMEI")  
+v10 <- c("ddtaMEI", "d2dtaMEI") # no 
+v11 <- c(v8, "d2dtaMEI") 
+
+v12 <- c("dtaMHI", "ddtaMHI") 
+v13 <- c("dtaMHI", "d2dtaMHI") 
+v14 <- c("ddtaMHI", "d2dtaMHI") #no
+v15 <- c(v12, "d2dtaMHI")
+
+# new generalized indexes
+
+v16 <- c("dtaMMEI", "dtaMMHI")
+v17 <- c("ddtaMMEI", "ddtaMMHI") #no
+v18 <- c("d2dtaMMEI", "d2dtaMMHI") #no
+v19 <- c(v16, v17) # empty cluster error
+v20 <- c(v16, v18)
+v21 <- c(v17,v18) #no
+v22 <- c(v19, v18)
+
+# separately
+v23 <- c("dtaMMEI", "ddtaMMEI") #NA/NaN/Inf in foreign function call
+v24 <- c("dtaMMEI", "d2dtaMMEI") #same as above
+
+v25 <- c("ddtaMMEI", "d2dtaMMEI") #no
+v26 <- c(v23, "d2dtaMMEI") #NA
+
+v27 <- c("dtaMMHI", "ddtaMMHI") #NA
+v28 <- c("dtaMMHI", "d2dtaMMHI") #NA
+v29 <- c("ddtaMMHI", "d2dtaMMHI") #no
+v30 <- c(v27, "d2dtaMMHI") #NA
+
+v_list1 <- list(v8, v9, v11, v12, v13, v15, v19)
+
+## simulation function 
+n_sim = 50
+clasif1 <- c()
+
+# Model 1 
+set.seed(1234)
+
+for(i in 1:n_sim){
+  set.seed(i)
+  
+  data1 <- ehymet::sim_model_ex1(n = 50, p = 30, i_sim = 1, seed = i)
+  
+  clasif1_i <- EHyClus_mm(data1, vars_combinations = v_list1, nbasis = 25,
+                              n_clusters = 2, norder = 4,
+                              true_labels = data1_labels)
+  clasif1_i <- cbind(names = row.names(clasif1_i$metrics),
+                    data.frame(clasif1_i$metrics, row.names=NULL))
+  clasif1 <- bind_rows(clasif1, clasif1_i)
+  
+}
+
+# Final simulation results
+clasif_f1 <- clasif1 %>%
+  group_by(names) %>%
+  mutate(count = n()) %>%
+  summarise_all(mean)
+
+# Model 2 
+
+clasif2 <- c()
+
+for(i in 1:n_sim){
+  set.seed(i)
+  
+  data2 <- ehymet::sim_model_ex1(n = 50, p = 30, i_sim = 2, seed = i)
+  
+  
+  clasif2_i <- EHyClus_mm(data2, vars_combinations = v_list1, nbasis = 25,
                          n_clusters = 2, norder = 4,
-                         true_labels = data1_labels)
+                         true_labels = data2_labels)
+  clasif2_i <- cbind(names = row.names(clasif2_i$metrics),
+                    data.frame(clasif2_i$metrics, row.names=NULL))
+  clasif2 <- bind_rows(clasif2, clasif2_i)
+  
+}
+
+# Final simulation results
+clasif_f2 <- clasif2 %>%
+  group_by(names) %>%
+  mutate(count = n()) %>%
+  summarise_all(mean)
+
+# Model 3 
+
+clasif3 <- c()
+
+v_list3 <- list()
+
+
+for(i in 1:n_sim){
+  set.seed(i)
+  
+  data3 <- ehymet::sim_model_ex1(n = 50, p = 30, i_sim = 3, seed = i)
+  
+  clasif3_i <- EHyClus_mm(data3, vars_combinations = v_list1, nbasis = 25,
+                          n_clusters = 2, norder = 4,
+                          true_labels = data3_labels)
+  clasif3_i <- cbind(names = row.names(clasif3_i$metrics),
+                     data.frame(clasif3_i$metrics, row.names=NULL))
+  clasif3 <- bind_rows(clasif3, clasif3_i)
+  
+}
+
+# Final simulation results
+clasif_f3 <- clasif3 %>%
+  group_by(names) %>%
+  mutate(count = n()) %>%
+  summarise_all(mean)
+
+# model 4 
+clasif4 <- c()
+
+#v_list4 <- list(v2,v3,v6,v8,v9,v10,v11,v12,v13,v14,v15,v16,v17,v18,v19,
+#            v20,v21,v22,v23,v24,v25,v26,v27,v28,v29,v30)
+v_list4 <- list(v8,v9,v10,v11,v12,v13,v14)
+
+for(i in 1:n_sim){
+  set.seed(i)
+  
+  data4 <- ehymet::sim_model_ex1(n = 50, p = 30, i_sim = 4, seed = i)
+  
+  clasif4_i <- EHyClus_mm(data4, vars_combinations = v_list4, nbasis = 25,
+                          n_clusters = 2, norder = 4,
+                          true_labels = data4_labels)
+  clasif4_i <- cbind(names = row.names(clasif4_i$metrics),
+                     data.frame(clasif4_i$metrics, row.names=NULL))
+  clasif4 <- bind_rows(clasif4, clasif4_i)
+  
+}
+
+# Final simulation results
+clasif_f4 <- clasif4 %>%
+  group_by(names) %>%
+  mutate(count = n()) %>%
+  summarise_all(mean)
+
+
+# model 5
+
+clasif5 <- c()
+
+v_list5 <- list(v8,v9,v10,v13)
+
+
+for(i in 1:n_sim){
+  set.seed(i)
+  
+  data5 <- ehymet::sim_model_ex1(n = 50, p = 30, i_sim = 5, seed = i)
+  
+  clasif5_i <- EHyClus_mm(data3, vars_combinations = v_list5, nbasis = 25,
+                          n_clusters = 2, norder = 4,
+                          true_labels = data5_labels)
+  clasif5_i <- cbind(names = row.names(clasif3_i$metrics),
+                     data.frame(clasif3_i$metrics, row.names=NULL))
+  clasif5 <- bind_rows(clasif3, clasif3_i)
+  
+}
+
+# Final simulation results
+clasif_f5 <- clasif5 %>%
+  group_by(names) %>%
+  mutate(count = n()) %>%
+  summarise_all(mean)
+
+
+# model 6
+clasif6 <- c()
+
+v_list6 <- list(v8,v9,v10,v11,v12,v14,v15,v16)
+
+
+for(i in 1:n_sim){
+  set.seed(i)
+  
+  data6 <- ehymet::sim_model_ex1(n = 50, p = 30, i_sim = 6, seed = i)
+  
+  clasif6_i <- EHyClus_mm(data6, vars_combinations = v_list6, nbasis = 25,
+                          n_clusters = 2, norder = 4,
+                          true_labels = data6_labels)
+  clasif6_i <- cbind(names = row.names(clasif6_i$metrics),
+                     data.frame(clasif6_i$metrics, row.names=NULL))
+  clasif6 <- bind_rows(clasif6, clasif6_i)
+  
+}
+
+# Final simulation results
+clasif_f6 <- clasif6 %>%
+  group_by(names) %>%
+  mutate(count = n()) %>%
+  summarise_all(mean)
+
+
+# model 7 
+clasif7 <- c()
+
+v_list7 <- list(v8,v9,v10,v11,v12,v13,v14,v15,v16,v17,v18)
+
+for(i in 1:n_sim){
+  set.seed(i)
+  
+  data7 <- ehymet::sim_model_ex1(n = 50, p = 30, i_sim = 7, seed = i)
+  
+  clasif7_i <- EHyClus_mm(data7, vars_combinations = v_list7, nbasis = 25,
+                          n_clusters = 2, norder = 4,
+                          true_labels = data7_labels)
+  clasif7_i <- cbind(names = row.names(clasif7_i$metrics),
+                     data.frame(clasif7_i$metrics, row.names=NULL))
+  clasif7 <- bind_rows(clasif7, clasif7_i)
+  
+}
+
+# Final simulation results
+clasif_f7 <- clasif7 %>%
+  group_by(names) %>%
+  mutate(count = n()) %>%
+  summarise_all(mean)
+
+
+# model 8

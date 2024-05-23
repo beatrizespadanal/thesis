@@ -17,7 +17,7 @@ head(data1_ind)
 
 # Indices combinations
 # original indexes
-VARS1 <- c("dtaEI","dtaHI")
+VARS1 <- c("dtaEI","dtaHI") 
 VARS2 <- c("ddtaEI","ddtaHI")
 VARS3 <- c("d2dtaEI","d2dtaHI")
 VARS4 <- c(VARS1,VARS2)
@@ -33,12 +33,12 @@ VARS11 <- c(VARS8,"d2dtaMEI")
 
 # combining both indexes types
 VARS12 <- c(VARS1,"dtaMEI")
-VARS13 <- c(VARS2,"ddtaMEI")
-VARS14 <- c(VARS3,"d2dtaMEI")
-VARS15 <- c(VARS4,VARS8)
-VARS16 <- c(VARS5,VARS9)
-VARS17 <- c(VARS6,VARS10)
-VARS18 <- c(VARS7,VARS11)
+VARS13 <- c(VARS2,"ddtaMEI") #no
+VARS14 <- c(VARS3,"d2dtaMEI") #no
+VARS15 <- c(VARS4,VARS8) #no
+VARS16 <- c(VARS5,VARS9) #no
+VARS17 <- c(VARS6,VARS10) #no
+VARS18 <- c(VARS7,VARS11) #no
 
 VARS <- list(VARS1,VARS2,VARS3,VARS4,VARS5,VARS6,VARS7,VARS8,VARS9,VARS10,
           VARS11,VARS12,VARS13,VARS14,VARS15,VARS16,VARS17, VARS18)
