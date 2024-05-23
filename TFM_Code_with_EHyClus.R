@@ -1117,7 +1117,7 @@ clasif_f6 <- clasif6 %>%
 # model 7 
 clasif7 <- c()
 
-v_list7 <- list(v8,v9,v10,v11,v12,v13,v14,v15,v16,v17,v18)
+v_list7 <- list(v8,v9,v10,v11,v12,v13,v14,v15,v16,v17,v19,v20,v21,v22,v23)
 
 for(i in 1:n_sim){
   set.seed(i)
@@ -1139,5 +1139,29 @@ clasif_f7 <- clasif7 %>%
   mutate(count = n()) %>%
   summarise_all(mean)
 
-
 # model 8
+clasif8 <- c()
+
+v_list8 <- list(v8,v9,v10,v11,v12,v13,v14,v15,v16,v17,v19,v20,v21,v22,v23,v24,
+                v25)
+
+for(i in 1:n_sim){
+  set.seed(i)
+  
+  data8 <- ehymet::sim_model_ex1(n = 50, p = 30, i_sim = 8, seed = i)
+  
+  clasif8_i <- EHyClus_mm(data7, vars_combinations = v_list8, nbasis = 25,
+                          n_clusters = 2, norder = 4,
+                          true_labels = data7_labels)
+  clasif8_i <- cbind(names = row.names(clasif8_i$metrics),
+                     data.frame(clasif8_i$metrics, row.names=NULL))
+  clasif8 <- bind_rows(clasif8, clasif8_i)
+  
+}
+
+# Final simulation results
+clasif_f8 <- clasif8 %>%
+  group_by(names) %>%
+  mutate(count = n()) %>%
+  summarise_all(mean)
+
