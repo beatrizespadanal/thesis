@@ -1246,6 +1246,3 @@ ggplot(clasif_f8_b, aes(x=names, y=Value)) +
   labs(title = "RI of different clustering methods for n = 50 simulations of Model 8",
        x = "Clustering Method", y = "RI") +
   theme_minimal()
-
-
-
