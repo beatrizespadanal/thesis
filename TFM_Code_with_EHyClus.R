@@ -345,15 +345,6 @@ ind <- function(curves, grid_ll = 0, grid_ul = 1, nbasis=25, norder=4,
 }
 
 # data models
-data1 <- sim_model_ex1(n = 50, p = 30, i_sim = 1, seed = 1221)
-data2 <- sim_model_ex1(n = 50, p = 30, i_sim = 2, seed = 1222)
-data3 <- sim_model_ex1(n = 50, p = 30, i_sim = 3, seed = 1223)
-data4 <- sim_model_ex1(n = 50, p = 30, i_sim = 4, seed = 1224)
-data5 <- sim_model_ex1(n = 50, p = 30, i_sim = 5, seed = 1225)
-data6 <- sim_model_ex1(n = 50, p = 30, i_sim = 6, seed = 1226)
-data7 <- sim_model_ex1(n = 50, p = 30, i_sim = 7, seed = 1227)
-data8 <- sim_model_ex1(n = 50, p = 30, i_sim = 8, seed = 1228)
-
 data1_labels <- c(rep(1,50), rep(2,50))
 data2_labels <- c(rep(2,50), rep(1,50))
 data3_labels <- c(rep(3,50), rep(1,50))
@@ -363,36 +354,9 @@ data6_labels <- c(rep(6,50), rep(1,50))
 data7_labels <- c(rep(7,50), rep(1,50))
 data8_labels <- c(rep(8,50), rep(1,50))
 
-# matrix with the indices
-data1_ind <- ind(data1, grid_ll = 0, grid_ul = 1, nbasis = 25,
-                 norder = 4, indices = c("EI", "HI", "MEI", 
-                                         "MHI", "MMEI", "MMHI"))
-data2_ind <- ind(data2, grid_ll = 0, grid_ul = 1, nbasis = 25,
-                 norder = 4, indices = c("EI", "HI", "MEI",
-                                         "MHI", "MMEI", "MMHI"))
-data3_ind <- ind(data3, grid_ll = 0, grid_ul = 1, nbasis = 25,
-                 norder = 4, indices = c("EI", "HI", "MEI",
-                                         "MHI", "MMEI", "MMHI"))
-data4_ind <- ind(data4, grid_ll = 0, grid_ul = 1, nbasis = 25,
-                 norder = 4, indices = c("EI", "HI", "MEI",
-                                         "MHI", "MMEI", "MMHI"))
-data5_ind <- ind(data5, grid_ll = 0, grid_ul = 1, nbasis = 25,
-                 norder = 4, indices = c("EI", "HI", "MEI",
-                                         "MHI", "MMEI", "MMHI"))
-data6_ind <- ind(data6, grid_ll = 0, grid_ul = 1, nbasis = 25,
-                 norder = 4, indices = c("EI", "HI", "MEI",
-                                         "MHI", "MMEI", "MMHI"))
-data7_ind <- ind(data7, grid_ll = 0, grid_ul = 1, nbasis = 25,
-                 norder = 4, indices = c("EI", "HI", "MEI",
-                                         "MHI", "MMEI", "MMHI"))
-data8_ind <- ind(data8, grid_ll = 0, grid_ul = 1, nbasis = 25,
-                 norder = 4, indices = c("EI", "HI", "MEI",
-                                         "MHI", "MMEI", "MMHI"))
-
 # clustering with the indices
 
 set.seed(123)
-
 clustInd_hierarch_aux <- function(ind_data, vars, method = "single",
                                   dist = "euclidean", n_cluster = 2,
                                   true_labels=NULL){
@@ -909,9 +873,9 @@ EHyClus_mm <- function(curves, vars_combinations, nbasis = 30,  n_clusters = 2, 
 
 # combinations 
 
-v1 <- c("dtaMEI", "dtaMHI") # too similar
-v2 <- c("ddtaMEI", "ddtaMHI") # too similar
-v3 <- c("d2dtaMEI", "d2dtaMHI") # too similar
+v1 <- c("dtaMEI", "dtaMHI") 
+v2 <- c("ddtaMEI", "ddtaMHI") 
+v3 <- c("d2dtaMEI", "d2dtaMHI") 
 v4 <- c(v1, v2) 
 v5 <- c(v1, v3)
 v6 <- c(v2, v3)
@@ -920,35 +884,34 @@ v7 <- c(v4, v3)
 # separately
 v8 <- c("dtaMEI", "ddtaMEI") 
 v9 <- c("dtaMEI", "d2dtaMEI")  
-v10 <- c("ddtaMEI", "d2dtaMEI") # no 
+v10 <- c("ddtaMEI", "d2dtaMEI")  
 v11 <- c(v8, "d2dtaMEI") 
 
 v12 <- c("dtaMHI", "ddtaMHI") 
 v13 <- c("dtaMHI", "d2dtaMHI") 
-v14 <- c("ddtaMHI", "d2dtaMHI") #no
+v14 <- c("ddtaMHI", "d2dtaMHI") 
 v15 <- c(v12, "d2dtaMHI")
 
 # new generalized indexes
 
 v16 <- c("dtaMMEI", "dtaMMHI")
-v17 <- c("ddtaMMEI", "ddtaMMHI") #no
-v18 <- c("d2dtaMMEI", "d2dtaMMHI") #no
-v19 <- c(v16, v17) # empty cluster error
+v17 <- c("ddtaMMEI", "ddtaMMHI") 
+v18 <- c("d2dtaMMEI", "d2dtaMMHI") 
+v19 <- c(v16, v17) 
 v20 <- c(v16, v18)
-v21 <- c(v17,v18) #no
+v21 <- c(v17,v18)
 v22 <- c(v19, v18)
 
 # separately
-v23 <- c("dtaMMEI", "ddtaMMEI") #NA/NaN/Inf in foreign function call
-v24 <- c("dtaMMEI", "d2dtaMMEI") #same as above
+v23 <- c("dtaMMEI", "ddtaMMEI") 
+v24 <- c("dtaMMEI", "d2dtaMMEI") 
+v25 <- c("ddtaMMEI", "d2dtaMMEI") 
+v26 <- c(v23, "d2dtaMMEI") 
 
-v25 <- c("ddtaMMEI", "d2dtaMMEI") #no
-v26 <- c(v23, "d2dtaMMEI") #NA
-
-v27 <- c("dtaMMHI", "ddtaMMHI") #NA
-v28 <- c("dtaMMHI", "d2dtaMMHI") #NA
-v29 <- c("ddtaMMHI", "d2dtaMMHI") #no
-v30 <- c(v27, "d2dtaMMHI") #NA
+v27 <- c("dtaMMHI", "ddtaMMHI") 
+v28 <- c("dtaMMHI", "d2dtaMMHI") 
+v29 <- c("ddtaMMHI", "d2dtaMMHI") 
+v30 <- c(v27, "d2dtaMMHI") 
 
 v_list1 <- list(v8, v9, v11, v12, v13, v15, v19)
 
@@ -981,6 +944,7 @@ clasif_f1 <- clasif1 %>%
 
 # Model 2 
 
+v_list2 <- list(v8, v9, v11, v12, v13, v15, v19)
 clasif2 <- c()
 
 for(i in 1:n_sim){
@@ -989,7 +953,7 @@ for(i in 1:n_sim){
   data2 <- ehymet::sim_model_ex1(n = 50, p = 30, i_sim = 2, seed = i)
   
   
-  clasif2_i <- EHyClus_mm(data2, vars_combinations = v_list1, nbasis = 25,
+  clasif2_i <- EHyClus_mm(data2, vars_combinations = v_list2, nbasis = 25,
                          n_clusters = 2, norder = 4,
                          true_labels = data2_labels)
   clasif2_i <- cbind(names = row.names(clasif2_i$metrics),
@@ -1009,7 +973,6 @@ clasif_f2 <- clasif2 %>%
 clasif3 <- c()
 
 v_list3 <- list()
-
 
 for(i in 1:n_sim){
   set.seed(i)
@@ -1164,4 +1127,116 @@ clasif_f8 <- clasif8 %>%
   group_by(names) %>%
   mutate(count = n()) %>%
   summarise_all(mean)
+
+## Box-plots for comparison 
+
+# model 1
+library(ggplot2)
+library(reshape2)
+library(tidyr)
+
+clasif_f1_b <- tibble(names = c(rep("hierarchical_clust",70), rep("kkmeans_clust",14),
+                              rep("kmeans_clust",14), rep("spc_clust",14)),
+                    Metric = c(rep("RI",70), rep("RI", 14), rep("RI",14),
+                               rep("RI", 14)),
+                    Value = clasif_f1$RI)
+
+ggplot(clasif_f1_b, aes(x=names, y=Value)) + 
+  geom_boxplot() + 
+  labs(title = "RI of different clustering methods for n = 50 simulations of Model 1",
+       x = "Clustering Method", y = "RI") +
+  theme_minimal()
+
+# model 2
+clasif_f2_b <- tibble(names = c(rep("hierarchical_clust", 70), rep("kkmeans_clust",14),
+                                rep("kmeans_clust", 14), rep("spc_clust", 14)),
+                      Metric = c(rep("RI", 70), rep("RI", 14), rep("RI", 14),
+                                 rep("RI", 14)),
+                      Value = clasif_f2$RI)
+
+ggplot(clasif_f2_b, aes(x=names, y=Value)) + 
+  geom_boxplot() + 
+  labs(title = "RI of different clustering methods for n = 50 simulations of Model 2",
+       x = "Clustering Method", y = "RI") +
+  theme_minimal()
+
+# model 3
+clasif_f3_b <- tibble(names = c(rep("hierarchical_clust", 70), rep("kkmeans_clust",14),
+                                rep("kmeans_clust", 14), rep("spc_clust", 14)),
+                      Metric = c(rep("RI", 70), rep("RI", 14), rep("RI", 14),
+                                 rep("RI", 14)),
+                      Value = clasif_f3$RI)
+
+ggplot(clasif_f3_b, aes(x=names, y=Value)) + 
+  geom_boxplot() + 
+  labs(title = "RI of different clustering methods for n = 50 simulations of Model 3",
+       x = "Clustering Method", y = "RI") +
+  theme_minimal()
+
+# model 4
+clasif_f4_b <- tibble(names = c(rep("hierarchical_clust", 70), rep("kkmeans_clust",14),
+                                rep("kmeans_clust", 14), rep("spc_clust", 14)),
+                      Metric = c(rep("RI", 70), rep("RI", 14), rep("RI", 14),
+                                 rep("RI", 14)),
+                      Value = clasif_f4$RI)
+
+ggplot(clasif_f4_b, aes(x=names, y=Value)) + 
+  geom_boxplot() + 
+  labs(title = "RI of different clustering methods for n = 50 simulations of Model 4",
+       x = "Clustering Method", y = "RI") +
+  theme_minimal()
+
+# model 5
+clasif_f5_b <- tibble(names = c(rep("hierarchical_clust", 70), rep("kkmeans_clust",14),
+                                rep("kmeans_clust", 14), rep("spc_clust", 14)),
+                      Metric = c(rep("RI", 70), rep("RI", 14), rep("RI", 14),
+                                 rep("RI", 14)),
+                      Value = clasif_f5$RI)
+
+ggplot(clasif_f5_b, aes(x=names, y=Value)) + 
+  geom_boxplot() + 
+  labs(title = "RI of different clustering methods for n = 50 simulations of Model 5",
+       x = "Clustering Method", y = "RI") +
+  theme_minimal()
+
+# model 6
+clasif_f6_b <- tibble(names = c(rep("hierarchical_clust", 80), rep("kkmeans_clust",16),
+                                rep("kmeans_clust", 16), rep("spc_clust", 16)),
+                      Metric = c(rep("RI", 80), rep("RI", 16), rep("RI", 16),
+                                 rep("RI", 16)),
+                      Value = clasif_f6$RI)
+
+ggplot(clasif_f6_b, aes(x=names, y=Value)) + 
+  geom_boxplot() + 
+  labs(title = "RI of different clustering methods for n = 50 simulations of Model 6",
+       x = "Clustering Method", y = "RI") +
+  theme_minimal()
+
+# model 7
+clasif_f7_b <- tibble(names = c(rep("hierarchical_clust", 150), rep("kkmeans_clust",30),
+                                rep("kmeans_clust", 30), rep("spc_clust", 30)),
+                      Metric = c(rep("RI", 150), rep("RI", 30), rep("RI", 30),
+                                 rep("RI", 30)),
+                      Value = clasif_f7$RI)
+
+ggplot(clasif_f7_b, aes(x=names, y=Value)) + 
+  geom_boxplot() + 
+  labs(title = "RI of different clustering methods for n = 50 simulations of Model 7",
+       x = "Clustering Method", y = "RI") +
+  theme_minimal()
+
+# model 8
+clasif_f8_b <- tibble(names = c(rep("hierarchical_clust", 170), rep("kkmeans_clust",34),
+                                rep("kmeans_clust", 34), rep("spc_clust", 34)),
+                      Metric = c(rep("RI", 170), rep("RI", 34), rep("RI", 34),
+                                 rep("RI", 34)),
+                      Value = clasif_f8$RI)
+
+ggplot(clasif_f8_b, aes(x=names, y=Value)) + 
+  geom_boxplot() + 
+  labs(title = "RI of different clustering methods for n = 50 simulations of Model 8",
+       x = "Clustering Method", y = "RI") +
+  theme_minimal()
+
+
 
