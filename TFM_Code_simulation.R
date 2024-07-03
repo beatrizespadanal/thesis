@@ -470,11 +470,8 @@ data8_labels <- c(rep(1,50), rep(8,50))
 
 # data models ex2
 set.seed(123)
-data9 <- sim_model_ex2()
-data10 <- sim_model_ex2(i_sim = 2)
-data11 <- sim_model_ex2(i_sim = 3)
-data12 <- sim_model_ex2(i_sim = 4)
+data_9 <- sim_model_ex2(i_sim = 1)
+data_10 <- sim_model_ex2(i_sim = 2)
 
 data9_labels <- c(rep(1,50), rep(9,50))
-data10_labels <- c(rep(1,50), rep(9,50))
-
+data10_labels <- c(rep(1,50), rep(10,50))
