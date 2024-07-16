@@ -53,7 +53,6 @@ plot5 <- plt_fun(data_5, data5_labels)
 plot6 <- plt_fun(data_6, data6_labels)
 plot7 <- plt_fun(data_7, data7_labels)
 plot8 <- plt_fun(data_8, data8_labels)
-plot9 <- plt_fun(data_9, data9_labels)
 plot10 <- plt_fun(data_10, data10_labels)
 
 # first derivative 
@@ -64,7 +63,6 @@ data_5d <- funspline(data_5,k=30)$deriv
 data_6d <- funspline(data_6,k=30)$deriv
 data_7d <- funspline(data_7,k=30)$deriv
 data_8d <- funspline(data_8,k=30)$deriv
-data_9d <- funspline(data_9,k=30)$deriv
 data_10d <- funspline(data_10,k=30)$deriv
 
 plot1_d <- plt_fun(data_1d,data1_labels)
@@ -74,7 +72,6 @@ plot5_d <- plt_fun(data_5d,data5_labels)
 plot6_d <- plt_fun(data_6d,data6_labels)
 plot7_d <- plt_fun(data_7d,data7_labels)
 plot8_d <- plt_fun(data_8d,data8_labels)
-plot9_d <- plt_fun(data_9d,data9_labels)
 plot10_d <- plt_fun(data_10d,data10_labels)
 
 # second derivative 
@@ -114,225 +111,320 @@ par(mfrow=c(3,3))
 
 # model 1 and 2
 plot(generate_indices(data_1, k=30)$dtaEI,generate_indices(data_1, k=30)$dtaHI, col="red", ylab="HI", xlab="EI",pch=10, 
-     main = "Samples 1 and 2")
-points(generate_indices(data_2,k=30)$dtaEI, generate_indices(data_2,k=30)$dtaHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$dtaMEI, generate_indices(data_1,k=30)$dtaMHI, col="red", ylab="MHI", xlab="MEI", pch=10)
-points(generate_indices(data_2,k=30)$dtaMEI, generate_indices(data_2,k=30)$dtaMHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$dtaMMEI, generate_indices(data_1,k=30)$dtaMMHI, col="red", ylab="MMHI", xlab="MMEI", pch=10)
-points(generate_indices(data_2,k=30)$dtaMMEI, generate_indices(data_2,k=30)$dtaMMHI, col="blue",pch=20)
+     main = "Samples 1 and 2", xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_2,k=30)$dtaEI, generate_indices(data_2,k=30)$dtaHI, col="blue",pch=20,
+       xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$dtaMEI, generate_indices(data_1,k=30)$dtaMHI, col="red", ylab="MHI", xlab="MEI", pch=10,
+     xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_2,k=30)$dtaMEI, generate_indices(data_2,k=30)$dtaMHI, col="blue",pch=20,
+       xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$dtaMMEI, generate_indices(data_1,k=30)$dtaMMHI, col="red", 
+     ylab="MMHI", xlab="MMEI", pch=10)
+points(generate_indices(data_2,k=30)$dtaMMEI, generate_indices(data_2,k=30)$dtaMMHI,
+       col="blue",pch=20)
 
 plot(generate_indices(data_1,k=30)$ddtaEI,generate_indices(data_1,k=30)$ddtaHI, col="red", ylab="HI", xlab="EI",pch=10, 
-     main = "First Derivatives")
-points(generate_indices(data_2,k=30)$ddtaEI, generate_indices(data_2,k=30)$ddtaHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$ddtaMEI, generate_indices(data_1,k=30)$ddtaMHI, col="red", ylab="MHI", xlab="MEI", pch=10)
-points(generate_indices(data_2,k=30)$ddtaMEI, generate_indices(data_2,k=30)$ddtaMHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$ddtaMMEI, generate_indices(data_1,k=30)$ddtaMMHI, col="red", ylab="MMHI", xlab="MMEI", pch=10)
-points(generate_indices(data_2,k=30)$ddtaMMEI, generate_indices(data_2,k=30)$ddtaMMHI, col="blue",pch=20)
+     main = "First Derivatives",xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_2,k=30)$ddtaEI, generate_indices(data_2,k=30)$ddtaHI, col="blue",pch=20,
+       xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$ddtaMEI, generate_indices(data_1,k=30)$ddtaMHI, col="red", ylab="MHI", xlab="MEI", pch=10,
+     xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_2,k=30)$ddtaMEI, generate_indices(data_2,k=30)$ddtaMHI, col="blue",pch=20,
+       xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$ddtaMMEI, generate_indices(data_1,k=30)$ddtaMMHI,
+     col="red", ylab="MMHI", xlab="MMEI", pch=10)
+points(generate_indices(data_2,k=30)$ddtaMMEI, generate_indices(data_2,k=30)$ddtaMMHI, 
+       col="blue",pch=20)
 
 plot(generate_indices(data_1,k=30)$d2dtaEI,generate_indices(data_1,k=30)$d2dtaHI, col="red", ylab="HI", xlab="EI",pch=10, 
-     main = "Second Derivatives")
-points(generate_indices(data_2,k=30)$d2dtaEI, generate_indices(data_2,k=30)$d2dtaHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$d2dtaMEI, generate_indices(data_1,k=30)$d2dtaMHI, col="red", ylab="MHI", xlab="MEI", pch=10)
-points(generate_indices(data_2,k=30)$d2dtaMEI, generate_indices(data_2,k=30)$d2dtaMHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$d2dtaMMEI, generate_indices(data_1,k=30)$d2dtaMMHI, col="red", ylab="MMHI", xlab="MMEI", pch=10)
-points(generate_indices(data_2,k=30)$d2dtaMMEI, generate_indices(data_2,k=30)$d2dtaMMHI, col="blue",pch=20)
+     main = "Second Derivatives",xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_2,k=30)$d2dtaEI, generate_indices(data_2,k=30)$d2dtaHI, col="blue",pch=20,
+       xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$d2dtaMEI, generate_indices(data_1,k=30)$d2dtaMHI, col="red", ylab="MHI", xlab="MEI", pch=10,
+     xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_2,k=30)$d2dtaMEI, generate_indices(data_2,k=30)$d2dtaMHI, col="blue",pch=20,
+       xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$d2dtaMMEI, generate_indices(data_1,k=30)$d2dtaMMHI, 
+     col="red", ylab="MMHI", xlab="MMEI", pch=10)
+points(generate_indices(data_2,k=30)$d2dtaMMEI, generate_indices(data_2,k=30)$d2dtaMMHI, 
+       col="blue",pch=20)
 
 # model 1 and 3
 plot(generate_indices(data_1, k=30)$dtaEI,generate_indices(data_1, k=30)$dtaHI, col="red", ylab="HI", xlab="EI",pch=10, 
-     main = "Samples 1 and 3")
-points(generate_indices(data_3,k=30)$dtaEI, generate_indices(data_3,k=30)$dtaHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$dtaMEI, generate_indices(data_1,k=30)$dtaMHI, col="red", ylab="MHI", xlab="MEI", pch=10)
-points(generate_indices(data_3,k=30)$dtaMEI, generate_indices(data_3,k=30)$dtaMHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$dtaMMEI, generate_indices(data_1,k=30)$dtaMMHI, col="red", ylab="MMHI", xlab="MMEI", pch=10)
-points(generate_indices(data_3,k=30)$dtaMMEI, generate_indices(data_3,k=30)$dtaMMHI, col="blue",pch=20)
+     main = "Samples 1 and 3", xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_3,k=30)$dtaEI, generate_indices(data_3,k=30)$dtaHI, col="blue",pch=20,
+       xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$dtaMEI, generate_indices(data_1,k=30)$dtaMHI, col="red", ylab="MHI", xlab="MEI", pch=10,
+     xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_3,k=30)$dtaMEI, generate_indices(data_3,k=30)$dtaMHI, col="blue",pch=20,
+       xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$dtaMMEI, generate_indices(data_1,k=30)$dtaMMHI, 
+     col="red", ylab="MMHI", xlab="MMEI", pch=10)
+points(generate_indices(data_3,k=30)$dtaMMEI, generate_indices(data_3,k=30)$dtaMMHI,
+       col="blue",pch=20)
 
 plot(generate_indices(data_1,k=30)$ddtaEI,generate_indices(data_1,k=30)$ddtaHI, col="red", ylab="HI", xlab="EI",pch=10, 
-     main = "First Derivatives")
-points(generate_indices(data_3,k=30)$ddtaEI, generate_indices(data_3,k=30)$ddtaHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$ddtaMEI, generate_indices(data_1,k=30)$ddtaMHI, col="red", ylab="MHI", xlab="MEI", pch=10)
-points(generate_indices(data_3,k=30)$ddtaMEI, generate_indices(data_3,k=30)$ddtaMHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$ddtaMMEI, generate_indices(data_1,k=30)$ddtaMMHI, col="red", ylab="MMHI", xlab="MMEI", pch=10)
-points(generate_indices(data_3,k=30)$ddtaMMEI, generate_indices(data_3,k=30)$ddtaMMHI, col="blue",pch=20)
+     main = "First Derivatives",xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_3,k=30)$ddtaEI, generate_indices(data_3,k=30)$ddtaHI, col="blue",pch=20,
+       xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$ddtaMEI, generate_indices(data_1,k=30)$ddtaMHI, col="red", ylab="MHI", xlab="MEI", pch=10,
+     xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_3,k=30)$ddtaMEI, generate_indices(data_3,k=30)$ddtaMHI, col="blue",pch=20,
+       xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$ddtaMMEI, generate_indices(data_1,k=30)$ddtaMMHI, 
+     col="red", ylab="MMHI", xlab="MMEI", pch=10)
+points(generate_indices(data_3,k=30)$ddtaMMEI, generate_indices(data_3,k=30)$ddtaMMHI, 
+       col="blue",pch=20)
 
 plot(generate_indices(data_1,k=30)$d2dtaEI,generate_indices(data_1,k=30)$d2dtaHI, col="red", ylab="HI", xlab="EI",pch=10, 
-     main = "Second Derivatives")
-points(generate_indices(data_3,k=30)$d2dtaEI, generate_indices(data_3,k=30)$d2dtaHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$d2dtaMEI, generate_indices(data_1,k=30)$d2dtaMHI, col="red", ylab="MHI", xlab="MEI", pch=10)
-points(generate_indices(data_3,k=30)$d2dtaMEI, generate_indices(data_3,k=30)$d2dtaMHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$d2dtaMMEI, generate_indices(data_1,k=30)$d2dtaMMHI, col="red", ylab="MMHI", xlab="MMEI", pch=10)
-points(generate_indices(data_3,k=30)$d2dtaMMEI, generate_indices(data_3,k=30)$d2dtaMMHI, col="blue",pch=20)
+     main = "Second Derivatives",xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_3,k=30)$d2dtaEI, generate_indices(data_3,k=30)$d2dtaHI, col="blue",pch=20,
+       xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$d2dtaMEI, generate_indices(data_1,k=30)$d2dtaMHI, col="red", ylab="MHI", xlab="MEI", pch=10,
+     xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_3,k=30)$d2dtaMEI, generate_indices(data_3,k=30)$d2dtaMHI, col="blue",pch=20,
+       xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$d2dtaMMEI, generate_indices(data_1,k=30)$d2dtaMMHI, 
+     col="red", ylab="MMHI", xlab="MMEI", pch=10)
+points(generate_indices(data_3,k=30)$d2dtaMMEI, generate_indices(data_3,k=30)$d2dtaMMHI, 
+       col="blue",pch=20)
 
 # model 1 and 4
 plot(generate_indices(data_1, k=30)$dtaEI,generate_indices(data_1, k=30)$dtaHI, col="red", ylab="HI", xlab="EI",pch=10, 
-     main = "Samples 1 and 4")
-points(generate_indices(data_4,k=30)$dtaEI, generate_indices(data_4,k=30)$dtaHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$dtaMEI, generate_indices(data_1,k=30)$dtaMHI, col="red", ylab="MHI", xlab="MEI", pch=10)
-points(generate_indices(data_4,k=30)$dtaMEI, generate_indices(data_4,k=30)$dtaMHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$dtaMMEI, generate_indices(data_1,k=30)$dtaMMHI, col="red", ylab="MMHI", xlab="MMEI", pch=10)
-points(generate_indices(data_4,k=30)$dtaMMEI, generate_indices(data_4,k=30)$dtaMMHI, col="blue",pch=20)
+     main = "Samples 1 and 4", xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_4,k=30)$dtaEI, generate_indices(data_4,k=30)$dtaHI, 
+       col="blue",pch=20,xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$dtaMEI, generate_indices(data_1,k=30)$dtaMHI,
+     col="red", ylab="MHI", xlab="MEI", pch=10, xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_4,k=30)$dtaMEI, generate_indices(data_4,k=30)$dtaMHI,
+      col="blue",pch=20,xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$dtaMMEI, generate_indices(data_1,k=30)$dtaMMHI, 
+     col="red", ylab="MMHI", xlab="MMEI", pch=10)
+points(generate_indices(data_4,k=30)$dtaMMEI, generate_indices(data_4,k=30)$dtaMMHI,
+       col="blue",pch=20)
 
 plot(generate_indices(data_1,k=30)$ddtaEI,generate_indices(data_1,k=30)$ddtaHI, col="red", ylab="HI", xlab="EI",pch=10, 
-     main = "First Derivatives")
-points(generate_indices(data_4,k=30)$ddtaEI, generate_indices(data_4,k=30)$ddtaHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$ddtaMEI, generate_indices(data_1,k=30)$ddtaMHI, col="red", ylab="MHI", xlab="MEI", pch=10)
-points(generate_indices(data_4,k=30)$ddtaMEI, generate_indices(data_4,k=30)$ddtaMHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$ddtaMMEI, generate_indices(data_1,k=30)$ddtaMMHI, col="red", ylab="MMHI", xlab="MMEI", pch=10)
-points(generate_indices(data_4,k=30)$ddtaMMEI, generate_indices(data_4,k=30)$ddtaMMHI, col="blue",pch=20)
+     main = "First Derivatives", xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_4,k=30)$ddtaEI, generate_indices(data_4,k=30)$ddtaHI, 
+       col="blue",pch=20,xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$ddtaMEI, generate_indices(data_1,k=30)$ddtaMHI,
+     col="red", ylab="MHI", xlab="MEI", pch=10, xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_4,k=30)$ddtaMEI, generate_indices(data_4,k=30)$ddtaMHI,
+       col="blue",pch=20,xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$ddtaMMEI, generate_indices(data_1,k=30)$ddtaMMHI, 
+     col="red", ylab="MMHI", xlab="MMEI", pch=10)
+points(generate_indices(data_4,k=30)$ddtaMMEI, generate_indices(data_4,k=30)$ddtaMMHI,
+       col="blue",pch=20)
 
 plot(generate_indices(data_1,k=30)$d2dtaEI,generate_indices(data_1,k=30)$d2dtaHI, col="red", ylab="HI", xlab="EI",pch=10, 
-     main = "Second Derivatives")
-points(generate_indices(data_4,k=30)$d2dtaEI, generate_indices(data_4,k=30)$d2dtaHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$d2dtaMEI, generate_indices(data_1,k=30)$d2dtaMHI, col="red", ylab="MHI", xlab="MEI", pch=10)
-points(generate_indices(data_4,k=30)$d2dtaMEI, generate_indices(data_4,k=30)$d2dtaMHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$d2dtaMMEI, generate_indices(data_1,k=30)$d2dtaMMHI, col="red", ylab="MMHI", xlab="MMEI", pch=10)
-points(generate_indices(data_4,k=30)$d2dtaMMEI, generate_indices(data_4,k=30)$d2dtaMMHI, col="blue",pch=20)
+     main = "Second Derivatives", xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_4,k=30)$d2dtaEI, generate_indices(data_4,k=30)$d2dtaHI, 
+       col="blue",pch=20, xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$d2dtaMEI, generate_indices(data_1,k=30)$d2dtaMHI, 
+     col="red", ylab="MHI", xlab="MEI", pch=10, xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_4,k=30)$d2dtaMEI, generate_indices(data_4,k=30)$d2dtaMHI,
+       col="blue",pch=20, xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$d2dtaMMEI, generate_indices(data_1,k=30)$d2dtaMMHI, 
+     col="red", ylab="MMHI", xlab="MMEI", pch=10)
+points(generate_indices(data_4,k=30)$d2dtaMMEI, generate_indices(data_4,k=30)$d2dtaMMHI,
+       col="blue",pch=20)
 
 # model 1 and 5
 plot(generate_indices(data_1, k=30)$dtaEI,generate_indices(data_1, k=30)$dtaHI, col="red", ylab="HI", xlab="EI",pch=10, 
-     main = "Samples 1 and 5")
-points(generate_indices(data_5,k=30)$dtaEI, generate_indices(data_5,k=30)$dtaHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$dtaMEI, generate_indices(data_1,k=30)$dtaMHI, col="red", ylab="MHI", xlab="MEI", pch=10)
-points(generate_indices(data_5,k=30)$dtaMEI, generate_indices(data_5,k=30)$dtaMHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$dtaMMEI, generate_indices(data_1,k=30)$dtaMMHI, col="red", ylab="MMHI", xlab="MMEI", pch=10)
-points(generate_indices(data_5,k=30)$dtaMMEI, generate_indices(data_5,k=30)$dtaMMHI, col="blue",pch=20)
+     main = "Samples 1 and 5",xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_5,k=30)$dtaEI, generate_indices(data_5,k=30)$dtaHI, 
+       col="blue",pch=20, xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$dtaMEI, generate_indices(data_1,k=30)$dtaMHI,
+     col="red", ylab="MHI", xlab="MEI", pch=10, xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_5,k=30)$dtaMEI, generate_indices(data_5,k=30)$dtaMHI,
+       col="blue",pch=20,xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$dtaMMEI, generate_indices(data_1,k=30)$dtaMMHI,
+     col="red", ylab="MMHI", xlab="MMEI", pch=10)
+points(generate_indices(data_5,k=30)$dtaMMEI, generate_indices(data_5,k=30)$dtaMMHI,
+       col="blue",pch=20)
 
 plot(generate_indices(data_1,k=30)$ddtaEI,generate_indices(data_1,k=30)$ddtaHI, col="red", ylab="HI", xlab="EI",pch=10, 
-     main = "First Derivatives")
-points(generate_indices(data_5,k=30)$ddtaEI, generate_indices(data_5,k=30)$ddtaHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$ddtaMEI, generate_indices(data_1,k=30)$ddtaMHI, col="red", ylab="MHI", xlab="MEI", pch=10)
-points(generate_indices(data_5,k=30)$ddtaMEI, generate_indices(data_5,k=30)$ddtaMHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$ddtaMMEI, generate_indices(data_1,k=30)$ddtaMMHI, col="red", ylab="MMHI", xlab="MMEI", pch=10)
-points(generate_indices(data_5,k=30)$ddtaMMEI, generate_indices(data_5,k=30)$ddtaMMHI, col="blue",pch=20)
+     main = "First Derivatives", xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_5,k=30)$ddtaEI, generate_indices(data_5,k=30)$ddtaHI, 
+       col="blue",pch=20,xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$ddtaMEI, generate_indices(data_1,k=30)$ddtaMHI,
+     col="red", ylab="MHI", xlab="MEI", pch=10,xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_5,k=30)$ddtaMEI, generate_indices(data_5,k=30)$ddtaMHI,
+       col="blue",pch=20,xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$ddtaMMEI, generate_indices(data_1,k=30)$ddtaMMHI,
+     col="red", ylab="MMHI", xlab="MMEI", pch=10)
+points(generate_indices(data_5,k=30)$ddtaMMEI, generate_indices(data_5,k=30)$ddtaMMHI,
+       col="blue",pch=20)
 
 plot(generate_indices(data_1,k=30)$d2dtaEI,generate_indices(data_1,k=30)$d2dtaHI, col="red", ylab="HI", xlab="EI",pch=10, 
-     main = "Second Derivatives")
-points(generate_indices(data_5,k=30)$d2dtaEI, generate_indices(data_5,k=30)$d2dtaHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$d2dtaMEI, generate_indices(data_1,k=30)$d2dtaMHI, col="red", ylab="MHI", xlab="MEI", pch=10)
-points(generate_indices(data_5,k=30)$d2dtaMEI, generate_indices(data_5,k=30)$d2dtaMHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$d2dtaMMEI, generate_indices(data_1,k=30)$d2dtaMMHI, col="red", ylab="MMHI", xlab="MMEI", pch=10)
-points(generate_indices(data_5,k=30)$d2dtaMMEI, generate_indices(data_5,k=30)$d2dtaMMHI, col="blue",pch=20)
+     main = "Second Derivatives", xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_5,k=30)$d2dtaEI, generate_indices(data_5,k=30)$d2dtaHI,
+       col="blue",pch=20,xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$d2dtaMEI, generate_indices(data_1,k=30)$d2dtaMHI,
+     col="red", ylab="MHI", xlab="MEI", pch=10,xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_5,k=30)$d2dtaMEI, generate_indices(data_5,k=30)$d2dtaMHI,
+       col="blue",pch=20,xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$d2dtaMMEI, generate_indices(data_1,k=30)$d2dtaMMHI,
+     col="red", ylab="MMHI", xlab="MMEI", pch=10)
+points(generate_indices(data_5,k=30)$d2dtaMMEI, generate_indices(data_5,k=30)$d2dtaMMHI,
+       col="blue",pch=20)
 
 # model 1 and 6
 plot(generate_indices(data_1, k=30)$dtaEI,generate_indices(data_1, k=30)$dtaHI, col="red", ylab="HI", xlab="EI",pch=10, 
-     main = "Samples 1 and 6")
-points(generate_indices(data_6,k=30)$dtaEI, generate_indices(data_6,k=30)$dtaHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$dtaMEI, generate_indices(data_1,k=30)$dtaMHI, col="red", ylab="MHI", xlab="MEI", pch=10)
-points(generate_indices(data_6,k=30)$dtaMEI, generate_indices(data_6,k=30)$dtaMHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$dtaMMEI, generate_indices(data_1,k=30)$dtaMMHI, col="red", ylab="MMHI", xlab="MMEI", pch=10)
-points(generate_indices(data_6,k=30)$dtaMMEI, generate_indices(data_6,k=30)$dtaMMHI, col="blue",pch=20)
+     main = "Samples 1 and 6", xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_6,k=30)$dtaEI, generate_indices(data_6,k=30)$dtaHI, 
+       col="blue",pch=20,xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$dtaMEI, generate_indices(data_1,k=30)$dtaMHI, 
+     col="red", ylab="MHI", xlab="MEI", pch=10, xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_6,k=30)$dtaMEI, generate_indices(data_6,k=30)$dtaMHI,
+       col="blue",pch=20,xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$dtaMMEI, generate_indices(data_1,k=30)$dtaMMHI,
+     col="red", ylab="MMHI", xlab="MMEI", pch=10)
+points(generate_indices(data_6,k=30)$dtaMMEI, generate_indices(data_6,k=30)$dtaMMHI,
+       col="blue",pch=20)
 
 plot(generate_indices(data_1,k=30)$ddtaEI,generate_indices(data_1,k=30)$ddtaHI, col="red", ylab="HI", xlab="EI",pch=10, 
-     main = "First Derivatives")
-points(generate_indices(data_6,k=30)$ddtaEI, generate_indices(data_6,k=30)$ddtaHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$ddtaMEI, generate_indices(data_1,k=30)$ddtaMHI, col="red", ylab="MHI", xlab="MEI", pch=10)
-points(generate_indices(data_6,k=30)$ddtaMEI, generate_indices(data_6,k=30)$ddtaMHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$ddtaMMEI, generate_indices(data_1,k=30)$ddtaMMHI, col="red", ylab="MMHI", xlab="MMEI", pch=10)
-points(generate_indices(data_6,k=30)$ddtaMMEI, generate_indices(data_6,k=30)$ddtaMMHI, col="blue",pch=20)
+     main = "First Derivatives",xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_6,k=30)$ddtaEI, generate_indices(data_6,k=30)$ddtaHI, 
+       col="blue",pch=20,xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$ddtaMEI, generate_indices(data_1,k=30)$ddtaMHI,
+     col="red", ylab="MHI", xlab="MEI", pch=10,xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_6,k=30)$ddtaMEI, generate_indices(data_6,k=30)$ddtaMHI,
+       col="blue",pch=20,xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$ddtaMMEI, generate_indices(data_1,k=30)$ddtaMMHI,
+     col="red", ylab="MMHI", xlab="MMEI", pch=10)
+points(generate_indices(data_6,k=30)$ddtaMMEI, generate_indices(data_6,k=30)$ddtaMMHI,
+       col="blue",pch=20)
 
 plot(generate_indices(data_1,k=30)$d2dtaEI,generate_indices(data_1,k=30)$d2dtaHI, col="red", ylab="HI", xlab="EI",pch=10, 
-     main = "Second Derivatives")
-points(generate_indices(data_6,k=30)$d2dtaEI, generate_indices(data_6,k=30)$d2dtaHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$d2dtaMEI, generate_indices(data_1,k=30)$d2dtaMHI, col="red", ylab="MHI", xlab="MEI", pch=10)
-points(generate_indices(data_6,k=30)$d2dtaMEI, generate_indices(data_6,k=30)$d2dtaMHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$d2dtaMMEI, generate_indices(data_1,k=30)$d2dtaMMHI, col="red", ylab="MMHI", xlab="MMEI", pch=10)
-points(generate_indices(data_6,k=30)$d2dtaMMEI, generate_indices(data_6,k=30)$d2dtaMMHI, col="blue",pch=20)
+     main = "Second Derivatives",xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_6,k=30)$d2dtaEI, generate_indices(data_6,k=30)$d2dtaHI,
+       col="blue",pch=20,xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$d2dtaMEI, generate_indices(data_1,k=30)$d2dtaMHI,
+     col="red", ylab="MHI", xlab="MEI", pch=10,xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_6,k=30)$d2dtaMEI, generate_indices(data_6,k=30)$d2dtaMHI,
+       col="blue",pch=20,xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$d2dtaMMEI, generate_indices(data_1,k=30)$d2dtaMMHI,
+     col="red", ylab="MMHI", xlab="MMEI", pch=10)
+points(generate_indices(data_6,k=30)$d2dtaMMEI, generate_indices(data_6,k=30)$d2dtaMMHI,
+       col="blue",pch=20)
 
 # model 1 and 7
 plot(generate_indices(data_1, k=30)$dtaEI,generate_indices(data_1, k=30)$dtaHI, col="red", ylab="HI", xlab="EI",pch=10, 
-     main = "Samples 1 and 7")
-points(generate_indices(data_7,k=30)$dtaEI, generate_indices(data_7,k=30)$dtaHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$dtaMEI, generate_indices(data_1,k=30)$dtaMHI, col="red", ylab="MHI", xlab="MEI", pch=10)
-points(generate_indices(data_7,k=30)$dtaMEI, generate_indices(data_7,k=30)$dtaMHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$dtaMMEI, generate_indices(data_1,k=30)$dtaMMHI, col="red", ylab="MMHI", xlab="MMEI", pch=10)
-points(generate_indices(data_7,k=30)$dtaMMEI, generate_indices(data_7,k=30)$dtaMMHI, col="blue",pch=20)
+     main = "Samples 1 and 7",xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_7,k=30)$dtaEI, generate_indices(data_7,k=30)$dtaHI,
+       col="blue",pch=20,xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$dtaMEI, generate_indices(data_1,k=30)$dtaMHI,
+     col="red", ylab="MHI", xlab="MEI", pch=10,xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_7,k=30)$dtaMEI, generate_indices(data_7,k=30)$dtaMHI,
+       col="blue",pch=20,xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$dtaMMEI, generate_indices(data_1,k=30)$dtaMMHI,
+     col="red", ylab="MMHI", xlab="MMEI", pch=10)
+points(generate_indices(data_7,k=30)$dtaMMEI, generate_indices(data_7,k=30)$dtaMMHI,
+       col="blue",pch=20)
 
 plot(generate_indices(data_1,k=30)$ddtaEI,generate_indices(data_1,k=30)$ddtaHI, col="red", ylab="HI", xlab="EI",pch=10, 
-     main = "First Derivatives")
-points(generate_indices(data_7,k=30)$ddtaEI, generate_indices(data_7,k=30)$ddtaHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$ddtaMEI, generate_indices(data_1,k=30)$ddtaMHI, col="red", ylab="MHI", xlab="MEI", pch=10)
-points(generate_indices(data_7,k=30)$ddtaMEI, generate_indices(data_7,k=30)$ddtaMHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$ddtaMMEI, generate_indices(data_1,k=30)$ddtaMMHI, col="red", ylab="MMHI", xlab="MMEI", pch=10)
-points(generate_indices(data_7,k=30)$ddtaMMEI, generate_indices(data_7,k=30)$ddtaMMHI, col="blue",pch=20)
+     main = "First Derivatives",xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_7,k=30)$ddtaEI, generate_indices(data_7,k=30)$ddtaHI,
+       col="blue",pch=20,xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$ddtaMEI, generate_indices(data_1,k=30)$ddtaMHI,
+     col="red", ylab="MHI", xlab="MEI", pch=10,xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_7,k=30)$ddtaMEI, generate_indices(data_7,k=30)$ddtaMHI,
+       col="blue",pch=20,xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$ddtaMMEI, generate_indices(data_1,k=30)$ddtaMMHI,
+     col="red", ylab="MMHI", xlab="MMEI", pch=10)
+points(generate_indices(data_7,k=30)$ddtaMMEI, generate_indices(data_7,k=30)$ddtaMMHI,
+       col="blue",pch=20)
 
 plot(generate_indices(data_1,k=30)$d2dtaEI,generate_indices(data_1,k=30)$d2dtaHI, col="red", ylab="HI", xlab="EI",pch=10, 
-     main = "Second Derivatives")
-points(generate_indices(data_7,k=30)$d2dtaEI, generate_indices(data_7,k=30)$d2dtaHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$d2dtaMEI, generate_indices(data_1,k=30)$d2dtaMHI, col="red", ylab="MHI", xlab="MEI", pch=10)
-points(generate_indices(data_7,k=30)$d2dtaMEI, generate_indices(data_7,k=30)$d2dtaMHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$d2dtaMMEI, generate_indices(data_1,k=30)$d2dtaMMHI, col="red", ylab="MMHI", xlab="MMEI", pch=10)
-points(generate_indices(data_7,k=30)$d2dtaMMEI, generate_indices(data_7,k=30)$d2dtaMMHI, col="blue",pch=20)
+     main = "Second Derivatives",xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_7,k=30)$d2dtaEI, generate_indices(data_7,k=30)$d2dtaHI,
+       col="blue",pch=20,xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$d2dtaMEI, generate_indices(data_1,k=30)$d2dtaMHI,
+     col="red", ylab="MHI", xlab="MEI", pch=10,xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_7,k=30)$d2dtaMEI, generate_indices(data_7,k=30)$d2dtaMHI,
+       col="blue",pch=20,xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$d2dtaMMEI, generate_indices(data_1,k=30)$d2dtaMMHI,
+     col="red", ylab="MMHI", xlab="MMEI", pch=10)
+points(generate_indices(data_7,k=30)$d2dtaMMEI, generate_indices(data_7,k=30)$d2dtaMMHI,
+       col="blue",pch=20)
 
 # model 1 and 8
 plot(generate_indices(data_1, k=30)$dtaEI,generate_indices(data_1, k=30)$dtaHI, col="red", ylab="HI", xlab="EI",pch=10, 
-     main = "Samples 1 and 8")
-points(generate_indices(data_8,k=30)$dtaEI, generate_indices(data_8,k=30)$dtaHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$dtaMEI, generate_indices(data_1,k=30)$dtaMHI, col="red", ylab="MHI", xlab="MEI", pch=10)
-points(generate_indices(data_8,k=30)$dtaMEI, generate_indices(data_8,k=30)$dtaMHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$dtaMMEI, generate_indices(data_1,k=30)$dtaMMHI, col="red", ylab="MMHI", xlab="MMEI", pch=10)
-points(generate_indices(data_8,k=30)$dtaMMEI, generate_indices(data_8,k=30)$dtaMMHI, col="blue",pch=20)
+     main = "Samples 1 and 8",xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_8,k=30)$dtaEI, generate_indices(data_8,k=30)$dtaHI, 
+       col="blue",pch=20,xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$dtaMEI, generate_indices(data_1,k=30)$dtaMHI,
+     col="red", ylab="MHI", xlab="MEI", pch=10,xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_8,k=30)$dtaMEI, generate_indices(data_8,k=30)$dtaMHI, 
+       col="blue",pch=20,xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$dtaMMEI, generate_indices(data_1,k=30)$dtaMMHI, 
+     col="red", ylab="MMHI", xlab="MMEI", pch=10)
+points(generate_indices(data_8,k=30)$dtaMMEI, generate_indices(data_8,k=30)$dtaMMHI,
+       col="blue",pch=20)
 
 plot(generate_indices(data_1,k=30)$ddtaEI,generate_indices(data_1,k=30)$ddtaHI, col="red", ylab="HI", xlab="EI",pch=10, 
-     main = "First Derivatives")
-points(generate_indices(data_8,k=30)$ddtaEI, generate_indices(data_8,k=30)$ddtaHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$ddtaMEI, generate_indices(data_1,k=30)$ddtaMHI, col="red", ylab="MHI", xlab="MEI", pch=10)
-points(generate_indices(data_8,k=30)$ddtaMEI, generate_indices(data_8,k=30)$ddtaMHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$ddtaMMEI, generate_indices(data_1,k=30)$ddtaMMHI, col="red", ylab="MMHI", xlab="MMEI", pch=10)
-points(generate_indices(data_8,k=30)$ddtaMMEI, generate_indices(data_8,k=30)$ddtaMMHI, col="blue",pch=20)
+     main = "First Derivatives",xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_8,k=30)$ddtaEI, generate_indices(data_8,k=30)$ddtaHI,
+       col="blue",pch=20,xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$ddtaMEI, generate_indices(data_1,k=30)$ddtaMHI,
+     col="red", ylab="MHI", xlab="MEI", pch=10,xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_8,k=30)$ddtaMEI, generate_indices(data_8,k=30)$ddtaMHI,
+       col="blue",pch=20,xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$ddtaMMEI, generate_indices(data_1,k=30)$ddtaMMHI,
+     col="red", ylab="MMHI", xlab="MMEI", pch=10)
+points(generate_indices(data_8,k=30)$ddtaMMEI, generate_indices(data_8,k=30)$ddtaMMHI,
+       col="blue",pch=20)
 
 plot(generate_indices(data_1,k=30)$d2dtaEI,generate_indices(data_1,k=30)$d2dtaHI, col="red", ylab="HI", xlab="EI",pch=10, 
-     main = "Second Derivatives")
-points(generate_indices(data_8,k=30)$d2dtaEI, generate_indices(data_8,k=30)$d2dtaHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$d2dtaMEI, generate_indices(data_1,k=30)$d2dtaMHI, col="red", ylab="MHI", xlab="MEI", pch=10)
-points(generate_indices(data_8,k=30)$d2dtaMEI, generate_indices(data_8,k=30)$d2dtaMHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$d2dtaMMEI, generate_indices(data_1,k=30)$d2dtaMMHI, col="red", ylab="MMHI", xlab="MMEI", pch=10)
-points(generate_indices(data_8,k=30)$d2dtaMMEI, generate_indices(data_8,k=30)$d2dtaMMHI, col="blue",pch=20)
+     main = "Second Derivatives",xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_8,k=30)$d2dtaEI, generate_indices(data_8,k=30)$d2dtaHI, 
+       col="blue",pch=20,xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$d2dtaMEI, generate_indices(data_1,k=30)$d2dtaMHI,
+     col="red", ylab="MHI", xlab="MEI", pch=10,xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_8,k=30)$d2dtaMEI, generate_indices(data_8,k=30)$d2dtaMHI,
+       col="blue",pch=20,xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_1,k=30)$d2dtaMMEI, generate_indices(data_1,k=30)$d2dtaMMHI,
+     col="red", ylab="MMHI", xlab="MMEI", pch=10)
+points(generate_indices(data_8,k=30)$d2dtaMMEI, generate_indices(data_8,k=30)$d2dtaMMHI,
+       col="blue",pch=20)
 
-# model 1 and 9
-plot(generate_indices(data_1, k=30)$dtaEI,generate_indices(data_1, k=30)$dtaHI, col="red", ylab="HI", xlab="EI",pch=10, 
-     main = "Samples 1 and 9")
-points(generate_indices(data_9,k=30)$dtaEI, generate_indices(data_9,k=30)$dtaHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$dtaMEI, generate_indices(data_1,k=30)$dtaMHI, col="red", ylab="MHI", xlab="MEI", pch=10)
-points(generate_indices(data_9,k=30)$dtaMEI, generate_indices(data_9,k=30)$dtaMHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$dtaMMEI, generate_indices(data_1,k=30)$dtaMMHI, col="red", ylab="MMHI", xlab="MMEI", pch=10)
-points(generate_indices(data_9,k=30)$dtaMMEI, generate_indices(data_9,k=30)$dtaMMHI, col="blue",pch=20)
+# model 9 and 10
+plot(generate_indices(data_9, k=30)$dtaEI,generate_indices(data_9, k=30)$dtaHI, col="red", ylab="HI", xlab="EI",pch=10, 
+     main = "Samples 9 and 10",xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_10,k=30)$dtaEI, generate_indices(data_10,k=30)$dtaHI, 
+       col="blue",pch=20,xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_9,k=30)$dtaMEI, generate_indices(data_9,k=30)$dtaMHI,
+     col="red", ylab="MHI", xlab="MEI", pch=10,xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_10,k=30)$dtaMEI, generate_indices(data_10,k=30)$dtaMHI, 
+       col="blue",pch=20,xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_9,k=30)$dtaMMEI, generate_indices(data_9,k=30)$dtaMMHI,
+     col="red", ylab="MMHI", xlab="MMEI", pch=10)
+points(generate_indices(data_10,k=30)$dtaMMEI, generate_indices(data_10,k=30)$dtaMMHI,
+       col="blue",pch=20)
 
-plot(generate_indices(data_1,k=30)$ddtaEI,generate_indices(data_1,k=30)$ddtaHI, col="red", ylab="HI", xlab="EI",pch=10, 
-     main = "First Derivatives")
-points(generate_indices(data_9,k=30)$ddtaEI, generate_indices(data_9,k=30)$ddtaHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$ddtaMEI, generate_indices(data_1,k=30)$ddtaMHI, col="red", ylab="MHI", xlab="MEI", pch=10)
-points(generate_indices(data_9,k=30)$ddtaMEI, generate_indices(data_9,k=30)$ddtaMHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$ddtaMMEI, generate_indices(data_1,k=30)$ddtaMMHI, col="red", ylab="MMHI", xlab="MMEI", pch=10)
-points(generate_indices(data_9,k=30)$ddtaMMEI, generate_indices(data_9,k=30)$ddtaMMHI, col="blue",pch=20)
+plot(generate_indices(data_9,k=30)$ddtaEI,generate_indices(data_9,k=30)$ddtaHI, col="red", ylab="HI", xlab="EI",pch=10, 
+     main = "First Derivatives",xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_10,k=30)$ddtaEI, generate_indices(data_10,k=30)$ddtaHI,
+       col="blue",pch=20,xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_9,k=30)$ddtaMEI, generate_indices(data_9,k=30)$ddtaMHI,
+     col="red", ylab="MHI", xlab="MEI", pch=10,xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_10,k=30)$ddtaMEI, generate_indices(data_10,k=30)$ddtaMHI,
+       col="blue",pch=20,xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_9,k=30)$ddtaMMEI, generate_indices(data_9,k=30)$ddtaMMHI,
+     col="red", ylab="MMHI", xlab="MMEI", pch=10)
+points(generate_indices(data_10,k=30)$ddtaMMEI, generate_indices(data_10,k=30)$ddtaMMHI,
+       col="blue",pch=20)
 
-plot(generate_indices(data_1,k=30)$d2dtaEI,generate_indices(data_1,k=30)$d2dtaHI, col="red", ylab="HI", xlab="EI",pch=10, 
-     main = "Second Derivatives")
-points(generate_indices(data_9,k=30)$d2dtaEI, generate_indices(data_9,k=30)$d2dtaHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$d2dtaMEI, generate_indices(data_1,k=30)$d2dtaMHI, col="red", ylab="MHI", xlab="MEI", pch=10)
-points(generate_indices(data_9,k=30)$d2dtaMEI, generate_indices(data_9,k=30)$d2dtaMHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$d2dtaMMEI, generate_indices(data_1,k=30)$d2dtaMMHI, col="red", ylab="MMHI", xlab="MMEI", pch=10)
-points(generate_indices(data_9,k=30)$d2dtaMMEI, generate_indices(data_9,k=30)$d2dtaMMHI, col="blue",pch=20)
-
-# model 1 and 10
-plot(generate_indices(data_1, k=30)$dtaEI,generate_indices(data_1, k=30)$dtaHI, col="red", ylab="HI", xlab="EI",pch=10, 
-     main = "Samples 1 and 10")
-points(generate_indices(data_10,k=30)$dtaEI, generate_indices(data_10,k=30)$dtaHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$dtaMEI, generate_indices(data_1,k=30)$dtaMHI, col="red", ylab="MHI", xlab="MEI", pch=10)
-points(generate_indices(data_10,k=30)$dtaMEI, generate_indices(data_10,k=30)$dtaMHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$dtaMMEI, generate_indices(data_1,k=30)$dtaMMHI, col="red", ylab="MMHI", xlab="MMEI", pch=10)
-points(generate_indices(data_10,k=30)$dtaMMEI, generate_indices(data_10,k=30)$dtaMMHI, col="blue",pch=20)
-
-plot(generate_indices(data_1,k=30)$ddtaEI,generate_indices(data_1,k=30)$ddtaHI, col="red", ylab="HI", xlab="EI",pch=10, 
-     main = "First Derivatives")
-points(generate_indices(data_10,k=30)$ddtaEI, generate_indices(data_10,k=30)$ddtaHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$ddtaMEI, generate_indices(data_1,k=30)$ddtaMHI, col="red", ylab="MHI", xlab="MEI", pch=10)
-points(generate_indices(data_10,k=30)$ddtaMEI, generate_indices(data_10,k=30)$ddtaMHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$ddtaMMEI, generate_indices(data_1,k=30)$ddtaMMHI, col="red", ylab="MMHI", xlab="MMEI", pch=10)
-points(generate_indices(data_10,k=30)$ddtaMMEI, generate_indices(data_10,k=30)$ddtaMMHI, col="blue",pch=20)
-
-plot(generate_indices(data_1,k=30)$d2dtaEI,generate_indices(data_1,k=30)$d2dtaHI, col="red", ylab="HI", xlab="EI",pch=10, 
-     main = "Second Derivatives")
-points(generate_indices(data_10,k=30)$d2dtaEI, generate_indices(data_10,k=30)$d2dtaHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$d2dtaMEI, generate_indices(data_1,k=30)$d2dtaMHI, col="red", ylab="MHI", xlab="MEI", pch=10)
-points(generate_indices(data_10,k=30)$d2dtaMEI, generate_indices(data_10,k=30)$d2dtaMHI, col="blue",pch=20)
-plot(generate_indices(data_1,k=30)$d2dtaMMEI, generate_indices(data_1,k=30)$d2dtaMMHI, col="red", ylab="MMHI", xlab="MMEI", pch=10)
-points(generate_indices(data_10,k=30)$d2dtaMMEI, generate_indices(data_10,k=30)$d2dtaMMHI, col="blue",pch=20)
+plot(generate_indices(data_9,k=30)$d2dtaEI,generate_indices(data_9,k=30)$d2dtaHI, col="red", ylab="HI", xlab="EI",pch=10, 
+     main = "Second Derivatives",xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_10,k=30)$d2dtaEI, generate_indices(data_10,k=30)$d2dtaHI, 
+       col="blue",pch=20,xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_9,k=30)$d2dtaMEI, generate_indices(data_9,k=30)$d2dtaMHI,
+     col="red", ylab="MHI", xlab="MEI", pch=10,xlim=c(0,1),ylim=c(0,1))
+points(generate_indices(data_10,k=30)$d2dtaMEI, generate_indices(data_10,k=30)$d2dtaMHI,
+       col="blue",pch=20,xlim=c(0,1),ylim=c(0,1))
+plot(generate_indices(data_9,k=30)$d2dtaMMEI, generate_indices(data_9,k=30)$d2dtaMMHI,
+     col="red", ylab="MMHI", xlab="MMEI", pch=10)
+points(generate_indices(data_10,k=30)$d2dtaMMEI, generate_indices(data_10,k=30)$d2dtaMMHI,
+       col="blue",pch=20)

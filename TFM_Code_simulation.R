@@ -473,5 +473,4 @@ set.seed(123)
 data_9 <- sim_model_ex2(i_sim = 1)
 data_10 <- sim_model_ex2(i_sim = 2)
 
-data9_labels <- c(rep(1,50), rep(9,50))
-data10_labels <- c(rep(1,50), rep(10,50))
+data10_labels <- c(rep(9,50), rep(10,50))

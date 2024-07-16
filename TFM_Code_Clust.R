@@ -1075,9 +1075,10 @@ ggplot(clasif_f7_b, aes(x=names, y=Value)) +
   theme_minimal()
 
 # model 8
-clasif_f8_b <- tibble(names = c(rep("hierarchical_clust", 270), rep("kkmeans_clust",54),
-                                rep("spc_clust", 54)),
-                      Metric = c(rep("RI", 270), rep("RI", 54), rep("RI", 54)),
+clasif_f8_b <- tibble(names = c(rep("hierarchical_clust", 230), rep("kkmeans_clust",46),
+                                rep("kmeans_clust",46), rep("spc_clust", 46)),
+                      Metric = c(rep("RI", 230), rep("RI", 46), rep("RI", 46),
+                                 rep("RI",46)),
                       Value = clasif_f8$RI)
 
 ggplot(clasif_f8_b, aes(x=names, y=Value)) + 
@@ -1085,6 +1086,7 @@ ggplot(clasif_f8_b, aes(x=names, y=Value)) +
   labs(title = "RI of different clustering methods for n = 50 simulations of Model 8",
        x = "Clustering Method", y = "RI") +
   theme_minimal()
+
 # dev.off()
 # model 9
 clasif_f9_b <- tibble(names = c(rep("hierarchical_clust", 230), rep("kkmeans_clust",46),
