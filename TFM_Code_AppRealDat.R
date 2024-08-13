@@ -64,18 +64,20 @@ points(generate_indices(t(girls),k=25)$d2dtaMMEI, generate_indices(t(girls),k=30
 # -------------------------
 
 
-library(caret)set.seed(12345)
+library(caret)
+set.seed(12345)
 data_g <- cbind(boys,girls)
-data_list_g <- list(v3,v4,v5,v7,v8,v9,v10,v11,v12,v13,v14,v15,v16,v17,
-                v18,v19,v20,v21,v22,v23,v24,v25,v26,v27,v28,v29,v30)
+data_list_g_old <- list(v3,v4,v5,v7,v8,v9,v10,v11,v12,v13,v14,v15)
+data_list_g_new <- list(v16,v17,v18,v19,v20,v21,v22,v23,
+                        v24,v25,v26,v27,v28,v29,v30)
 labels_g <- c(rep(1,39),rep(2,54))
 
-clust_g <- EHyClus_mm(t(data_g), vars_combinations = data_list_g,
+clust_g_old <- EHyClus(t(data_g), vars_combinations = data_list_g_old,
                     n_clusters = 2, true_labels = labels_g)
-View(clust_g$metrics)
+clust_g_new <- EHyClus_new(t(data_g), vars_combinations = data_list_g_new,
+                       n_clusters = 2, true_labels = labels_g)
+
 #clust_g$cluster
-
-
 # clust$cluster$hierarch$hierarch_ward.D2_euclidean_ddtaMMEIddtaMMHI
 # wrongly classified 
 # boys: 3 
@@ -186,11 +188,13 @@ points(generate_indices(region_4,k=3)$d2dtaMMEI, generate_indices(region_4,k=3)$
 # clustering
 
 set.seed(12345)
-data_list_cw <- list(v4,v5,v6,v7,v8,v9,v10,v11,v12,v13,v14,v15,v16,v17,
-                  v18,v19,v20,v21,v22,v23,v24,v25,v26,v27,v28,v29,v30)
+data_list_cw_old <- list(v4,v5,v6,v7,v8,v9,v10,v11,v12,v13,v14,v15)
+data_list_cw_new <- list(v16,v17,v18,v19,v20,v21,v22,v23,
+                         v24,v25,v26,v27,v28,v29,v30)
 
 labels_cw <- c(rep(1,15), rep(2,12), rep(3,5), rep(4,3))
 
-clust_cw <- EHyClus_mm(t(CanadianWeather$dailyAv[,,1]), vars_combinations = data_list_cw,
+clust_cw_old <- EHyClus(t(CanadianWeather$dailyAv[,,1]), vars_combinations = data_list_cw_old,
                     n_clusters = 4, true_labels = labels_cw)
-View(clust_cw$metrics)
+clust_cw_new <- EHyClus_new(t(CanadianWeather$dailyAv[,,1]), vars_combinations = data_list_cw_new,
+                        n_clusters = 4, true_labels = labels_cw)

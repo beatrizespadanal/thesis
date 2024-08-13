@@ -502,7 +502,7 @@ get_result_names <- function(method_name, parameter_combinations, vars_combinati
   do.call(paste, args)
 }
 
-EHyClus_mm <- function(curves, vars_combinations, k = 30, n_clusters = 2, bs = "cr",
+EHyClus_new <- function(curves, vars_combinations, k = 30, n_clusters = 2, bs = "cr",
                     clustering_methods = c("hierarch", "kmeans", "kkmeans", "spc"),
                     l_method_hierarch = c("single", "complete", "average", "centroid", "ward.D2"),
                     l_dist_hierarch = c("euclidean", "manhattan"),
@@ -575,7 +575,7 @@ EHyClus_mm <- function(curves, vars_combinations, k = 30, n_clusters = 2, bs = "
     curves  = curves,
     k       = k,
     bs      = bs,
-    indices = c("EI", "HI", "MEI", "MHI","MMEI", "MMHI")
+    indices = c("MMEI", "MMHI")
   )
   
   if (k) {
@@ -717,12 +717,14 @@ v28 <- c("dtaMMHI", "d2dtaMMHI")
 v29 <- c("ddtaMMHI", "d2dtaMMHI") 
 v30 <- c(v27, "d2dtaMMHI") 
 
-v_list1 <- list(v8,v9,v10,v11,v12,v13,v14,v15,v16,v17,
-                v18,v19,v20,v21,v22,v23,v24,v25,v26,v27,v28,v29,v30)
+v_list1_old <- list(v8,v9,v10,v11,v12,v13,v14,v15)
+v_list1_new <- list(v16,v17,v18,v19,v20,v21,v22,v23,
+                    v24,v25,v26,v27,v28,v29,v30)
 
 ## simulation function 
 n_sim = 50
-clasif1 <- c()
+clasif1_old <- c()
+clasif1_new <- c()
 
 # Model 1 
 set.seed(1234)
@@ -732,103 +734,156 @@ for(i in 1:n_sim){
   
   data1 <- ehymet::sim_model_ex1(n = 50, p = 30, i_sim = 1)
   
-  clasif1_i <- EHyClus_mm(data1, vars_combinations = v_list1,
+  clasif1_i_old <- EHyClus(data1, vars_combinations = v_list1_old,
                           n_clusters = 2, true_labels = data1_labels)
-  clasif1_i <- cbind(names = row.names(clasif1_i$metrics),
-                     data.frame(clasif1_i$metrics, row.names=NULL))
-  clasif1 <- bind_rows(clasif1, clasif1_i)
+  clasif1_i_old <- cbind(names = row.names(clasif1_i_old$metrics),
+                     data.frame(clasif1_i_old$metrics, row.names=NULL))
+  clasif1_old <- bind_rows(clasif1_old, clasif1_i_old)
   
+  clasif1_i_new <- EHyClus_new(data1, vars_combinations = v_list1_new,
+                           n_clusters = 2, true_labels = data1_labels)
+  clasif1_i_new <- cbind(names = row.names(clasif1_i_new$metrics),
+                         data.frame(clasif1_i_new$metrics, row.names=NULL))
+  clasif1_new <- bind_rows(clasif1_new, clasif1_i_new)
 }
 
 # Final simulation results
-clasif_f1 <- clasif1 %>%
+clasif_f1_old <- clasif1_old %>%
+  group_by(names) %>%
+  mutate(count = n()) %>%
+  summarise_all(mean)
+
+clasif_f1_new <- clasif1_new %>%
   group_by(names) %>%
   mutate(count = n()) %>%
   summarise_all(mean)
 
 # Model 2 
 
-v_list2 <- list(v8,v9,v10,v11,v12,v13,v14,v15,v16,v17,
-                v18,v19,v20,v21,v22,v23,v24,v25,v26,v27,v28,v29,v30)
-clasif2 <- c()
+v_list2_old <- list(v8,v9,v10,v11,v12,v13,v14,v15)
+
+v_list2_new <- list(v16,v17,v18,v19,v20,v21,v22,
+                    v23,v24,v25,v26,v27,v28,v29,v30)
+clasif2_old <- c()
+clasif2_new <- c()
 
 for(i in 1:n_sim){
   set.seed(i)
   
   data2 <- ehymet::sim_model_ex1(n = 50, p = 30, i_sim = 2)
   
-  clasif2_i <- EHyClus_mm(data2, vars_combinations = v_list2,
+  clasif2_i_old <- EHyClus(data2, vars_combinations = v_list2_old,
                           n_clusters = 2, true_labels = data2_labels)
-  clasif2_i <- cbind(names = row.names(clasif2_i$metrics),
-                     data.frame(clasif2_i$metrics, row.names=NULL))
-  clasif2 <- bind_rows(clasif2, clasif2_i)
+  clasif2_i_old <- cbind(names = row.names(clasif2_i_old$metrics),
+                     data.frame(clasif2_i_old$metrics, row.names=NULL))
+  clasif2_old <- bind_rows(clasif2_old, clasif2_i_old)
+  
+  clasif2_i_new <- EHyClus_new(data2, vars_combinations = v_list2_new,
+                              n_clusters = 2, true_labels = data2_labels)
+  clasif2_i_new <- cbind(names = row.names(clasif2_i_new$metrics),
+                         data.frame(clasif2_i_new$metrics, row.names=NULL))
+  clasif2_new <- bind_rows(clasif2_new, clasif2_i_new)
+  
   
 }
 
 # Final simulation results
-clasif_f2 <- clasif2 %>%
+clasif_f2_old <- clasif2_old %>%
+  group_by(names) %>%
+  mutate(count = n()) %>%
+  summarise_all(mean)
+
+clasif_f2_new <- clasif2_new %>%
   group_by(names) %>%
   mutate(count = n()) %>%
   summarise_all(mean)
 
 # Model 3 
 
-clasif3 <- c()
+clasif3_old <- c()
+clasif3_new <- c()
 
-v_list3 <- list(v8,v9,v10,v11,v12,v13,v14,v15,v16,v17,
-                v18,v19,v20,v21,v22,v23,v24,v25,v26,v27,v28,v29,v30)
+v_list3_old <- list(v8,v9,v10,v11,v12,v13,v14,v15)
+v_list3_new <- list(v16,v17,v18,v19,v20,v21,v22,
+                    v23,v24,v25,v26,v27,v28,v29,v30)
 
 for(i in 1:n_sim){
   set.seed(i)
   
   data3 <- ehymet::sim_model_ex1(n = 50, p = 30, i_sim = 3)
   
-  clasif3_i <- EHyClus_mm(data3, vars_combinations = v_list3,
+  clasif3_i_old <- EHyClus(data3, vars_combinations = v_list3_old,
                           n_clusters = 2, true_labels = data3_labels)
-  clasif3_i <- cbind(names = row.names(clasif3_i$metrics),
-                     data.frame(clasif3_i$metrics, row.names=NULL))
-  clasif3 <- bind_rows(clasif3, clasif3_i)
+  clasif3_i_old <- cbind(names = row.names(clasif3_i_old$metrics),
+                     data.frame(clasif3_i_old$metrics, row.names=NULL))
+  clasif3_old <- bind_rows(clasif3_old, clasif3_i_old)
+  
+  clasif3_i_new <- EHyClus_new(data3, vars_combinations = v_list3_new,
+                          n_clusters = 2, true_labels = data3_labels)
+  clasif3_i_new <- cbind(names = row.names(clasif3_i_new$metrics),
+                     data.frame(clasif3_i_new$metrics, row.names=NULL))
+  clasif3_new <- bind_rows(clasif3_new, clasif3_i_new)
   
 }
 
 # Final simulation results
-clasif_f3 <- clasif3 %>%
+clasif_f3_old <- clasif3_old %>%
+  group_by(names) %>%
+  mutate(count = n()) %>%
+  summarise_all(mean)
+
+clasif_f3_new <- clasif3_new %>%
   group_by(names) %>%
   mutate(count = n()) %>%
   summarise_all(mean)
 
 # model 4 
-clasif4 <- c()
 
-v_list4 <- list(v8,v9,v10,v11,v12,v13,v14,v15,v16,v17,v18,v19,
-            v20,v21,v22,v23,v24,v25,v26,v27,v28,v29,v30)
+clasif4_old <- c()
+clasif4_new <- c()
+
+v_list4_old <- list(v8,v9,v10,v11,v12,v13,v14,v15)
+v_list4_new <- list(v16,v17,v18,v19,v20,v21,v22,
+                     v23,v24,v25,v26,v27,v28,v29,v30)
 
 for(i in 1:n_sim){
   set.seed(i)
   
   data4 <- ehymet::sim_model_ex1(n = 50, p = 30, i_sim = 4)
   
-  clasif4_i <- EHyClus_mm(data4, vars_combinations = v_list4,
+  clasif4_i_old <- EHyClus(data4, vars_combinations = v_list4_old,
                           n_clusters = 2, true_labels = data4_labels)
-  clasif4_i <- cbind(names = row.names(clasif4_i$metrics),
-                     data.frame(clasif4_i$metrics, row.names=NULL))
-  clasif4 <- bind_rows(clasif4, clasif4_i)
+  clasif4_i_old <- cbind(names = row.names(clasif4_i_old$metrics),
+                     data.frame(clasif4_i_old$metrics, row.names=NULL))
+  clasif4_old <- bind_rows(clasif4_old, clasif4_i_old)
+  
+  clasif4_i_new <- EHyClus_new(data4, vars_combinations = v_list4_new,
+                          n_clusters = 2, true_labels = data4_labels)
+  clasif4_i_new <- cbind(names = row.names(clasif4_i_new$metrics),
+                     data.frame(clasif4_i_new$metrics, row.names=NULL))
+  clasif4_new <- bind_rows(clasif4_new, clasif4_i_new)
   
 }
 
 # Final simulation results
-clasif_f4 <- clasif4 %>%
+clasif_f4_old <- clasif4_old %>%
   group_by(names) %>%
   mutate(count = n()) %>%
   summarise_all(mean)
 
+clasif_f4_new <- clasif4_new %>%
+  group_by(names) %>%
+  mutate(count = n()) %>%
+  summarise_all(mean)
 
 # model 5
 
-clasif5 <- c()
+clasif5_old <- c()
+clasif5_new <- c()
 
-v_list5 <- list(v5,v6,v7,v8,v9,v10,v11,v12,v13,v14,v15,v16,v17,v18,
-                v19,v20,v21,v22,v23,v24,v25,v26,v27,v28,v29,v30)
+v_list5_old <- list(v5,v6,v7,v8,v9,v10,v11,v12,v13,v14,v15)
+v_list5_new <- list(v16,v17,v18,v19,v20,v21,v22,v23,
+                    v24,v25,v26,v27,v28,v29,v30)
 
 
 for(i in 1:n_sim){
@@ -836,152 +891,227 @@ for(i in 1:n_sim){
   
   data5 <- ehymet::sim_model_ex1(n = 50, p = 30, i_sim = 5)
   
-  clasif5_i <- EHyClus_mm(data3, vars_combinations = v_list5,
+  clasif5_i_old <- EHyClus(data5, vars_combinations = v_list5_old,
                           n_clusters = 2, true_labels = data5_labels)
-  clasif5_i <- cbind(names = row.names(clasif3_i$metrics),
-                     data.frame(clasif3_i$metrics, row.names=NULL))
-  clasif5 <- bind_rows(clasif3, clasif3_i)
+  clasif5_i_old <- cbind(names = row.names(clasif5_i_old$metrics),
+                     data.frame(clasif5_i_old$metrics, row.names=NULL))
+  clasif5_old <- bind_rows(clasif5_old, clasif5_i_old)
+  
+  clasif5_i_new <- EHyClus_new(data5, vars_combinations = v_list5_new,
+                          n_clusters = 2, true_labels = data5_labels)
+  clasif5_i_new <- cbind(names = row.names(clasif5_i_new$metrics),
+                     data.frame(clasif5_i_new$metrics, row.names=NULL))
+  clasif5_new <- bind_rows(clasif5_new, clasif5_i_new)
   
 }
 
 # Final simulation results
-clasif_f5 <- clasif5 %>%
+clasif_f5_old <- clasif5_old %>%
+  group_by(names) %>%
+  mutate(count = n()) %>%
+  summarise_all(mean)
+
+clasif_f5_new <- clasif5_new %>%
   group_by(names) %>%
   mutate(count = n()) %>%
   summarise_all(mean)
 
 
 # model 6
-clasif6 <- c()
 
-v_list6 <- list(v8,v9,v10,v11,v12,v13,v14,v15,v16,
-                v17,v18,v19,v20,v21,v22,v23,v24,v25,v26,v27,v28,v29,v30)
+clasif6_old <- c()
+clasif6_new <- c()
 
+v_list6_old <- list(v8,v9,v10,v11,v12,v13,v14,v15)
+v_list6_new <- list(v16,v17,v18,v19,v20,v21,v22,v23,
+                    v24,v25,v26,v27,v28,v29,v30)
 
 for(i in 1:n_sim){
   set.seed(i)
   
   data6 <- ehymet::sim_model_ex1(n = 50, p = 30, i_sim = 6)
   
-  clasif6_i <- EHyClus_mm(data6, vars_combinations = v_list6,
+  clasif6_i_old <- EHyClus(data6, vars_combinations = v_list6_old,
                           n_clusters = 2, true_labels = data6_labels)
-  clasif6_i <- cbind(names = row.names(clasif6_i$metrics),
-                     data.frame(clasif6_i$metrics, row.names=NULL))
-  clasif6 <- bind_rows(clasif6, clasif6_i)
+  clasif6_i_old <- cbind(names = row.names(clasif6_i_old$metrics),
+                     data.frame(clasif6_i_old$metrics, row.names=NULL))
+  clasif6_old <- bind_rows(clasif6_old, clasif6_i_old)
+  
+  clasif6_i_new <- EHyClus_new(data6, vars_combinations = v_list6_new,
+                          n_clusters = 2, true_labels = data6_labels)
+  clasif6_i_new <- cbind(names = row.names(clasif6_i_new$metrics),
+                     data.frame(clasif6_i_new$metrics, row.names=NULL))
+  clasif6_new <- bind_rows(clasif6_new, clasif6_i_new)
   
 }
 
 #  Final simulation results
-clasif_f6 <- clasif6 %>%
+clasif_f6_old <- clasif6_old %>%
   group_by(names) %>%
   mutate(count = n()) %>%
   summarise_all(mean)
 
+clasif_f6_new <- clasif6_new %>%
+  group_by(names) %>%
+  mutate(count = n()) %>%
+  summarise_all(mean)
 
-# model 7 
-clasif7 <- c()
+# model 7
 
-v_list7 <- list(v8,v9,v10,v11,v12,v13,v14,v15,v16,v17,v18,
-                v19,v20,v21,v22,v23,v24,v25,v26,v27,v28,v29,v30)
+clasif7_old <- c()
+clasif7_new <- c()
+
+v_list7_old <- list(v8,v9,v10,v11,v12,v13,v14,v15)
+v_list7_new <- list(v16,v17,v18,v19,v20,v21,v22,
+                    v23,v24,v25,v26,v27,v28,v29,v30)
 
 for(i in 1:n_sim){
   set.seed(i)
   
   data7 <- ehymet::sim_model_ex1(n = 50, p = 30, i_sim = 7)
   
-  clasif7_i <- EHyClus_mm(data7, vars_combinations = v_list7,
+  clasif7_i_old <- EHyClus(data7, vars_combinations = v_list7_old,
                           n_clusters = 2, true_labels = data7_labels)
-  clasif7_i <- cbind(names = row.names(clasif7_i$metrics),
-                     data.frame(clasif7_i$metrics, row.names=NULL))
-  clasif7 <- bind_rows(clasif7, clasif7_i)
+  clasif7_i_old <- cbind(names = row.names(clasif7_i_old$metrics),
+                     data.frame(clasif7_i_old$metrics, row.names=NULL))
+  clasif7_old <- bind_rows(clasif7_old, clasif7_i_old)
+  
+  clasif7_i_new <- EHyClus_new(data7, vars_combinations = v_list7_new,
+                          n_clusters = 2, true_labels = data7_labels)
+  clasif7_i_new <- cbind(names = row.names(clasif7_i_new$metrics),
+                     data.frame(clasif7_i_new$metrics, row.names=NULL))
+  clasif7_new <- bind_rows(clasif7_new, clasif7_i_new)
   
 }
 
  # Final simulation results
-clasif_f7 <- clasif7 %>%
+clasif_f7_old <- clasif7_old %>%
+  group_by(names) %>%
+  mutate(count = n()) %>%
+  summarise_all(mean)
+
+clasif_f7_new <- clasif7_new %>%
   group_by(names) %>%
   mutate(count = n()) %>%
   summarise_all(mean)
 
 # model 8
-clasif8 <- c()
 
-v_list8 <- list(v8,v9,v10,v11,v12,v13,v14,v15,v16,v17,
-                v18,v19,v20,v21,v22,v23,v24,v25,v26,v27,v28,v29,v30)
+clasif8_old <- c()
+clasif8_new <- c()
+
+v_list8_old <- list(v8,v9,v10,v11,v12,v13,v14,v15)
+v_list8_new <- list(v16,v17,v18,v19,v20,v21,v22,v23,
+                    v24,v25,v26,v27,v28,v29,v30)
 
 for(i in 1:n_sim){
   set.seed(i)
   
   data8 <- ehymet::sim_model_ex1(n = 50, p = 30, i_sim = 8)
   
-  clasif8_i <- EHyClus_mm(data8, vars_combinations = v_list8,
+  clasif8_i_old <- EHyClus(data8, vars_combinations = v_list8_old,
                           n_clusters = 2, true_labels = data8_labels)
-  clasif8_i <- cbind(names = row.names(clasif8_i$metrics),
-                     data.frame(clasif8_i$metrics, row.names=NULL))
-  clasif8 <- bind_rows(clasif8, clasif8_i)
+  clasif8_i_old <- cbind(names = row.names(clasif8_i_old$metrics),
+                     data.frame(clasif8_i_old$metrics, row.names=NULL))
+  clasif8_old <- bind_rows(clasif8_old, clasif8_i_old)
+  
+  clasif8_i_new <- EHyClus_new(data8, vars_combinations = v_list8_new,
+                          n_clusters = 2, true_labels = data8_labels)
+  clasif8_i_new <- cbind(names = row.names(clasif8_i_new$metrics),
+                     data.frame(clasif8_i_new$metrics, row.names=NULL))
+  clasif8_new <- bind_rows(clasif8_new, clasif8_i_new)
   
 }
 
 # Final simulation results
-clasif_f8 <- clasif8 %>%
+clasif_f8_old <- clasif8_old %>%
+  group_by(names) %>%
+  mutate(count = n()) %>%
+  summarise_all(mean)
+
+clasif_f8_new <- clasif8_new %>%
   group_by(names) %>%
   mutate(count = n()) %>%
   summarise_all(mean)
 
 # model 9
-clasif9 <- c()
 
-v_list9 <- list(
-  v8,v9,v10,v11,v12,v13,v14,v15,v16,v17,
-                v18,v19,v20,v21,v22,v23,v24,v25,v26,v27,v28,v29,v30)
+clasif9_old <- c()
+clasif9_new <- c()
+
+v_list9_old <- list(v8,v9,v10,v11,v12,v13,v14,v15)
+v_list9_new <- list(v16,v17,v18,v19,v20,v21,v22,v23,
+                    v24,v25,v26,v27,v28,v29,v30)
 
 for(i in 1:n_sim){
   set.seed(i)
   
   data9 <- ehymet::sim_model_ex2(n = 50, p = 150, i_sim = 1)
   
-  clasif9_i <- EHyClus_mm(data9, vars_combinations = v_list9,
+  clasif9_i_old <- EHyClus(data9, vars_combinations = v_list9_old,
                           n_clusters = 2, true_labels = data9_labels)
-  clasif9_i <- cbind(names = row.names(clasif9_i$metrics),
-                     data.frame(clasif9_i$metrics, row.names=NULL))
-  clasif9 <- bind_rows(clasif9, clasif9_i)
+  clasif9_i_old <- cbind(names = row.names(clasif9_i_old$metrics),
+                     data.frame(clasif9_i_old$metrics, row.names=NULL))
+  clasif9_old <- bind_rows(clasif9_old, clasif9_i_old)
+  
+  clasif9_i_new <- EHyClus_new(data9, vars_combinations = v_list9_new,
+                          n_clusters = 2, true_labels = data9_labels)
+  clasif9_i_new <- cbind(names = row.names(clasif9_i_new$metrics),
+                     data.frame(clasif9_i_new$metrics, row.names=NULL))
+  clasif9_new <- bind_rows(clasif9_new, clasif9_i_new)
   
 }
 
 # Final simulation results
-clasif_f9 <- clasif9 %>%
+clasif_f9_old <- clasif9_old %>%
   group_by(names) %>%
   mutate(count = n()) %>%
   summarise_all(mean)
 
+clasif_f9_new <- clasif9_new %>%
+  group_by(names) %>%
+  mutate(count = n()) %>%
+  summarise_all(mean)
 
 # model 10
-clasif10 <- c()
+clasif10_old <- c()
+clasif10_new <- c()
 
-v_list10 <- list(
-  v8,v9,v10,v11,v12,v13,v14,v15,v16,v17,
-  v18,v19,v20,v21,v22,v23,v24,v25,v26,v27,v28,v29,v30)
+v_list10_old <- list(v8,v9,v10,v11,v12,v13,v14,v15)
+v_list10_new <- list(v16,v17,v18,v19,v20,v21,v22,v23,
+                     v24,v25,v26,v27,v28,v29,v30)
 
 for(i in 1:n_sim){
   set.seed(i)
   
   data10 <- ehymet::sim_model_ex2(n = 50, p = 150, i_sim = 2)
   
-  clasif10_i <- EHyClus_mm(data10, vars_combinations = v_list10,
+  clasif10_i_old <- EHyClus(data10, vars_combinations = v_list10_old,
                           n_clusters = 2, true_labels = data10_labels)
-  clasif10_i <- cbind(names = row.names(clasif10_i$metrics),
-                     data.frame(clasif10_i$metrics, row.names=NULL))
-  clasif10 <- bind_rows(clasif10, clasif10_i)
+  clasif10_i_old <- cbind(names = row.names(clasif10_i_old$metrics),
+                     data.frame(clasif10_i_old$metrics, row.names=NULL))
+  clasif10_old <- bind_rows(clasif10_old, clasif10_i_old)
+  
+  clasif10_i_new <- EHyClus_new(data10, vars_combinations = v_list10_new,
+                           n_clusters = 2, true_labels = data10_labels)
+  clasif10_i_new <- cbind(names = row.names(clasif10_i_new$metrics),
+                      data.frame(clasif10_i_new$metrics, row.names=NULL))
+  clasif10_new <- bind_rows(clasif10_new, clasif10_i_new)
   
 }
 
 # Final simulation results
-clasif_f10 <- clasif10 %>%
+clasif_f10_old <- clasif10_old %>%
   group_by(names) %>%
   mutate(count = n()) %>%
   summarise_all(mean)
 
-## Box-plots for comparison 
+clasif_f10_new <- clasif10_new %>%
+  group_by(names) %>%
+  mutate(count = n()) %>%
+  summarise_all(mean)
+
+## Box-plots for comparison
 
 # model 1
 library(ggplot2)
