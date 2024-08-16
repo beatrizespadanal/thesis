@@ -717,60 +717,25 @@ v28 <- c("dtaMMHI", "d2dtaMMHI")
 v29 <- c("ddtaMMHI", "d2dtaMMHI") 
 v30 <- c(v27, "d2dtaMMHI") 
 
-v_list1_old <- list(v8,v9,v10,v11,v12,v13,v14,v15)
-v_list1_new <- list(v16,v17,v18,v19,v20,v21,v22,v23,
-                    v24,v25,v26,v27,v28,v29,v30)
 
 ## simulation function 
-n_sim = 50
-clasif1_old <- c()
-clasif1_new <- c()
 
-# Model 1 
+n_sim = 50
+
+# Model 1 and 2  
+v_list2_old <- list(v8,v9,v10,v11,v12,v13,v14,v15)
+v_list2_new <- list(v16,v17,v18,v19,v20,v21,v22,v23,
+                    v24,v25,v26,v27,v28,v29,v30)
+
+clasif2_old <- c()
+clasif2_new <- c()
+
 set.seed(1234)
 
 for(i in 1:n_sim){
   set.seed(i)
   
-  data1 <- ehymet::sim_model_ex1(n = 50, p = 30, i_sim = 1)
-  
-  clasif1_i_old <- EHyClus(data1, vars_combinations = v_list1_old,
-                          n_clusters = 2, true_labels = data1_labels)
-  clasif1_i_old <- cbind(names = row.names(clasif1_i_old$metrics),
-                     data.frame(clasif1_i_old$metrics, row.names=NULL))
-  clasif1_old <- bind_rows(clasif1_old, clasif1_i_old)
-  
-  clasif1_i_new <- EHyClus_new(data1, vars_combinations = v_list1_new,
-                           n_clusters = 2, true_labels = data1_labels)
-  clasif1_i_new <- cbind(names = row.names(clasif1_i_new$metrics),
-                         data.frame(clasif1_i_new$metrics, row.names=NULL))
-  clasif1_new <- bind_rows(clasif1_new, clasif1_i_new)
-}
-
-# Final simulation results
-clasif_f1_old <- clasif1_old %>%
-  group_by(names) %>%
-  mutate(count = n()) %>%
-  summarise_all(mean)
-
-clasif_f1_new <- clasif1_new %>%
-  group_by(names) %>%
-  mutate(count = n()) %>%
-  summarise_all(mean)
-
-# Model 2 
-
-v_list2_old <- list(v8,v9,v10,v11,v12,v13,v14,v15)
-
-v_list2_new <- list(v16,v17,v18,v19,v20,v21,v22,
-                    v23,v24,v25,v26,v27,v28,v29,v30)
-clasif2_old <- c()
-clasif2_new <- c()
-
-for(i in 1:n_sim){
-  set.seed(i)
-  
-  data2 <- ehymet::sim_model_ex1(n = 50, p = 30, i_sim = 2)
+  data2 <- ehymet::sim_model_ex1(n = 50, p = 30, i_sim = 1)
   
   clasif2_i_old <- EHyClus(data2, vars_combinations = v_list2_old,
                           n_clusters = 2, true_labels = data2_labels)
@@ -779,12 +744,10 @@ for(i in 1:n_sim){
   clasif2_old <- bind_rows(clasif2_old, clasif2_i_old)
   
   clasif2_i_new <- EHyClus_new(data2, vars_combinations = v_list2_new,
-                              n_clusters = 2, true_labels = data2_labels)
+                           n_clusters = 2, true_labels = data2_labels)
   clasif2_i_new <- cbind(names = row.names(clasif2_i_new$metrics),
                          data.frame(clasif2_i_new$metrics, row.names=NULL))
   clasif2_new <- bind_rows(clasif2_new, clasif2_i_new)
-  
-  
 }
 
 # Final simulation results
@@ -798,19 +761,18 @@ clasif_f2_new <- clasif2_new %>%
   mutate(count = n()) %>%
   summarise_all(mean)
 
-# Model 3 
-
-clasif3_old <- c()
-clasif3_new <- c()
-
+# Model 1 and 3 
 v_list3_old <- list(v8,v9,v10,v11,v12,v13,v14,v15)
+
 v_list3_new <- list(v16,v17,v18,v19,v20,v21,v22,
                     v23,v24,v25,v26,v27,v28,v29,v30)
+clasif3_old <- c()
+clasif3_new <- c()
 
 for(i in 1:n_sim){
   set.seed(i)
   
-  data3 <- ehymet::sim_model_ex1(n = 50, p = 30, i_sim = 3)
+  data3 <- ehymet::sim_model_ex1(n = 50, p = 30, i_sim = 2)
   
   clasif3_i_old <- EHyClus(data3, vars_combinations = v_list3_old,
                           n_clusters = 2, true_labels = data3_labels)
@@ -819,11 +781,10 @@ for(i in 1:n_sim){
   clasif3_old <- bind_rows(clasif3_old, clasif3_i_old)
   
   clasif3_i_new <- EHyClus_new(data3, vars_combinations = v_list3_new,
-                          n_clusters = 2, true_labels = data3_labels)
+                              n_clusters = 2, true_labels = data3_labels)
   clasif3_i_new <- cbind(names = row.names(clasif3_i_new$metrics),
-                     data.frame(clasif3_i_new$metrics, row.names=NULL))
+                         data.frame(clasif3_i_new$metrics, row.names=NULL))
   clasif3_new <- bind_rows(clasif3_new, clasif3_i_new)
-  
 }
 
 # Final simulation results
@@ -837,19 +798,18 @@ clasif_f3_new <- clasif3_new %>%
   mutate(count = n()) %>%
   summarise_all(mean)
 
-# model 4 
-
+# Model 1 and 4 
 clasif4_old <- c()
 clasif4_new <- c()
 
 v_list4_old <- list(v8,v9,v10,v11,v12,v13,v14,v15)
 v_list4_new <- list(v16,v17,v18,v19,v20,v21,v22,
-                     v23,v24,v25,v26,v27,v28,v29,v30)
+                    v23,v24,v25,v26,v27,v28,v29,v30)
 
 for(i in 1:n_sim){
   set.seed(i)
   
-  data4 <- ehymet::sim_model_ex1(n = 50, p = 30, i_sim = 4)
+  data4 <- ehymet::sim_model_ex1(n = 50, p = 30, i_sim = 3)
   
   clasif4_i_old <- EHyClus(data4, vars_combinations = v_list4_old,
                           n_clusters = 2, true_labels = data4_labels)
@@ -862,7 +822,6 @@ for(i in 1:n_sim){
   clasif4_i_new <- cbind(names = row.names(clasif4_i_new$metrics),
                      data.frame(clasif4_i_new$metrics, row.names=NULL))
   clasif4_new <- bind_rows(clasif4_new, clasif4_i_new)
-  
 }
 
 # Final simulation results
@@ -876,23 +835,21 @@ clasif_f4_new <- clasif4_new %>%
   mutate(count = n()) %>%
   summarise_all(mean)
 
-# model 5
-
+# model 1 and 5 
 clasif5_old <- c()
 clasif5_new <- c()
 
-v_list5_old <- list(v5,v6,v7,v8,v9,v10,v11,v12,v13,v14,v15)
-v_list5_new <- list(v16,v17,v18,v19,v20,v21,v22,v23,
-                    v24,v25,v26,v27,v28,v29,v30)
-
+v_list5_old <- list(v8,v9,v10,v11,v12,v13,v14,v15)
+v_list5_new <- list(v16,v17,v18,v19,v20,v21,v22,
+                     v23,v24,v25,v26,v27,v28,v29,v30)
 
 for(i in 1:n_sim){
   set.seed(i)
   
-  data5 <- ehymet::sim_model_ex1(n = 50, p = 30, i_sim = 5)
+  data5 <- ehymet::sim_model_ex1(n = 50, p = 30, i_sim = 4)
   
   clasif5_i_old <- EHyClus(data5, vars_combinations = v_list5_old,
-                          n_clusters = 2, true_labels = data5_labels)
+                          n_clusters = 5, true_labels = data5_labels)
   clasif5_i_old <- cbind(names = row.names(clasif5_i_old$metrics),
                      data.frame(clasif5_i_old$metrics, row.names=NULL))
   clasif5_old <- bind_rows(clasif5_old, clasif5_i_old)
@@ -902,7 +859,6 @@ for(i in 1:n_sim){
   clasif5_i_new <- cbind(names = row.names(clasif5_i_new$metrics),
                      data.frame(clasif5_i_new$metrics, row.names=NULL))
   clasif5_new <- bind_rows(clasif5_new, clasif5_i_new)
-  
 }
 
 # Final simulation results
@@ -916,20 +872,18 @@ clasif_f5_new <- clasif5_new %>%
   mutate(count = n()) %>%
   summarise_all(mean)
 
-
-# model 6
-
+# model 1 and 6
 clasif6_old <- c()
 clasif6_new <- c()
 
-v_list6_old <- list(v8,v9,v10,v11,v12,v13,v14,v15)
+v_list6_old <- list(v5,v6,v7,v8,v9,v10,v11,v12,v13,v14,v15)
 v_list6_new <- list(v16,v17,v18,v19,v20,v21,v22,v23,
                     v24,v25,v26,v27,v28,v29,v30)
 
 for(i in 1:n_sim){
   set.seed(i)
   
-  data6 <- ehymet::sim_model_ex1(n = 50, p = 30, i_sim = 6)
+  data6 <- ehymet::sim_model_ex1(n = 50, p = 30, i_sim = 5)
   
   clasif6_i_old <- EHyClus(data6, vars_combinations = v_list6_old,
                           n_clusters = 2, true_labels = data6_labels)
@@ -942,10 +896,9 @@ for(i in 1:n_sim){
   clasif6_i_new <- cbind(names = row.names(clasif6_i_new$metrics),
                      data.frame(clasif6_i_new$metrics, row.names=NULL))
   clasif6_new <- bind_rows(clasif6_new, clasif6_i_new)
-  
 }
 
-#  Final simulation results
+# Final simulation results
 clasif_f6_old <- clasif6_old %>%
   group_by(names) %>%
   mutate(count = n()) %>%
@@ -956,19 +909,18 @@ clasif_f6_new <- clasif6_new %>%
   mutate(count = n()) %>%
   summarise_all(mean)
 
-# model 7
-
+# model 1 and 7
 clasif7_old <- c()
 clasif7_new <- c()
 
 v_list7_old <- list(v8,v9,v10,v11,v12,v13,v14,v15)
-v_list7_new <- list(v16,v17,v18,v19,v20,v21,v22,
-                    v23,v24,v25,v26,v27,v28,v29,v30)
+v_list7_new <- list(v16,v17,v18,v19,v20,v21,v22,v23,
+                    v24,v25,v26,v27,v28,v29,v30)
 
 for(i in 1:n_sim){
   set.seed(i)
   
-  data7 <- ehymet::sim_model_ex1(n = 50, p = 30, i_sim = 7)
+  data7 <- ehymet::sim_model_ex1(n = 50, p = 30, i_sim = 6)
   
   clasif7_i_old <- EHyClus(data7, vars_combinations = v_list7_old,
                           n_clusters = 2, true_labels = data7_labels)
@@ -981,10 +933,9 @@ for(i in 1:n_sim){
   clasif7_i_new <- cbind(names = row.names(clasif7_i_new$metrics),
                      data.frame(clasif7_i_new$metrics, row.names=NULL))
   clasif7_new <- bind_rows(clasif7_new, clasif7_i_new)
-  
 }
 
- # Final simulation results
+#  Final simulation results
 clasif_f7_old <- clasif7_old %>%
   group_by(names) %>%
   mutate(count = n()) %>%
@@ -995,19 +946,18 @@ clasif_f7_new <- clasif7_new %>%
   mutate(count = n()) %>%
   summarise_all(mean)
 
-# model 8
-
+# model 1 and 8
 clasif8_old <- c()
 clasif8_new <- c()
 
 v_list8_old <- list(v8,v9,v10,v11,v12,v13,v14,v15)
-v_list8_new <- list(v16,v17,v18,v19,v20,v21,v22,v23,
-                    v24,v25,v26,v27,v28,v29,v30)
+v_list8_new <- list(v16,v17,v18,v19,v20,v21,v22,
+                    v23,v24,v25,v26,v27,v28,v29,v30)
 
 for(i in 1:n_sim){
   set.seed(i)
   
-  data8 <- ehymet::sim_model_ex1(n = 50, p = 30, i_sim = 8)
+  data8 <- ehymet::sim_model_ex1(n = 50, p = 30, i_sim = 7)
   
   clasif8_i_old <- EHyClus(data8, vars_combinations = v_list8_old,
                           n_clusters = 2, true_labels = data8_labels)
@@ -1023,7 +973,7 @@ for(i in 1:n_sim){
   
 }
 
-# Final simulation results
+ # Final simulation results
 clasif_f8_old <- clasif8_old %>%
   group_by(names) %>%
   mutate(count = n()) %>%
@@ -1034,8 +984,7 @@ clasif_f8_new <- clasif8_new %>%
   mutate(count = n()) %>%
   summarise_all(mean)
 
-# model 9
-
+# model 1 and 9
 clasif9_old <- c()
 clasif9_new <- c()
 
@@ -1046,7 +995,7 @@ v_list9_new <- list(v16,v17,v18,v19,v20,v21,v22,v23,
 for(i in 1:n_sim){
   set.seed(i)
   
-  data9 <- ehymet::sim_model_ex2(n = 50, p = 150, i_sim = 1)
+  data9 <- ehymet::sim_model_ex1(n = 50, p = 30, i_sim = 8)
   
   clasif9_i_old <- EHyClus(data9, vars_combinations = v_list9_old,
                           n_clusters = 2, true_labels = data9_labels)
@@ -1054,12 +1003,11 @@ for(i in 1:n_sim){
                      data.frame(clasif9_i_old$metrics, row.names=NULL))
   clasif9_old <- bind_rows(clasif9_old, clasif9_i_old)
   
-  clasif9_i_new <- EHyClus_new(data9, vars_combinations = v_list9_new,
+  clasif9_i_new <- EHyClus_new(data8, vars_combinations = v_list9_new,
                           n_clusters = 2, true_labels = data9_labels)
   clasif9_i_new <- cbind(names = row.names(clasif9_i_new$metrics),
                      data.frame(clasif9_i_new$metrics, row.names=NULL))
   clasif9_new <- bind_rows(clasif9_new, clasif9_i_new)
-  
 }
 
 # Final simulation results
@@ -1073,171 +1021,333 @@ clasif_f9_new <- clasif9_new %>%
   mutate(count = n()) %>%
   summarise_all(mean)
 
-# model 10
-clasif10_old <- c()
-clasif10_new <- c()
+# model 10 and 11
+clasif11_old <- c()
+clasif11_new <- c()
 
-v_list10_old <- list(v8,v9,v10,v11,v12,v13,v14,v15)
-v_list10_new <- list(v16,v17,v18,v19,v20,v21,v22,v23,
+v_list11_old <- list(v8,v9,v10,v11,v12,v13,v14,v15)
+v_list11_new <- list(v16,v17,v18,v19,v20,v21,v22,v23,
+                    v24,v25,v26,v27,v28,v29,v30)
+
+for(i in 1:n_sim){
+  set.seed(i)
+  
+  data11 <- ehymet::sim_model_ex2(n = 50, p = 150, i_sim = 1)
+  
+  clasif11_i_old <- EHyClus(data11, vars_combinations = v_list11_old,
+                          n_clusters = 2, true_labels = data11_labels)
+  clasif11_i_old <- cbind(names = row.names(clasif11_i_old$metrics),
+                     data.frame(clasif11_i_old$metrics, row.names=NULL))
+  clasif11_old <- bind_rows(clasif11_old, clasif11_i_old)
+  
+  clasif11_i_new <- EHyClus_new(data11, vars_combinations = v_list11_new,
+                          n_clusters = 2, true_labels = data11_labels)
+  clasif11_i_new <- cbind(names = row.names(clasif11_i_new$metrics),
+                     data.frame(clasif11_i_new$metrics, row.names=NULL))
+  clasif11_new <- bind_rows(clasif11_new, clasif11_i_new)
+}
+
+# Final simulation results
+clasif_f11_old <- clasif11_old %>%
+  group_by(names) %>%
+  mutate(count = n()) %>%
+  summarise_all(mean)
+
+clasif_f11_new <- clasif11_new %>%
+  group_by(names) %>%
+  mutate(count = n()) %>%
+  summarise_all(mean)
+
+# model 10 and 12
+clasif12_old <- c()
+clasif12_new <- c()
+
+v_list12_old <- list(v8,v9,v10,v11,v12,v13,v14,v15)
+v_list12_new <- list(v16,v17,v18,v19,v20,v21,v22,v23,
                      v24,v25,v26,v27,v28,v29,v30)
 
 for(i in 1:n_sim){
   set.seed(i)
   
-  data10 <- ehymet::sim_model_ex2(n = 50, p = 150, i_sim = 2)
+  data12 <- ehymet::sim_model_ex2(n = 50, p = 150, i_sim = 2)
   
-  clasif10_i_old <- EHyClus(data10, vars_combinations = v_list10_old,
-                          n_clusters = 2, true_labels = data10_labels)
-  clasif10_i_old <- cbind(names = row.names(clasif10_i_old$metrics),
-                     data.frame(clasif10_i_old$metrics, row.names=NULL))
-  clasif10_old <- bind_rows(clasif10_old, clasif10_i_old)
+  clasif12_i_old <- EHyClus(data12, vars_combinations = v_list12_old,
+                          n_clusters = 2, true_labels = data12_labels)
+  clasif12_i_old <- cbind(names = row.names(clasif12_i_old$metrics),
+                     data.frame(clasif12_i_old$metrics, row.names=NULL))
+  clasif12_old <- bind_rows(clasif12_old, clasif12_i_old)
   
-  clasif10_i_new <- EHyClus_new(data10, vars_combinations = v_list10_new,
-                           n_clusters = 2, true_labels = data10_labels)
-  clasif10_i_new <- cbind(names = row.names(clasif10_i_new$metrics),
-                      data.frame(clasif10_i_new$metrics, row.names=NULL))
-  clasif10_new <- bind_rows(clasif10_new, clasif10_i_new)
-  
+  clasif12_i_new <- EHyClus_new(data10, vars_combinations = v_list12_new,
+                           n_clusters = 2, true_labels = data12_labels)
+  clasif12_i_new <- cbind(names = row.names(clasif12_i_new$metrics),
+                      data.frame(clasif12_i_new$metrics, row.names=NULL))
+  clasif12_new <- bind_rows(clasif12_new, clasif12_i_new)
 }
 
 # Final simulation results
-clasif_f10_old <- clasif10_old %>%
+clasif_f12_old <- clasif12_old %>%
   group_by(names) %>%
   mutate(count = n()) %>%
   summarise_all(mean)
 
-clasif_f10_new <- clasif10_new %>%
+clasif_f12_new <- clasif12_new %>%
   group_by(names) %>%
   mutate(count = n()) %>%
   summarise_all(mean)
 
 ## Box-plots for comparison
 
-# model 1
 library(ggplot2)
 library(reshape2)
 library(tidyr)
 
-clasif_f1_b <- tibble(names = c(rep("hierarchical_clust",230), rep("kkmeans_clust",46),
-                                rep("kmeans_clust",46)),
-                      Metric = c(rep("RI",230), rep("RI", 46), rep("RI",46)),
-                      Value = clasif_f1$RI)
 
-ggplot(clasif_f1_b, aes(x=names, y=Value)) + 
+# model 1 and 2
+clasif_f2_b_old <- tibble(names = c(rep("hierarchical_clust", 80), rep("kkmeans_clust", 16),
+                                rep("kmeans_clust", 16), rep("spc_clust", 16)),
+                      Metric = c(rep("RI", 80), rep("RI", 16), rep("RI", 16),
+                                 rep("RI",16)),
+                      Value = clasif_f2_old$RI)
+
+p2_old <- ggplot(clasif_f2_b_old, aes(x=names, y=Value)) + 
   geom_boxplot() + 
-  labs(title = "RI of different clustering methods for n = 50 simulations of Model 1",
-       x = "Clustering Method", y = "RI") +
+  labs(x = "Clustering Method", y = "RI") +
   theme_minimal()
 
-# model 2
-clasif_f2_b <- tibble(names = c(rep("hierarchical_clust", 230), rep("kkmeans_clust",46),
-                                rep("kmeans_clust", 46)),
-                      Metric = c(rep("RI", 230), rep("RI", 46), rep("RI", 46)),
-                      Value = clasif_f2$RI)
+clasif_f2_b_new <- tibble(names = c(rep("hierarchical_clust", 150), rep("kkmeans_clust", 20),
+                                    rep("kmeans_clust", 20), rep("spc_clust", 20)),
+                          Metric = c(rep("RI", 150), rep("RI", 20), rep("RI", 20),
+                                     rep("RI",20)),
+                          Value = clasif_f2_new$RI)
 
-ggplot(clasif_f2_b, aes(x=names, y=Value)) + 
+p2_new <- ggplot(clasif_f2_b_new, aes(x=names, y=Value)) + 
   geom_boxplot() + 
-  labs(title = "RI of different clustering methods for n = 50 simulations of Model 2",
-       x = "Clustering Method", y = "RI") +
+  labs(x = "Clustering Method", y = "RI") +
   theme_minimal()
 
-# model 3
-clasif_f3_b <- tibble(names = c(rep("hierarchical_clust", 230), rep("kkmeans_clust",46),
-                                rep("kmeans_clust", 46)),
-                      Metric = c(rep("RI", 230), rep("RI", 46), rep("RI", 46)),
-                      Value = clasif_f3$RI)
+gridExtra::grid.arrange(p2_old, p2_new, ncol=2)
 
-ggplot(clasif_f3_b, aes(x=names, y=Value)) + 
+# model 1 and 3
+clasif_f3_b_old <- tibble(names = c(rep("hierarchical_clust", 80), rep("kkmeans_clust", 16),
+                                rep("kmeans_clust", 16), rep("spc_clust",16)),
+                      Metric = c(rep("RI", 80), rep("RI", 16), rep("RI", 16),
+                                 rep("RI",16)),
+                      Value = clasif_f3_old$RI)
+
+p3_old <- ggplot(clasif_f3_b_old, aes(x=names, y=Value)) + 
   geom_boxplot() + 
-  labs(title = "RI of different clustering methods for n = 50 simulations of Model 3",
-       x = "Clustering Method", y = "RI") +
+  labs(x = "Clustering Method", y = "RI") +
   theme_minimal()
 
-# model 4
-clasif_f4_b <- tibble(names = c(rep("hierarchical_clust", 230), rep("kkmeans_clust",46),
-                                rep("kmeans_clust", 46), rep("spc_clust", 46)),
-                      Metric = c(rep("RI", 230), rep("RI", 46), rep("RI", 46),
-                                 rep("RI", 46)),
-                      Value = clasif_f4$RI)
+clasif_f3_b_new <- tibble(names = c(rep("hierarchical_clust", 150), rep("kkmeans_clust", 20),
+                                    rep("kmeans_clust", 20), rep("spc_clust", 20)),
+                          Metric = c(rep("RI", 150), rep("RI", 20), rep("RI", 20),
+                                     rep("RI", 20)),
+                          Value = clasif_f3_new$RI)
 
-ggplot(clasif_f4_b, aes(x=names, y=Value)) + 
+p3_new <- ggplot(clasif_f3_b_new, aes(x=names, y=Value)) + 
   geom_boxplot() + 
-  labs(title = "RI of different clustering methods for n = 50 simulations of Model 4",
-       x = "Clustering Method", y = "RI") +
+  labs(x = "Clustering Method", y = "RI") +
   theme_minimal()
 
-# model 5
-clasif_f5_b <- tibble(names = c(rep("hierarchical_clust", 230), rep("kkmeans_clust",46),
-                                rep("kmeans_clust", 46)),
-                      Metric = c(rep("RI", 230), rep("RI", 46), rep("RI", 46)),
-                      Value = clasif_f5$RI)
+gridExtra::grid.arrange(p3_old, p3_new, ncol=2)
 
-ggplot(clasif_f5_b, aes(x=names, y=Value)) + 
+# model 1 and 4
+clasif_f4_b_old <- tibble(names = c(rep("hierarchical_clust", 80), rep("kkmeans_clust", 16),
+                                    rep("kmeans_clust", 16), rep("spc_clust",16)),
+                          Metric = c(rep("RI", 80), rep("RI", 16), rep("RI", 16),
+                                     rep("RI",16)),
+                          Value = clasif_f4_old$RI)
+
+p4_old <- ggplot(clasif_f4_b_old, aes(x=names, y=Value)) + 
   geom_boxplot() + 
-  labs(title = "RI of different clustering methods for n = 50 simulations of Model 5",
-       x = "Clustering Method", y = "RI") +
+  labs(x = "Clustering Method", y = "RI") +
   theme_minimal()
 
-# model 6
-clasif_f6_b <- tibble(names = c(rep("hierarchical_clust", 230), rep("kkmeans_clust",46),
-                                rep("kmeans_clust", 46), rep("spc_clust", 46)),
-                      Metric = c(rep("RI", 230), rep("RI", 46), rep("RI", 46),
-                                 rep("RI", 46)),
-                      Value = clasif_f6$RI)
+clasif_f4_b_new <- tibble(names = c(rep("hierarchical_clust", 150), rep("kkmeans_clust", 30),
+                                    rep("kmeans_clust", 30)),
+                          Metric = c(rep("RI", 150), rep("RI", 30), rep("RI", 30)),
+                          Value = clasif_f4_new$RI)
 
-ggplot(clasif_f6_b, aes(x=names, y=Value)) + 
+p4_new <- ggplot(clasif_f4_b_new, aes(x=names, y=Value)) + 
   geom_boxplot() + 
-  labs(title = "RI of different clustering methods for n = 50 simulations of Model 6",
-       x = "Clustering Method", y = "RI") +
+  labs(x = "Clustering Method", y = "RI") +
   theme_minimal()
 
-# model 7
-clasif_f7_b <- tibble(names = c(rep("hierarchical_clust", 230), rep("kkmeans_clust",46),
-                                rep("kmeans_clust", 46), rep("spc_clust", 46)),
-                      Metric = c(rep("RI", 230), rep("RI", 46), rep("RI", 46),
-                                 rep("RI", 46)),
-                      Value = clasif_f7$RI)
+gridExtra::grid.arrange(p4_old, p4_new, ncol=2)
 
-ggplot(clasif_f7_b, aes(x=names, y=Value)) + 
+# model 1 and 5
+clasif_f5_b_old <- tibble(names = c(rep("hierarchical_clust", 80), rep("kkmeans_clust",16),
+                                rep("kmeans_clust", 16), rep("spc_clust",16)),
+                          Metric = c(rep("RI", 80), rep("RI", 16), rep("RI", 16),
+                                 rep("RI",16)),
+                      Value = clasif_f5_old$RI)
+
+p5_old <- ggplot(clasif_f5_b_old, aes(x=names, y=Value)) + 
   geom_boxplot() + 
-  labs(title = "RI of different clustering methods for n = 50 simulations of Model 7",
-       x = "Clustering Method", y = "RI") +
+  labs(x = "Clustering Method", y = "RI") +
   theme_minimal()
 
-# model 8
-clasif_f8_b <- tibble(names = c(rep("hierarchical_clust", 230), rep("kkmeans_clust",46),
-                                rep("kmeans_clust",46), rep("spc_clust", 46)),
-                      Metric = c(rep("RI", 230), rep("RI", 46), rep("RI", 46),
-                                 rep("RI",46)),
-                      Value = clasif_f8$RI)
+clasif_f5_b_new <- tibble(names = c(rep("hierarchical_clust", 150), rep("kkmeans_clust",30),
+                                    rep("kmeans_clust", 30), rep("spc_clust",30)),
+                          Metric = c(rep("RI", 150), rep("RI", 30), rep("RI", 30),
+                                     rep("RI",30)),
+                          Value = clasif_f5_new$RI)
 
-ggplot(clasif_f8_b, aes(x=names, y=Value)) + 
+p5_new <- ggplot(clasif_f5_b_new, aes(x=names, y=Value)) + 
   geom_boxplot() + 
-  labs(title = "RI of different clustering methods for n = 50 simulations of Model 8",
-       x = "Clustering Method", y = "RI") +
+  labs(x = "Clustering Method", y = "RI") +
   theme_minimal()
 
-# dev.off()
-# model 9
-clasif_f9_b <- tibble(names = c(rep("hierarchical_clust", 230), rep("kkmeans_clust",46),
-                                rep("kmeans_clust",46),rep("spc_clust", 46)),
-                      Metric = c(rep("RI", 230), rep("RI", 46), rep("RI", 46), rep("RI",46)),
-                      Value = clasif_f9$RI)
+gridExtra::grid.arrange(p5_old, p5_new, ncol=2)
 
-ggplot(clasif_f9_b, aes(x=names, y=Value)) + 
+# model 1 and 6
+clasif_f6_b_old <- tibble(names = c(rep("hierarchical_clust", 110), rep("kkmeans_clust",21),
+                                rep("kmeans_clust", 21), rep("spc_clust", 22)),
+                      Metric = c(rep("RI", 110), rep("RI", 21), rep("RI", 21),
+                                 rep("RI", 22)),
+                      Value = clasif_f6_old$RI)
+
+p6_old <- ggplot(clasif_f6_b_old, aes(x=names, y=Value)) + 
   geom_boxplot() + 
-  labs(title = "RI of different clustering methods for n = 50 simulations of Model 9",
-       x = "Clustering Method", y = "RI") +
+  labs(x = "Clustering Method", y = "RI") +
   theme_minimal()
 
-# model 10
-clasif_f10_b <- tibble(names = c(rep("hierarchical_clust", 230), rep("kkmeans_clust",46),
-                                rep("kmeans_clust",46),rep("spc_clust", 46)),
-                      Metric = c(rep("RI", 230), rep("RI", 46), rep("RI", 46),rep("RI", 46)),
-                      Value = clasif_f10$RI)
 
-ggplot(clasif_f10_b, aes(x=names, y=Value)) + 
+clasif_f6_b_new <- tibble(names = c(rep("hierarchical_clust",150), rep("kkmeans_clust",30),
+                                    rep("kmeans_clust", 30), rep("spc_clust", 30)),
+                          Metric = c(rep("RI", 150), rep("RI", 30), rep("RI", 30),
+                                     rep("RI", 30)),
+                          Value = clasif_f6_new$RI)
+
+p6_new <- ggplot(clasif_f6_b_new, aes(x=names, y=Value)) + 
   geom_boxplot() + 
-  labs(title = "RI of different clustering methods for n = 50 simulations of Model 10",
-       x = "Clustering Method", y = "RI") +
+  labs(x = "Clustering Method", y = "RI") +
   theme_minimal()
+
+gridExtra::grid.arrange(p6_old, p6_new, ncol=2)
+
+# model 1 and 7
+clasif_f7_b_old <- tibble(names = c(rep("hierarchical_clust", 80), rep("kkmeans_clust",16),
+                                rep("kmeans_clust", 16), rep("spc_clust", 16)),
+                      Metric = c(rep("RI", 80), rep("RI", 16), rep("RI", 16),
+                                 rep("RI", 16)),
+                      Value = clasif_f7_old$RI)
+
+p7_old <- ggplot(clasif_f7_b_old, aes(x=names, y=Value)) + 
+  geom_boxplot() + 
+  labs(x = "Clustering Method", y = "RI") +
+  theme_minimal()
+
+clasif_f7_b_new <- tibble(names = c(rep("hierarchical_clust", 150), rep("kkmeans_clust",30),
+                                    rep("kmeans_clust", 30), rep("spc_clust", 30)),
+                          Metric = c(rep("RI", 150), rep("RI", 30), rep("RI", 30),
+                                     rep("RI", 30)),
+                          Value = clasif_f7_new$RI)
+
+p7_new <- ggplot(clasif_f7_b_new, aes(x=names, y=Value)) + 
+  geom_boxplot() + 
+  labs(x = "Clustering Method", y = "RI") +
+  theme_minimal()
+
+gridExtra::grid.arrange(p7_old, p7_new, ncol=2)
+
+# model 1 and 8
+clasif_f8_b_old <- tibble(names = c(rep("hierarchical_clust", 80), rep("kkmeans_clust",16),
+                                rep("kmeans_clust",16), rep("spc_clust", 16)),
+                      Metric = c(rep("RI", 80), rep("RI", 16), rep("RI", 16),
+                                 rep("RI",16)),
+                      Value = clasif_f8_old$RI)
+
+p8_old <- ggplot(clasif_f8_b_old, aes(x=names, y=Value)) + 
+  geom_boxplot() + 
+  labs(x = "Clustering Method", y = "RI") +
+  theme_minimal()
+
+
+clasif_f8_b_new <- tibble(names = c(rep("hierarchical_clust", 150), rep("kkmeans_clust",30),
+                                    rep("kmeans_clust",30), rep("spc_clust", 30)),
+                          Metric = c(rep("RI", 150), rep("RI", 30), rep("RI", 30),
+                                     rep("RI",30)),
+                          Value = clasif_f8_new$RI)
+
+p8_new <- ggplot(clasif_f8_b_new, aes(x=names, y=Value)) + 
+  geom_boxplot() + 
+  labs(x = "Clustering Method", y = "RI") +
+  theme_minimal()
+
+gridExtra::grid.arrange(p8_old, p8_new, ncol=2)
+
+# model 1 and 9
+clasif_f9_b_old <- tibble(names = c(rep("hierarchical_clust", 80), rep("kkmeans_clust",16),
+                                rep("kmeans_clust",16),rep("spc_clust", 16)),
+                      Metric = c(rep("RI", 80), rep("RI", 16), rep("RI", 16), rep("RI",16)),
+                      Value = clasif_f9_old$RI)
+
+p9_old <- ggplot(clasif_f9_b_old, aes(x=names, y=Value)) +
+  geom_boxplot() +
+  labs(x = "Clustering Method", y = "RI") +
+  theme_minimal()
+
+clasif_f9_b_new <- tibble(names = c(rep("hierarchical_clust", 150), rep("kkmeans_clust",30),
+                                    rep("kmeans_clust",30),rep("spc_clust", 30)),
+                          Metric = c(rep("RI", 150), rep("RI", 30), rep("RI", 30),
+                                     rep("RI",30)),
+                          Value = clasif_f9_new$RI)
+
+p9_new <- ggplot(clasif_f9_b_new, aes(x=names, y=Value)) +
+  geom_boxplot() +
+  labs(x = "Clustering Method", y = "RI") +
+  theme_minimal()
+
+gridExtra::grid.arrange(p9_old, p9_new, ncol=2)
+
+# model 10 and 11
+clasif_f11_b_old <- tibble(names = c(rep("hierarchical_clust", 80), rep("kkmeans_clust",16),
+                                rep("kmeans_clust",16),rep("spc_clust", 16)),
+                      Metric = c(rep("RI", 80), rep("RI", 16), rep("RI", 16),
+                                 rep("RI", 16)),
+                      Value = clasif_f11_old$RI)
+
+p11_old <- ggplot(clasif_f11_b_old, aes(x=names, y=Value)) + 
+  geom_boxplot() + 
+  labs(x = "Clustering Method", y = "RI") +
+  theme_minimal()
+
+clasif_f11_b_new <- tibble(names = c(rep("hierarchical_clust", 150), rep("kkmeans_clust",30),
+                                     rep("kmeans_clust",30),rep("spc_clust", 30)),
+                           Metric = c(rep("RI", 150), rep("RI", 30), rep("RI", 30),
+                                      rep("RI", 30)),
+                           Value = clasif_f11_new$RI)
+
+p11_new <- ggplot(clasif_f11_b_new, aes(x=names, y=Value)) + 
+  geom_boxplot() + 
+  labs(x = "Clustering Method", y = "RI") +
+  theme_minimal()
+
+gridExtra::grid.arrange(p11_old, p11_new, ncol=2)
+
+# model 10 and 12
+clasif_f12_b_old <- tibble(names = c(rep("hierarchical_clust", 80), rep("kkmeans_clust",16),
+                                     rep("kmeans_clust",16),rep("spc_clust", 16)),
+                           Metric = c(rep("RI", 80), rep("RI", 16), rep("RI", 16),
+                                      rep("RI", 16)),
+                           Value = clasif_f12_old$RI)
+
+p12_old <- ggplot(clasif_f12_b_old, aes(x=names, y=Value)) + 
+  geom_boxplot() + 
+  labs(x = "Clustering Method", y = "RI") +
+  theme_minimal()
+
+clasif_f12_b_new <- tibble(names = c(rep("hierarchical_clust", 150), rep("kkmeans_clust",30),
+                                     rep("kmeans_clust",30),rep("spc_clust", 30)),
+                           Metric = c(rep("RI", 150), rep("RI", 30), rep("RI", 30),
+                                      rep("RI", 30)),
+                           Value = clasif_f12_new$RI)
+
+p12_new <- ggplot(clasif_f12_b_new, aes(x=names, y=Value)) + 
+  geom_boxplot() + 
+  labs(x = "Clustering Method", y = "RI") +
+  theme_minimal()
+
+gridExtra::grid.arrange(p12_old, p12_new, ncol=2)
