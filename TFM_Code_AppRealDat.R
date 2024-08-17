@@ -56,15 +56,16 @@ plt_fun_growth <- function(data, true_labels){
 }
 
 # smooth the data  first 
-data_s <- funspline(data_g, k=30)$smooth
+dta_g <- funspline(data_g,k=30)
+data_s <- dta_g$smooth
 smooth <- plt_fun_growth(data_s, labels)
 
 #first derivative
-data_d <- funspline(data_g, k=30)$deriv
+data_d <- dta_g$deriv
 firstderiv <- plt_fun_growth(data_d,labels)
 
 #second derivative
-data_d2 <- funspline(data_g, k=30)$deriv2
+data_d2 <- dta_g$deriv2
 secondderiv <- plt_fun_growth(data_d2,labels)
 
 gridExtra::grid.arrange(smooth, firstderiv, secondderiv, ncol=3)
@@ -138,12 +139,6 @@ clust_g_new <- EHyClus_new(data_g, vars_combinations = data_list_g_new,
 View(clust_g_old$metrics)
 View(clust_g_new$metrics) #best results! 
 
-#clust_g$cluster
-# clust$cluster$hierarch$hierarch_ward.D2_euclidean_ddtaMMEIddtaMMHI
-# wrongly classified 
-# boys: 3 
-# girls: 11
-# accuracy = [(39-3)+(54-11)]/93 = (36+43)/93 = 0.84946 ~ 84% 
 
 #-----------------------------------
 # case B - Canadian weather data set 
@@ -191,7 +186,7 @@ plt_fun_cw <- function(data, true_labels){
     ggplot2::geom_line(linewidth=0.1)+
     # ggplot2::scale_color_brewer(palette = "Set1")+
     ggplot2::scale_color_manual(values=c("yellow","pink","skyblue","lightgreen")) +
-    # ggplot2::ggtitle()+
+    ggplot2::ggtitle("Canadian weather curves")+
     ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))+
     ggplot2::ylab("") + ggplot2::xlab("") +
     ggplot2::theme_minimal() +
