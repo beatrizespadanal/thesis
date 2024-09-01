@@ -161,7 +161,7 @@ plot(generate_indices(data_2,k=30)$d2dtaEI[1:50],generate_indices(data_2,k=30)$d
 points(generate_indices(data_2,k=30)$d2dtaEI[51:100], generate_indices(data_2,k=30)$d2dtaHI[51:100], col="blue",pch=20,
        xlim=c(0,1),ylim=c(0,1))
 plot(generate_indices(data_2,k=30)$ddtaMEI[1:50], generate_indices(data_2,k=30)$d2dtaMEI[1:50], col="red", ylab="d2MEI", xlab="dMEI", pch=10,
-     xlim=c(0,1),ylim=c(0,1))
+     xlim=c(0,1),ylim=c(0,1), main = "First and Second derivatives")
 points(generate_indices(data_2,k=30)$ddtaMEI[51:100], generate_indices(data_2,k=30)$d2dtaMEI[51:100], col="blue",pch=20,
        xlim=c(0,1),ylim=c(0,1))
 plot(generate_indices(data_2,k=30)$d2dtaMMEI[1:50], generate_indices(data_2,k=30)$d2dtaMMHI[1:50], 
