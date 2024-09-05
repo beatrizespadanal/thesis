@@ -1112,6 +1112,7 @@ clasif_f2_b_old <- tibble(names = c(rep("hierarchical_clust", 80), rep("kkmeans_
 p2_old <- ggplot(clasif_f2_b_old, aes(x=names, y=Value)) + 
   geom_boxplot() + 
   labs(x = "Clustering Method", y = "RI") +
+  scale_y_continuous(limits = c(0.4, 1)) + 
   theme_minimal()
 
 clasif_f2_b_new <- tibble(names = c(rep("hierarchical_clust", 150), rep("kkmeans_clust", 20),
@@ -1123,6 +1124,7 @@ clasif_f2_b_new <- tibble(names = c(rep("hierarchical_clust", 150), rep("kkmeans
 p2_new <- ggplot(clasif_f2_b_new, aes(x=names, y=Value)) + 
   geom_boxplot() + 
   labs(x = "Clustering Method", y = "RI") +
+  scale_y_continuous(limits = c(0.4, 1)) +
   theme_minimal()
 
 gridExtra::grid.arrange(p2_old, p2_new, ncol=2)
@@ -1137,6 +1139,7 @@ clasif_f3_b_old <- tibble(names = c(rep("hierarchical_clust", 80), rep("kkmeans_
 p3_old <- ggplot(clasif_f3_b_old, aes(x=names, y=Value)) + 
   geom_boxplot() + 
   labs(x = "Clustering Method", y = "RI") +
+  scale_y_continuous(limits = c(0.4, 1)) + 
   theme_minimal()
 
 clasif_f3_b_new <- tibble(names = c(rep("hierarchical_clust", 150), rep("kkmeans_clust", 20),
@@ -1148,6 +1151,7 @@ clasif_f3_b_new <- tibble(names = c(rep("hierarchical_clust", 150), rep("kkmeans
 p3_new <- ggplot(clasif_f3_b_new, aes(x=names, y=Value)) + 
   geom_boxplot() + 
   labs(x = "Clustering Method", y = "RI") +
+  scale_y_continuous(limits = c(0.4, 1)) + 
   theme_minimal()
 
 gridExtra::grid.arrange(p3_old, p3_new, ncol=2)
@@ -1162,6 +1166,7 @@ clasif_f4_b_old <- tibble(names = c(rep("hierarchical_clust", 80), rep("kkmeans_
 p4_old <- ggplot(clasif_f4_b_old, aes(x=names, y=Value)) + 
   geom_boxplot() + 
   labs(x = "Clustering Method", y = "RI") +
+  scale_y_continuous(limits = c(0.4, 1)) + 
   theme_minimal()
 
 clasif_f4_b_new <- tibble(names = c(rep("hierarchical_clust", 150), rep("kkmeans_clust", 30),
@@ -1172,6 +1177,7 @@ clasif_f4_b_new <- tibble(names = c(rep("hierarchical_clust", 150), rep("kkmeans
 p4_new <- ggplot(clasif_f4_b_new, aes(x=names, y=Value)) + 
   geom_boxplot() + 
   labs(x = "Clustering Method", y = "RI") +
+  scale_y_continuous(limits = c(0.4, 1)) + 
   theme_minimal()
 
 gridExtra::grid.arrange(p4_old, p4_new, ncol=2)
@@ -1186,6 +1192,7 @@ clasif_f5_b_old <- tibble(names = c(rep("hierarchical_clust", 80), rep("kkmeans_
 p5_old <- ggplot(clasif_f5_b_old, aes(x=names, y=Value)) + 
   geom_boxplot() + 
   labs(x = "Clustering Method", y = "RI") +
+  scale_y_continuous(limits = c(0.4, 0.8)) + 
   theme_minimal()
 
 clasif_f5_b_new <- tibble(names = c(rep("hierarchical_clust", 150), rep("kkmeans_clust",30),
@@ -1197,6 +1204,7 @@ clasif_f5_b_new <- tibble(names = c(rep("hierarchical_clust", 150), rep("kkmeans
 p5_new <- ggplot(clasif_f5_b_new, aes(x=names, y=Value)) + 
   geom_boxplot() + 
   labs(x = "Clustering Method", y = "RI") +
+  scale_y_continuous(limits = c(0.4, 0.8)) + 
   theme_minimal()
 
 gridExtra::grid.arrange(p5_old, p5_new, ncol=2)
@@ -1211,6 +1219,7 @@ clasif_f6_b_old <- tibble(names = c(rep("hierarchical_clust", 110), rep("kkmeans
 p6_old <- ggplot(clasif_f6_b_old, aes(x=names, y=Value)) + 
   geom_boxplot() + 
   labs(x = "Clustering Method", y = "RI") +
+  scale_y_continuous(limits = c(0.4, 1)) + 
   theme_minimal()
 
 
@@ -1223,6 +1232,7 @@ clasif_f6_b_new <- tibble(names = c(rep("hierarchical_clust",150), rep("kkmeans_
 p6_new <- ggplot(clasif_f6_b_new, aes(x=names, y=Value)) + 
   geom_boxplot() + 
   labs(x = "Clustering Method", y = "RI") +
+  scale_y_continuous(limits = c(0.4, 1)) + 
   theme_minimal()
 
 gridExtra::grid.arrange(p6_old, p6_new, ncol=2)
@@ -1237,6 +1247,7 @@ clasif_f7_b_old <- tibble(names = c(rep("hierarchical_clust", 80), rep("kkmeans_
 p7_old <- ggplot(clasif_f7_b_old, aes(x=names, y=Value)) + 
   geom_boxplot() + 
   labs(x = "Clustering Method", y = "RI") +
+  scale_y_continuous(limits = c(0.4, 0.6)) + 
   theme_minimal()
 
 clasif_f7_b_new <- tibble(names = c(rep("hierarchical_clust", 150), rep("kkmeans_clust",30),
@@ -1248,6 +1259,7 @@ clasif_f7_b_new <- tibble(names = c(rep("hierarchical_clust", 150), rep("kkmeans
 p7_new <- ggplot(clasif_f7_b_new, aes(x=names, y=Value)) + 
   geom_boxplot() + 
   labs(x = "Clustering Method", y = "RI") +
+  scale_y_continuous(limits = c(0.4, 0.6)) + 
   theme_minimal()
 
 gridExtra::grid.arrange(p7_old, p7_new, ncol=2)
@@ -1262,6 +1274,7 @@ clasif_f8_b_old <- tibble(names = c(rep("hierarchical_clust", 80), rep("kkmeans_
 p8_old <- ggplot(clasif_f8_b_old, aes(x=names, y=Value)) + 
   geom_boxplot() + 
   labs(x = "Clustering Method", y = "RI") +
+  scale_y_continuous(limits = c(0.4, 1)) + 
   theme_minimal()
 
 
@@ -1274,6 +1287,7 @@ clasif_f8_b_new <- tibble(names = c(rep("hierarchical_clust", 150), rep("kkmeans
 p8_new <- ggplot(clasif_f8_b_new, aes(x=names, y=Value)) + 
   geom_boxplot() + 
   labs(x = "Clustering Method", y = "RI") +
+  scale_y_continuous(limits = c(0.4, 1)) + 
   theme_minimal()
 
 gridExtra::grid.arrange(p8_old, p8_new, ncol=2)
@@ -1287,6 +1301,7 @@ clasif_f9_b_old <- tibble(names = c(rep("hierarchical_clust", 80), rep("kkmeans_
 p9_old <- ggplot(clasif_f9_b_old, aes(x=names, y=Value)) +
   geom_boxplot() +
   labs(x = "Clustering Method", y = "RI") +
+  scale_y_continuous(limits = c(0.4, 1)) + 
   theme_minimal()
 
 clasif_f9_b_new <- tibble(names = c(rep("hierarchical_clust", 150), rep("kkmeans_clust",30),
@@ -1298,6 +1313,7 @@ clasif_f9_b_new <- tibble(names = c(rep("hierarchical_clust", 150), rep("kkmeans
 p9_new <- ggplot(clasif_f9_b_new, aes(x=names, y=Value)) +
   geom_boxplot() +
   labs(x = "Clustering Method", y = "RI") +
+  scale_y_continuous(limits = c(0.4, 1)) + 
   theme_minimal()
 
 gridExtra::grid.arrange(p9_old, p9_new, ncol=2)
@@ -1312,6 +1328,7 @@ clasif_f11_b_old <- tibble(names = c(rep("hierarchical_clust", 80), rep("kkmeans
 p11_old <- ggplot(clasif_f11_b_old, aes(x=names, y=Value)) + 
   geom_boxplot() + 
   labs(x = "Clustering Method", y = "RI") +
+  scale_y_continuous(limits = c(0.4, 0.6)) + 
   theme_minimal()
 
 clasif_f11_b_new <- tibble(names = c(rep("hierarchical_clust", 150), rep("kkmeans_clust",30),
@@ -1323,6 +1340,7 @@ clasif_f11_b_new <- tibble(names = c(rep("hierarchical_clust", 150), rep("kkmean
 p11_new <- ggplot(clasif_f11_b_new, aes(x=names, y=Value)) + 
   geom_boxplot() + 
   labs(x = "Clustering Method", y = "RI") +
+  scale_y_continuous(limits = c(0.4, 0.6)) + 
   theme_minimal()
 
 gridExtra::grid.arrange(p11_old, p11_new, ncol=2)
@@ -1337,6 +1355,7 @@ clasif_f12_b_old <- tibble(names = c(rep("hierarchical_clust", 80), rep("kkmeans
 p12_old <- ggplot(clasif_f12_b_old, aes(x=names, y=Value)) + 
   geom_boxplot() + 
   labs(x = "Clustering Method", y = "RI") +
+  scale_y_continuous(limits = c(0.4, 1)) + 
   theme_minimal()
 
 clasif_f12_b_new <- tibble(names = c(rep("hierarchical_clust", 150), rep("kkmeans_clust",30),
@@ -1348,6 +1367,7 @@ clasif_f12_b_new <- tibble(names = c(rep("hierarchical_clust", 150), rep("kkmean
 p12_new <- ggplot(clasif_f12_b_new, aes(x=names, y=Value)) + 
   geom_boxplot() + 
   labs(x = "Clustering Method", y = "RI") +
+  scale_y_continuous(limits = c(0.4, 1)) + 
   theme_minimal()
 
 gridExtra::grid.arrange(p12_old, p12_new, ncol=2)
