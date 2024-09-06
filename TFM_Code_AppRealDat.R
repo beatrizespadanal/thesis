@@ -186,7 +186,7 @@ plt_fun_cw <- function(data, true_labels, title){
   plt <- pa +
     ggplot2::geom_line(linewidth=0.1)+
     # ggplot2::scale_color_brewer(palette = "Set1")+
-    ggplot2::scale_color_manual(values=c("yellow","pink","skyblue","lightgreen")) +
+    ggplot2::scale_color_manual(values=c("red","blue","green","orange")) +
     ggplot2::ggtitle(title)+
     ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))+
     ggplot2::ylab("") + ggplot2::xlab("") +
@@ -209,75 +209,75 @@ ind <- generate_indices(data,k=30)
 
 #original data
 plot(ind$dtaEI[1:15],ind$dtaHI[1:15],
-     col="yellow", ylab="HI", xlab="EI",pch=16,
+     col="red", ylab="HI", xlab="EI",pch=16,
      main = "Original data", xlim=c(0,1),ylim=c(0,1))
 points(cbind(ind$dtaEI[16:24],ind$dtaEI[30:32]), 
-       cbind(ind$dtaHI[16:24],ind$dtaHI[30:32]), col="pink", pch=16)
-points(ind$dtaEI[25:29], ind$dtaHI[25:29], col="skyblue",pch=16)
-points(ind$dtaEI[33:35], ind$dtaHI[33:35], col="lightgreen",pch=16)
+       cbind(ind$dtaHI[16:24],ind$dtaHI[30:32]), col="blue", pch=16)
+points(ind$dtaEI[25:29], ind$dtaHI[25:29], col="green",pch=16)
+points(ind$dtaEI[33:35], ind$dtaHI[33:35], col="orange",pch=16)
 
 plot(ind$dtaMEI[1:15],ind$ddtaMEI[1:15],
-     col="yellow", ylab="dMEI", xlab="MEI",pch=16,
+     col="red", ylab="dMEI", xlab="MEI",pch=16,
      xlim=c(0,1),ylim=c(0,1), main="Original data and first derivative")
 points(cbind(ind$dtaMEI[16:24],ind$dtaMEI[30:32]), 
-       cbind(ind$ddtaMEI[16:24],ind$ddtaMEI[30:32]), col="pink", pch=16)
-points(ind$dtaMEI[25:29], ind$ddtaMEI[25:29], col="skyblue",pch=16)
-points(ind$dtaMEI[33:35], ind$ddtaMEI[33:35], col="lightgreen",pch=16)
+       cbind(ind$ddtaMEI[16:24],ind$ddtaMEI[30:32]), col="blue", pch=16)
+points(ind$dtaMEI[25:29], ind$ddtaMEI[25:29], col="green",pch=16)
+points(ind$dtaMEI[33:35], ind$ddtaMEI[33:35], col="orange",pch=16)
 
 plot(ind$dtaMMEI[1:15],ind$dtaMMHI[1:15],
-     col="yellow", ylab="MMHI", xlab="MMEI",pch=16)
+     col="red", ylab="MMHI", xlab="MMEI",pch=16)
 points(cbind(ind$dtaMMEI[16:24],ind$dtaMMEI[30:32]), 
-       cbind(ind$dtaMMHI[16:24],ind$dtaMMHI[30:32]), col="pink", pch=16)
-points(ind$dtaMMEI[25:29], ind$dtaMMHI[25:29], col="skyblue",pch=16)
-points(ind$dtaMMEI[33:35], ind$dtaMMHI[33:35], col="lightgreen",pch=16)
+       cbind(ind$dtaMMHI[16:24],ind$dtaMMHI[30:32]), col="blue", pch=16)
+points(ind$dtaMMEI[25:29], ind$dtaMMHI[25:29], col="green",pch=16)
+points(ind$dtaMMEI[33:35], ind$dtaMMHI[33:35], col="orange",pch=16)
 
 # first derivative
 plot(ind$ddtaEI[1:15],ind$ddtaHI[1:15],
-     col="yellow", ylab="HI", xlab="EI",pch=16,
+     col="red", ylab="HI", xlab="EI",pch=16,
      main = "First derivatives", xlim=c(0,1),ylim=c(0,1))
 points(cbind(ind$ddtaEI[16:24],ind$ddtaEI[30:32]), 
-       cbind(ind$ddtaHI[16:24],ind$ddtaHI[30:32]), col="pink", pch=16)
-points(ind$ddtaEI[25:29], ind$ddtaHI[25:29], col="skyblue",pch=16)
-points(ind$ddtaEI[33:35], ind$ddtaHI[33:35], col="lightgreen",pch=16)
+       cbind(ind$ddtaHI[16:24],ind$ddtaHI[30:32]), col="blue", pch=16)
+points(ind$ddtaEI[25:29], ind$ddtaHI[25:29], col="green",pch=16)
+points(ind$ddtaEI[33:35], ind$ddtaHI[33:35], col="orange",pch=16)
 
 plot(ind$dtaMEI[1:15],ind$d2dtaMEI[1:15],
-     col="yellow", ylab="d2MEI", xlab="MEI",pch=16,
+     col="red", ylab="d2MEI", xlab="MEI",pch=16,
      xlim=c(0,1),ylim=c(0,1),main="original and second derivatives")
 points(cbind(ind$dtaMEI[16:24],ind$dtaMEI[30:32]), 
-       cbind(ind$d2dtaMEI[16:24],ind$d2dtaMEI[30:32]), col="pink", pch=16)
-points(ind$dtaMEI[25:29], ind$d2dtaMHI[25:29], col="skyblue",pch=16)
-points(ind$dtaMEI[33:35], ind$d2dtaMHI[33:35], col="lightgreen",pch=16)
+       cbind(ind$d2dtaMEI[16:24],ind$d2dtaMEI[30:32]), col="blue", pch=16)
+points(ind$dtaMEI[25:29], ind$d2dtaMHI[25:29], col="green",pch=16)
+points(ind$dtaMEI[33:35], ind$d2dtaMHI[33:35], col="orange",pch=16)
 
 plot(ind$ddtaMMEI[1:15],ind$ddtaMMHI[1:15],
-     col="yellow", ylab="MMHI", xlab="MMEI",pch=16)
+     col="red", ylab="MMHI", xlab="MMEI",pch=16)
 points(cbind(ind$ddtaMMEI[16:24],ind$ddtaMMEI[30:32]), 
-       cbind(ind$ddtaMMHI[16:24],ind$ddtaMMHI[30:32]), col="pink", pch=16)
-points(ind$ddtaMMEI[25:29], ind$ddtaMMHI[25:29], col="skyblue",pch=16)
-points(ind$ddtaMMEI[33:35], ind$ddtaMMHI[33:35], col="lightgreen",pch=16)
+       cbind(ind$ddtaMMHI[16:24],ind$ddtaMMHI[30:32]), col="blue", pch=16)
+points(ind$ddtaMMEI[25:29], ind$ddtaMMHI[25:29], col="green",pch=16)
+points(ind$ddtaMMEI[33:35], ind$ddtaMMHI[33:35], col="orange",pch=16)
 
 # second derivative
 plot(ind$d2dtaEI[1:15],ind$d2dtaHI[1:15],
-     col="yellow", ylab="HI", xlab="EI",pch=16,
+     col="red", ylab="HI", xlab="EI",pch=16,
      main = "second derivatives", xlim=c(0,1),ylim=c(0,1))
 points(cbind(ind$d2dtaEI[16:24],ind$d2dtaEI[30:32]), 
-       cbind(ind$d2dtaHI[16:24],ind$d2dtaHI[30:32]), col="pink", pch=16)
-points(ind$d2dtaEI[25:29], ind$d2dtaHI[25:29], col="skyblue",pch=16)
-points(ind$d2dtaEI[33:35], ind$d2dtaHI[33:35], col="lightgreen",pch=16)
+       cbind(ind$d2dtaHI[16:24],ind$d2dtaHI[30:32]), col="blue", pch=16)
+points(ind$d2dtaEI[25:29], ind$d2dtaHI[25:29], col="green",pch=16)
+points(ind$d2dtaEI[33:35], ind$d2dtaHI[33:35], col="orange",pch=16)
 
 plot(ind$ddtaMEI[1:15],ind$d2dtaMEI[1:15],
-     col="yellow", ylab="d2MEI", xlab="dMEI",pch=16,
+     col="red", ylab="d2MEI", xlab="dMEI",pch=16,
      xlim=c(0,1),ylim=c(0,1), main="first and second derivatives")
 points(cbind(ind$ddtaMEI[16:24],ind$ddtaMEI[30:32]), 
-       cbind(ind$d2dtaMEI[16:24],ind$d2dtaMEI[30:32]), col="pink", pch=16)
-points(ind$ddtaMEI[25:29], ind$d2dtaMEI[25:29], col="skyblue",pch=16)
-points(ind$ddtaMEI[33:35], ind$d2dtaMEI[33:35], col="lightgreen",pch=16)
+       cbind(ind$d2dtaMEI[16:24],ind$d2dtaMEI[30:32]), col="blue", pch=16)
+points(ind$ddtaMEI[25:29], ind$d2dtaMEI[25:29], col="green",pch=16)
+points(ind$ddtaMEI[33:35], ind$d2dtaMEI[33:35], col="orange",pch=16)
 
 plot(ind$d2dtaMMEI[1:15],ind$d2dtaMMHI[1:15],
-     col="yellow", ylab="MMHI", xlab="MMEI",pch=16)
+     col="red", ylab="MMHI", xlab="MMEI",pch=16)
 points(cbind(ind$d2dtaMMEI[16:24],ind$d2dtaMMEI[30:32]), 
-       cbind(ind$d2dtaMMHI[16:24],ind$d2dtaMMHI[30:32]), col="pink", pch=16)
-points(ind$d2dtaMMEI[25:29], ind$d2dtaMMHI[25:29], col="skyblue",pch=16)
-points(ind$d2dtaMMEI[33:35], ind$d2dtaMMHI[33:35], col="lightgreen",pch=16)
+       cbind(ind$d2dtaMMHI[16:24],ind$d2dtaMMHI[30:32]), col="blue", pch=16)
+points(ind$d2dtaMMEI[25:29], ind$d2dtaMMHI[25:29], col="green",pch=16)
+points(ind$d2dtaMMEI[33:35], ind$d2dtaMMHI[33:35], col="orange",pch=16)
 
 # clustering
 set.seed(12345)
@@ -304,9 +304,9 @@ first_cw_prec <- dta_prec$deriv
 second_cw_prec <- dta_prec$deriv2
 
 # plots
-p_smooth_prec <-plt_fun_cw(smooth_cw_prec,labels_cw)
-p_firstderiv_prec <- plt_fun_cw(first_cw_prec,labels_cw)
-p_secondderiv_prec <- plt_fun_cw(second_cw_prec,labels_cw)
+p_smooth_prec <-plt_fun_cw(smooth_cw_prec,labels_cw,"Average daily precipitation curves")
+p_firstderiv_prec <- plt_fun_cw(first_cw_prec,labels_cw, "First derivative curves")
+p_secondderiv_prec <- plt_fun_cw(second_cw_prec,labels_cw, "Second derivative curves")
 
 gridExtra::grid.arrange(p_smooth_prec,p_firstderiv_prec,p_secondderiv_prec,ncol=3)
 
@@ -317,76 +317,76 @@ ind_prec <- generate_indices(data_prec,k=30)
 
 #original data
 plot(ind_prec$dtaEI[1:15],ind_prec$dtaHI[1:15],
-     col="yellow", ylab="HI", xlab="EI",pch=15,
+     col="red", ylab="HI", xlab="EI",pch=15,
      main = "Original data", xlim=c(0,1),ylim=c(0,1))
 points(cbind(ind_prec$dtaEI[16:24],ind_prec$dtaEI[30:32]), 
-       cbind(ind_prec$dtaHI[16:24],ind_prec$dtaHI[30:32]), col="pink", pch=15)
-points(ind_prec$dtaEI[25:29], ind_prec$dtaHI[25:29], col="skyblue",pch=15)
-points(ind_prec$dtaEI[33:35], ind_prec$dtaHI[33:35], col="lightgreen",pch=15)
+       cbind(ind_prec$dtaHI[16:24],ind_prec$dtaHI[30:32]), col="blue", pch=15)
+points(ind_prec$dtaEI[25:29], ind_prec$dtaHI[25:29], col="green",pch=15)
+points(ind_prec$dtaEI[33:35], ind_prec$dtaHI[33:35], col="orange",pch=15)
 
 plot(ind_prec$dtaMEI[1:15],ind_prec$ddtaMEI[1:15],
-     col="yellow", ylab="dMEI", xlab="MEI",pch=15,
-     xlim=c(0,1),ylim=c(0,1))
+     col="red", ylab="dMEI", xlab="MEI",pch=15,
+     xlim=c(0,1),ylim=c(0,1), main ="Original data and first derivative")
 points(cbind(ind_prec$dtaMEI[16:24],ind_prec$dtaMEI[30:32]), 
-       cbind(ind_prec$ddtaMEI[16:24],ind_prec$ddtaMEI[30:32]), col="pink", pch=15)
+       cbind(ind_prec$ddtaMEI[16:24],ind_prec$ddtaMEI[30:32]), col="blue", pch=15)
 
-points(ind_prec$dtaMEI[25:29], ind_prec$ddtaMEI[25:29], col="skyblue",pch=15)
-points(ind_prec$dtaMEI[33:35], ind_prec$ddtaMEI[33:35], col="lightgreen",pch=15)
+points(ind_prec$dtaMEI[25:29], ind_prec$ddtaMEI[25:29], col="green",pch=15)
+points(ind_prec$dtaMEI[33:35], ind_prec$ddtaMEI[33:35], col="orange",pch=15)
 
 plot(ind_prec$dtaMMEI[1:15],ind_prec$dtaMMHI[1:15],
-     col="yellow", ylab="MMHI", xlab="MMEI",pch=15)
+     col="red", ylab="MMHI", xlab="MMEI",pch=15)
 points(cbind(ind_prec$dtaMMEI[16:24],ind_prec$dtaMMEI[30:32]), 
-       cbind(ind_prec$dtaMMHI[16:24],ind_prec$dtaMMHI[30:32]), col="pink", pch=15)
-points(ind_prec$dtaMMEI[25:29], ind_prec$dtaMMHI[25:29], col="skyblue",pch=15)
-points(ind_prec$dtaMMEI[33:35], ind_prec$dtaMMHI[33:35], col="lightgreen",pch=15)
+       cbind(ind_prec$dtaMMHI[16:24],ind_prec$dtaMMHI[30:32]), col="blue", pch=15)
+points(ind_prec$dtaMMEI[25:29], ind_prec$dtaMMHI[25:29], col="green",pch=15)
+points(ind_prec$dtaMMEI[33:35], ind_prec$dtaMMHI[33:35], col="orange",pch=15)
 
 # first derivative
 plot(ind_prec$ddtaEI[1:15],ind_prec$ddtaHI[1:15],
-     col="yellow", ylab="HI", xlab="EI",pch=15,
+     col="red", ylab="HI", xlab="EI",pch=15,
      main = "First derivatives", xlim=c(0,1),ylim=c(0,1))
 points(cbind(ind_prec$ddtaEI[16:24],ind_prec$ddtaEI[30:32]), 
-       cbind(ind_prec$ddtaHI[16:24],ind_prec$ddtaHI[30:32]), col="pink", pch=15)
-points(ind_prec$ddtaEI[25:29], ind_prec$ddtaHI[25:29], col="skyblue",pch=15)
-points(ind_prec$ddtaEI[33:35], ind_prec$ddtaHI[33:35], col="lightgreen",pch=15)
+       cbind(ind_prec$ddtaHI[16:24],ind_prec$ddtaHI[30:32]), col="blue", pch=15)
+points(ind_prec$ddtaEI[25:29], ind_prec$ddtaHI[25:29], col="green",pch=15)
+points(ind_prec$ddtaEI[33:35], ind_prec$ddtaHI[33:35], col="orange",pch=15)
 
 plot(ind$dtaMEI[1:15],ind$d2dtaMHI[1:15],
-     col="yellow", ylab="d2MEI", xlab="MEI",pch=15,
-     xlim=c(0,1),ylim=c(0,1))
+     col="red", ylab="d2MEI", xlab="MEI",pch=15,
+     xlim=c(0,1),ylim=c(0,1), main ="original and second derivatives")
 points(cbind(ind_prec$dtaMEI[16:24],ind_prec$dtaMEI[30:32]), 
-       cbind(ind_prec$d2dtaMEI[16:24],ind_prec$d2dtaMEI[30:32]), col="pink", pch=15)
-points(ind_prec$dtaMEI[25:29], ind_prec$d2dtaMHI[25:29], col="skyblue",pch=15)
-points(ind_prec$dtaMEI[33:35], ind_prec$d2dtaMHI[33:35], col="lightgreen",pch=15)
+       cbind(ind_prec$d2dtaMEI[16:24],ind_prec$d2dtaMEI[30:32]), col="blue", pch=15)
+points(ind_prec$dtaMEI[25:29], ind_prec$d2dtaMHI[25:29], col="green",pch=15)
+points(ind_prec$dtaMEI[33:35], ind_prec$d2dtaMHI[33:35], col="orange",pch=15)
 
 plot(ind_prec$ddtaMMEI[1:15],ind_prec$ddtaMMHI[1:15],
-     col="yellow", ylab="MMHI", xlab="MMEI",pch=15)
+     col="red", ylab="MMHI", xlab="MMEI",pch=15)
 points(cbind(ind_prec$ddtaMMEI[16:24],ind_prec$ddtaMMEI[30:32]), 
-       cbind(ind_prec$ddtaMMHI[16:24],ind_prec$ddtaMMHI[30:32]), col="pink", pch=15)
-points(ind_prec$ddtaMMEI[25:29], ind_prec$ddtaMMHI[25:29], col="skyblue",pch=15)
-points(ind_prec$ddtaMMEI[33:35], ind_prec$ddtaMMHI[33:35], col="lightgreen",pch=15)
+       cbind(ind_prec$ddtaMMHI[16:24],ind_prec$ddtaMMHI[30:32]), col="blue", pch=15)
+points(ind_prec$ddtaMMEI[25:29], ind_prec$ddtaMMHI[25:29], col="green",pch=15)
+points(ind_prec$ddtaMMEI[33:35], ind_prec$ddtaMMHI[33:35], col="orange",pch=15)
 
 # second derivative
 plot(ind_prec$d2dtaEI[1:15],ind_prec$d2dtaHI[1:15],
-     col="yellow", ylab="HI", xlab="EI",pch=15,
+     col="red", ylab="HI", xlab="EI",pch=15,
      main = "second derivatives", xlim=c(0,1),ylim=c(0,1))
 points(cbind(ind_prec$d2dtaEI[16:24],ind_prec$d2dtaEI[30:32]), 
-       cbind(ind_prec$d2dtaHI[16:24],ind_prec$d2dtaHI[30:32]), col="pink", pch=15)
-points(ind_prec$d2dtaEI[25:29], ind_prec$d2dtaHI[25:29], col="skyblue",pch=15)
-points(ind_prec$d2dtaEI[33:35], ind_prec$d2dtaHI[33:35], col="lightgreen",pch=15)
+       cbind(ind_prec$d2dtaHI[16:24],ind_prec$d2dtaHI[30:32]), col="blue", pch=15)
+points(ind_prec$d2dtaEI[25:29], ind_prec$d2dtaHI[25:29], col="green",pch=15)
+points(ind_prec$d2dtaEI[33:35], ind_prec$d2dtaHI[33:35], col="orange",pch=15)
 
 plot(ind_prec$ddtaMEI[1:15],ind_prec$d2dtaMEI[1:15],
-     col="yellow", ylab="d2MEI", xlab="dMEI",pch=15,
-     xlim=c(0,1),ylim=c(0,1))
+     col="red", ylab="d2MEI", xlab="dMEI",pch=15,
+     xlim=c(0,1),ylim=c(0,1), main = "first and second derivatives")
 points(cbind(ind_prec$ddtaMEI[16:24],ind_prec$ddtaMEI[30:32]), 
-       cbind(ind_prec$d2dtaMEI[16:24],ind_prec$d2dtaMEI[30:32]), col="pink", pch=15)
-points(ind_prec$ddtaMEI[25:29], ind_prec$d2dtaMEI[25:29], col="skyblue",pch=15)
-points(ind_prec$ddtaMEI[33:35], ind_prec$d2dtaMEI[33:35], col="lightgreen",pch=15)
+       cbind(ind_prec$d2dtaMEI[16:24],ind_prec$d2dtaMEI[30:32]), col="blue", pch=15)
+points(ind_prec$ddtaMEI[25:29], ind_prec$d2dtaMEI[25:29], col="green",pch=15)
+points(ind_prec$ddtaMEI[33:35], ind_prec$d2dtaMEI[33:35], col="orange",pch=15)
 
 plot(ind_prec$d2dtaMMEI[1:15],ind_prec$d2dtaMMHI[1:15],
-     col="yellow", ylab="MMHI", xlab="MMEI",pch=15)
+     col="red", ylab="MMHI", xlab="MMEI",pch=15)
 points(cbind(ind_prec$d2dtaMMEI[16:24],ind_prec$d2dtaMMEI[30:32]), 
-       cbind(ind_prec$d2dtaMMHI[16:24],ind_prec$d2dtaMMHI[30:32]), col="pink", pch=15)
-points(ind_prec$d2dtaMMEI[25:29], ind_prec$d2dtaMMHI[25:29], col="skyblue",pch=15)
-points(ind_prec$d2dtaMMEI[33:35], ind_prec$d2dtaMMHI[33:35], col="lightgreen",pch=15)
+       cbind(ind_prec$d2dtaMMHI[16:24],ind_prec$d2dtaMMHI[30:32]), col="blue", pch=15)
+points(ind_prec$d2dtaMMEI[25:29], ind_prec$d2dtaMMHI[25:29], col="green",pch=15)
+points(ind_prec$d2dtaMMEI[33:35], ind_prec$d2dtaMMHI[33:35], col="orange",pch=15)
 
 # clustering
 set.seed(12345)

@@ -37,9 +37,9 @@ euclidean_distance <- function(curve1, curve2) {
   return(sqrt(sum((curve1 - curve2)^2)))
 }
 
-distances <- mapply(euclidean_distance, split(curves_func1, row(curves_func1)), 
+distances_1_2 <- mapply(euclidean_distance, split(curves_func1, row(curves_func1)), 
                     split(curves_func2, row(curves_func2)))
-distances # similar in both magnitude and shape
+distances_1_2 # similar in both magnitude and shape
 
 ###############
 # model 1 and 3
@@ -66,9 +66,9 @@ test_rms_1_3 # not equal! differences in amplitude
 
 # distance metrics
 
-distances <- mapply(euclidean_distance, split(curves_func1, row(curves_func1)), 
+distances_1_3 <- mapply(euclidean_distance, split(curves_func1, row(curves_func1)), 
                     split(curves_func3, row(curves_func3)))
-distances # similar in both magnitude and shape
+distances_1_3 # similar in both magnitude and shape
 
 ###############
 # model 1 and 4
@@ -95,9 +95,9 @@ test_rms_1_4 # not equal! differences in amplitude
 
 # distance metrics
 
-distances <- mapply(euclidean_distance, split(curves_func1, row(curves_func1)), 
+distances_1_4 <- mapply(euclidean_distance, split(curves_func1, row(curves_func1)), 
                     split(curves_func4, row(curves_func4)))
-distances # similar in both magnitude and shape
+distances_1_4 # similar in both magnitude and shape
 
 ###############
 # model 1 and 5
@@ -124,9 +124,9 @@ test_rms_1_5 # might be equal! p-value > 0.05 (significance level)
 
 # distance metrics
 
-distances <- mapply(euclidean_distance, split(curves_func1, row(curves_func1)), 
+distances_1_5 <- mapply(euclidean_distance, split(curves_func1, row(curves_func1)), 
                     split(curves_func5, row(curves_func5)))
-distances # different in shape
+distances_1_5 # similar in shape
 
 ###############
 # model 1 and 6
@@ -153,9 +153,9 @@ test_rms_1_6 # might be equal! p-value > 0.05 (significance level)
 
 # distance metrics
 
-distances <- mapply(euclidean_distance, split(curves_func1, row(curves_func1)), 
+distances_1_6 <- mapply(euclidean_distance, split(curves_func1, row(curves_func1)), 
                     split(curves_func6, row(curves_func6)))
-distances # different in shape
+distances_1_6 # different in shape
 
 ###############
 # model 1 and 7
@@ -184,9 +184,9 @@ test_rms_1_7 # Considering 0.05 as the significance level, we can reject the
 
 # distance metrics
 
-distances <- mapply(euclidean_distance, split(curves_func1, row(curves_func1)), 
+distances_1_7 <- mapply(euclidean_distance, split(curves_func1, row(curves_func1)), 
                     split(curves_func7, row(curves_func7)))
-distances # similar in both magnitude and shape
+distances_1_7 # similar in both magnitude and shape
 
 ###############
 # model 1 and 8
@@ -213,9 +213,9 @@ test_rms_1_8 # not equal! differences in amplitude
 
 # distance metrics
 
-distances <- mapply(euclidean_distance, split(curves_func1, row(curves_func1)), 
+distances_1_8 <- mapply(euclidean_distance, split(curves_func1, row(curves_func1)), 
                     split(curves_func8, row(curves_func8)))
-distances # similar in both magnitude and shape
+distances_1_8 # similar in both magnitude and shape
 
 ###############
 # model 1 and 9
@@ -242,9 +242,9 @@ test_rms_1_9 # not equal! differences in amplitude
 
 # distance metrics
 
-distances <- mapply(euclidean_distance, split(curves_func1, row(curves_func1)), 
+distances_1_9 <- mapply(euclidean_distance, split(curves_func1, row(curves_func1)), 
                     split(curves_func9, row(curves_func9)))
-distances # similar in both magnitude and shape
+distances_1_9 # similar in shape
 
 #################
 # model 10 and 11
@@ -271,9 +271,9 @@ test_rms_10_11 # not equal! differences in amplitude
 
 # distance metrics
 
-distances <- mapply(euclidean_distance, split(curves_func10, row(curves_func10)), 
+distances_10_11 <- mapply(euclidean_distance, split(curves_func10, row(curves_func10)), 
                     split(curves_func11, row(curves_func11)))
-distances # similar in both magnitude and shape
+distances_10_11 # similar in both magnitude and shape
 
 #################
 # model 10 and 12
@@ -302,9 +302,9 @@ test_rms_10_12 # Taking the significance level at 0.05, we can reject the
 
 # distance metrics
 
-distances <- mapply(euclidean_distance, split(curves_func10, row(curves_func10)), 
+distances_10_12 <- mapply(euclidean_distance, split(curves_func10, row(curves_func10)), 
                     split(curves_func12, row(curves_func12)))
-distances # different shape
+distances_10_12 # different shape
 
 #######################
 # Berkeley Growth study
