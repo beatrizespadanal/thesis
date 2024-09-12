@@ -37,10 +37,9 @@ plt_fun <- function(data, true_labels){
     ggplot2::geom_line(linewidth=0.1)+
     ggplot2::scale_color_brewer(palette = "Set1")+
     # scale_color_manual(values=c("#CC6600","#3399FF")) +
-    # ggtitle("Original D")+
-    # ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))+
     ggplot2::ylab("") + ggplot2::xlab("") +
-    ggplot2::theme(legend.position = "none")
+    ggplot2::theme_minimal() +
+    ggplot2::theme(legend.position = "none") 
   return(plt)
 }
 
