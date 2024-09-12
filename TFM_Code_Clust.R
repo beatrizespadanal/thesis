@@ -675,7 +675,15 @@ EHyClus_new <- function(curves, vars_combinations, k = 30, n_clusters = 2, bs = 
   result
 }
 
-# combinations 
+# combinations
+v1 <- c("dtaMEI", "dtaMHI")
+v2 <- c("ddtaMEI", "ddtaMHI") 
+v3 <- c("d2dtaMEI", "d2dtaMHI") 
+v4 <- c(v1, v2) 
+v5 <- c(v1, v3)
+v6 <- c(v2,v3)
+v7 <- c(v4, v3)
+
 # separately
 v8 <- c("dtaMEI", "ddtaMEI") 
 v9 <- c("dtaMEI", "d2dtaMEI")  
