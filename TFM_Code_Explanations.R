@@ -31,15 +31,35 @@ rms_func2 <- apply(curves_func2, 1, rms)
 test_rms_1_2 <- wilcox.test(rms_func1, rms_func2)
 test_rms_1_2 # not equal! differences in amplitude
 
-# distance metrics
+# dynamic time warping
 
-euclidean_distance <- function(curve1, curve2) {
-  return(sqrt(sum((curve1 - curve2)^2)))
+model1_curves <- data_2[1:50,]
+model2_curves <- data_2[51:100,]
+
+library(dtw)
+
+dtw_distance <- function(curve1,curve2) {
+  dtw_res <- dtw(curve1,curve2)
+  return(dtw_res$distance)
 }
 
-distances_1_2 <- mapply(euclidean_distance, split(curves_func1, row(curves_func1)), 
-                    split(curves_func2, row(curves_func2)))
-distances_1_2 # similar in both magnitude and shape
+dtw_dist1 <- matrix(NA, nrow=50, ncol=50)
+dtw_dist2 <- matrix(NA, nrow=50, ncol=50)
+
+for(i in 1:50){
+  for (j in 1:50) {
+    dtw_dist1[i,j] <- dtw_distance(model1_curves[i,], model1_curves[j,])
+  }
+}
+
+for(i in 1:50){
+  for (j in 1:50) {
+    dtw_dist2[i,j] <- dtw_distance(model2_curves[i,], model2_curves[j,])
+  }
+}
+
+test1_2_dtw <- wilcox.test(dtw_dist1, dtw_dist2)
+test1_2_dtw # not reject -> same shape 
 
 ###############
 # model 1 and 3
@@ -47,8 +67,8 @@ distances_1_2 # similar in both magnitude and shape
 
 x_values <- seq(0,1,length.out=30)
 
-curves_func1 <- data_3[1:50,]
-curves_func3 <- data_3[51:100,]
+curves_func1 <- data_3s[1:50,]
+curves_func3 <- data_3s[51:100,]
 
 auc_1 <- apply(curves_func1, 1, function(y) auc(x_values,y))
 auc_3 <- apply(curves_func3, 1, function(y) auc(x_values,y))
@@ -64,11 +84,28 @@ rms_func3 <- apply(curves_func3, 1, rms)
 test_rms_1_3 <- wilcox.test(rms_func1, rms_func3)
 test_rms_1_3 # not equal! differences in amplitude
 
-# distance metrics
+# dynamic time warping
 
-distances_1_3 <- mapply(euclidean_distance, split(curves_func1, row(curves_func1)), 
-                    split(curves_func3, row(curves_func3)))
-distances_1_3 # similar in both magnitude and shape
+model1_curves <- data_3[1:50,]
+model3_curves <- data_3[51:100,]
+
+dtw_dist1 <- matrix(NA, nrow=50, ncol=50)
+dtw_dist3 <- matrix(NA, nrow=50, ncol=50)
+
+for(i in 1:50){
+  for (j in 1:50) {
+    dtw_dist1[i,j] <- dtw_distance(model1_curves[i,], model1_curves[j,])
+  }
+}
+
+for(i in 1:50){
+  for (j in 1:50) {
+    dtw_dist3[i,j] <- dtw_distance(model3_curves[i,], model3_curves[j,])
+  }
+}
+
+test1_3_dtw <- wilcox.test(dtw_dist1, dtw_dist3)
+test1_3_dtw # not reject -> same shape 
 
 ###############
 # model 1 and 4
@@ -93,11 +130,28 @@ rms_func4 <- apply(curves_func4, 1, rms)
 test_rms_1_4 <- wilcox.test(rms_func1, rms_func4)
 test_rms_1_4 # not equal! differences in amplitude
 
-# distance metrics
+# dynamic time warping
 
-distances_1_4 <- mapply(euclidean_distance, split(curves_func1, row(curves_func1)), 
-                    split(curves_func4, row(curves_func4)))
-distances_1_4 # similar in both magnitude and shape
+model1_curves <- data_4[1:50,]
+model4_curves <- data_4[51:100,]
+
+dtw_dist1 <- matrix(NA, nrow=50, ncol=50)
+dtw_dist4 <- matrix(NA, nrow=50, ncol=50)
+
+for(i in 1:50){
+  for (j in 1:50) {
+    dtw_dist1[i,j] <- dtw_distance(model1_curves[i,], model1_curves[j,])
+  }
+}
+
+for(i in 1:50){
+  for (j in 1:50) {
+    dtw_dist4[i,j] <- dtw_distance(model4_curves[i,], model4_curves[j,])
+  }
+}
+
+test1_4_dtw <- wilcox.test(dtw_dist1, dtw_dist4)
+test1_4_dtw # not reject -> same shape 
 
 ###############
 # model 1 and 5
@@ -124,9 +178,26 @@ test_rms_1_5 # might be equal! p-value > 0.05 (significance level)
 
 # distance metrics
 
-distances_1_5 <- mapply(euclidean_distance, split(curves_func1, row(curves_func1)), 
-                    split(curves_func5, row(curves_func5)))
-distances_1_5 # similar in shape
+model1_curves <- data_5[1:50,]
+model5_curves <- data_5[51:100,]
+
+dtw_dist1 <- matrix(NA, nrow=50, ncol=50)
+dtw_dist5 <- matrix(NA, nrow=50, ncol=50)
+
+for(i in 1:50){
+  for (j in 1:50) {
+    dtw_dist1[i,j] <- dtw_distance(model1_curves[i,], model1_curves[j,])
+  }
+}
+
+for(i in 1:50){
+  for (j in 1:50) {
+    dtw_dist5[i,j] <- dtw_distance(model5_curves[i,], model5_curves[j,])
+  }
+}
+
+test1_5_dtw <- wilcox.test(dtw_dist1, dtw_dist5)
+test1_5_dtw # reject -> different shape 
 
 ###############
 # model 1 and 6
@@ -153,9 +224,26 @@ test_rms_1_6 # might be equal! p-value > 0.05 (significance level)
 
 # distance metrics
 
-distances_1_6 <- mapply(euclidean_distance, split(curves_func1, row(curves_func1)), 
-                    split(curves_func6, row(curves_func6)))
-distances_1_6 # different in shape
+model1_curves <- data_6[1:50,]
+model6_curves <- data_6[51:100,]
+
+dtw_dist1 <- matrix(NA, nrow=50, ncol=50)
+dtw_dist6 <- matrix(NA, nrow=50, ncol=50)
+
+for(i in 1:50){
+  for (j in 1:50) {
+    dtw_dist1[i,j] <- dtw_distance(model1_curves[i,], model1_curves[j,])
+  }
+}
+
+for(i in 1:50){
+  for (j in 1:50) {
+    dtw_dist6[i,j] <- dtw_distance(model6_curves[i,], model6_curves[j,])
+  }
+}
+
+test1_6_dtw <- wilcox.test(dtw_dist1, dtw_dist6)
+test1_6_dtw # reject -> different shape 
 
 ###############
 # model 1 and 7
@@ -184,9 +272,26 @@ test_rms_1_7 # Considering 0.05 as the significance level, we can reject the
 
 # distance metrics
 
-distances_1_7 <- mapply(euclidean_distance, split(curves_func1, row(curves_func1)), 
-                    split(curves_func7, row(curves_func7)))
-distances_1_7 # similar in both magnitude and shape
+model1_curves <- data_7[1:50,]
+model7_curves <- data_7[51:100,]
+
+dtw_dist1 <- matrix(NA, nrow=50, ncol=50)
+dtw_dist7 <- matrix(NA, nrow=50, ncol=50)
+
+for(i in 1:50){
+  for (j in 1:50) {
+    dtw_dist1[i,j] <- dtw_distance(model1_curves[i,], model1_curves[j,])
+  }
+}
+
+for(i in 1:50){
+  for (j in 1:50) {
+    dtw_dist7[i,j] <- dtw_distance(model7_curves[i,], model7_curves[j,])
+  }
+}
+
+test1_7_dtw <- wilcox.test(dtw_dist1, dtw_dist7)
+test1_7_dtw # reject -> different shape 
 
 ###############
 # model 1 and 8
@@ -213,9 +318,26 @@ test_rms_1_8 # not equal! differences in amplitude
 
 # distance metrics
 
-distances_1_8 <- mapply(euclidean_distance, split(curves_func1, row(curves_func1)), 
-                    split(curves_func8, row(curves_func8)))
-distances_1_8 # similar in both magnitude and shape
+model1_curves <- data_8[1:50,]
+model8_curves <- data_8[51:100,]
+
+dtw_dist1 <- matrix(NA, nrow=50, ncol=50)
+dtw_dist8 <- matrix(NA, nrow=50, ncol=50)
+
+for(i in 1:50){
+  for (j in 1:50) {
+    dtw_dist1[i,j] <- dtw_distance(model1_curves[i,], model1_curves[j,])
+  }
+}
+
+for(i in 1:50){
+  for (j in 1:50) {
+    dtw_dist8[i,j] <- dtw_distance(model8_curves[i,], model8_curves[j,])
+  }
+}
+
+test1_8_dtw <- wilcox.test(dtw_dist1, dtw_dist8)
+test1_8_dtw # reject -> different shape 
 
 ###############
 # model 1 and 9
@@ -242,9 +364,26 @@ test_rms_1_9 # not equal! differences in amplitude
 
 # distance metrics
 
-distances_1_9 <- mapply(euclidean_distance, split(curves_func1, row(curves_func1)), 
-                    split(curves_func9, row(curves_func9)))
-distances_1_9 # similar in shape
+model1_curves <- data_9[1:50,]
+model9_curves <- data_9[51:100,]
+
+dtw_dist1 <- matrix(NA, nrow=50, ncol=50)
+dtw_dist9 <- matrix(NA, nrow=50, ncol=50)
+
+for(i in 1:50){
+  for (j in 1:50) {
+    dtw_dist1[i,j] <- dtw_distance(model1_curves[i,], model1_curves[j,])
+  }
+}
+
+for(i in 1:50){
+  for (j in 1:50) {
+    dtw_dist9[i,j] <- dtw_distance(model9_curves[i,], model9_curves[j,])
+  }
+}
+
+test1_9_dtw <- wilcox.test(dtw_dist1, dtw_dist9)
+test1_9_dtw # reject -> diff shape 
 
 #################
 # model 10 and 11
@@ -271,9 +410,32 @@ test_rms_10_11 # not equal! differences in amplitude
 
 # distance metrics
 
-distances_10_11 <- mapply(euclidean_distance, split(curves_func10, row(curves_func10)), 
-                    split(curves_func11, row(curves_func11)))
-distances_10_11 # similar in both magnitude and shape
+model10_curves <- data_11[1:50,]
+model11_curves <- data_11[51:100,]
+
+dtw_dist10 <- matrix(NA, nrow=50, ncol=50)
+dtw_dist11 <- matrix(NA, nrow=50, ncol=50)
+
+for(i in 1:50){
+  for (j in 1:50) {
+    dtw_dist10[i,j] <- dtw_distance(model10_curves[i,], model10_curves[j,])
+  }
+}
+
+for(i in 1:50){
+  for (j in 1:50) {
+    dtw_dist11[i,j] <- dtw_distance(model11_curves[i,], model11_curves[j,])
+  }
+}
+
+# Histogram of DTW distances for Model 1
+hist(dtw_dist10, main = "Histogram of DTW Distances for Model 10", xlab = "DTW Distance", col = "blue")
+
+# Histogram of DTW distances for Model 2
+hist(dtw_dist11, main = "Histogram of DTW Distances for Model 11", xlab = "DTW Distance", col = "red")
+
+test10_11_dtw <- wilcox.test(dtw_dist10, dtw_dist11)
+test10_11_dtw # not reject -> same shape 
 
 #################
 # model 10 and 12
@@ -302,9 +464,26 @@ test_rms_10_12 # Taking the significance level at 0.05, we can reject the
 
 # distance metrics
 
-distances_10_12 <- mapply(euclidean_distance, split(curves_func10, row(curves_func10)), 
-                    split(curves_func12, row(curves_func12)))
-distances_10_12 # different shape
+model10_curves <- data_12[1:50,]
+model12_curves <- data_12[51:100,]
+
+dtw_dist10 <- matrix(NA, nrow=50, ncol=50)
+dtw_dist12 <- matrix(NA, nrow=50, ncol=50)
+
+for(i in 1:50){
+  for (j in 1:50) {
+    dtw_dist10[i,j] <- dtw_distance(model10_curves[i,], model10_curves[j,])
+  }
+}
+
+for(i in 1:50){
+  for (j in 1:50) {
+    dtw_dist12[i,j] <- dtw_distance(model12_curves[i,], model12_curves[j,])
+  }
+}
+
+test10_12_dtw <- wilcox.test(dtw_dist10, dtw_dist12)
+test10_12_dtw # reject -> diff shape 
 
 #######################
 # Berkeley Growth study
@@ -336,9 +515,25 @@ test_rms # For a significance level of 5%, there are evidences that the two grou
 
 # Dynamic time warping  
 
-library(dtw)
-alignment_g <- dtw(t(growth$hgtm), t(growth$hgtf))
-alignment_g$distance #high value -> differences in shape
+curves_boys <- t(growth$hgtm)
+curves_girls <- t(growth$hgtf)
+dtw_boys <- matrix(NA, nrow=39, ncol=39)
+dtw_girls <- matrix(NA, nrow=54, ncol=54)
+
+for(i in 1:39){
+  for (j in 1:39) {
+    dtw_boys[i,j] <- dtw_distance(curves_boys[i,], curves_boys[j,])
+  }
+}
+
+for(i in 1:54){
+  for (j in 1:54) {
+    dtw_girls[i,j] <- dtw_distance(curves_girls[i,], curves_girls[j,])
+  }
+}
+
+test_growth_dtw <- wilcox.test(dtw_boys, dtw_girls)
+test_growth_dtw # reject -> diff shape 
 
 ##################
 # Canadian Weather
