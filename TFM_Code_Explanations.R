@@ -428,12 +428,6 @@ for(i in 1:50){
   }
 }
 
-# Histogram of DTW distances for Model 1
-hist(dtw_dist10, main = "Histogram of DTW Distances for Model 10", xlab = "DTW Distance", col = "blue")
-
-# Histogram of DTW distances for Model 2
-hist(dtw_dist11, main = "Histogram of DTW Distances for Model 11", xlab = "DTW Distance", col = "red")
-
 test10_11_dtw <- wilcox.test(dtw_dist10, dtw_dist11)
 test10_11_dtw # not reject -> same shape 
 
